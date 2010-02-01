@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  metal:use-macro="context/@@groupserver_layout/page">
+  <head>
+    <title metal:fill-slot="title">
+      Remote Registration Form:
+      <span tal:replace="view/groupInfo/get_name">this group</span>:
+      <span tal:replace="view/siteInfo/get_name">this site</span>
+    </title>
+  </head>
+  <body>
+    <tal:block metal:fill-slot="body">
+      <h1>Remote Registration Form</h1>
+      <p>
+        To create a remote sign-up box for
+        <span class="group" 
+          tal:content="view/groupInfo/get_name">this group</span>,
+        copy the
+        <acronym title="Hypertext Markup Languae">HTML</acronym>
+        below and paste it into your own page.
+        After filling out the form, the new group member will be taken
+        through the standard registration process for 
+        <span class="group" 
+          tal:content="view/groupInfo/get_name">this group</span>.
+      </p>
+      <pre class="code">
+&lt;form enctype="multipart/form-data"  method="post" id="register.form"
+  action="<span tal:replace="python:'%s/request_registration.html' % view.siteInfo.url"/>"&gt;
+  &lt;label for="form.email" 
+    title="Your email address."&gt;Email Address&lt;/label&gt;
+  &lt;input id="form.email" name="form.email" 
+    size="20" type="text" value="" /&gt;
+  &lt;input id="form.groupId" name="form.groupId" 
+    type="hidden" value="<span tal:replace="view/groupInfo/get_id"/>" /&gt;
+  &lt;input id="form.came_from" name="form.came_from" 
+    type="hidden" value="<span tal:replace="view/groupInfo/get_url"/>" /&gt;
+  &lt;input type="submit" id="form.actions.register" 
+    name="form.actions.register" value="Register" /&gt;
+&lt;/form&gt;&lt;!--GroupSever Signup Form--&gt;
+      </pre>
+    </tal:block>
+  </body>
+</html>
+

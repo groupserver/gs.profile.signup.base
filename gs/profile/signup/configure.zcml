@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configure xmlns="http://namespaces.zope.org/zope"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  xmlns:five="http://namespaces.zope.org/five"
+  i18n_domain="groupserver">
+  <interface 
+    interface=".interfaces.IGSRequestRegistration" />
+  <interface 
+    interface=".interfaces.IGSRequestRegistrationMarker"
+    type="zope.app.content.interfaces.IContentType" />
+  <browser:page 
+    for="*"
+    name="request_registration.html"
+    class=".request_registration.RequestRegistrationForm"
+    permission="zope2.Public"/>
+
+   <browser:page 
+    for="Products.XWFChat.interfaces.IGSGroupFolder"
+    name="admin_remote_request_register.html"
+    class=".request_registration_remote.GSRemoteRequestRegistration"
+    template="browser/templates/request_register_remote.pt"
+    permission="zope2.View" />
+
+   <browser:page
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
+    name="register_password.html"
+    class=".setpassword.SetPasswordForm"
+    permission="zope2.ManageProperties" />
+
+   <browser:page 
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
+    name="registration_profile.html"
+    class=".changeprofile.ChangeProfileForm"
+    permission="zope2.ManageProperties" />
+
+   <browser:page 
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
+    name="verify_wait.html"
+    class=".verifywait.VerifyWaitForm"
+    permission="zope2.ManageProperties" />
+   <browser:page 
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
+    name="verify_email.ajax"
+    class=".viewaddressverified.AddressVerifiedView"
+    permission="zope2.ManageProperties" />
+  <browser:resource name="check_email_verified-20080408.js"
+    file="browser/javascript/check_email_verified.js"
+    permission="zope2.View" />
+</configure>
+

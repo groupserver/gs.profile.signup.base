@@ -1,0 +1,177 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  metal:use-macro="context/@@groupserver_site_home_layout/page">
+  <head>
+    <title metal:fill-slot="title">
+      <span tal:replace="view/label">
+        Register
+      </span>:
+      <span tal:replace="view/siteInfo/get_name">this site</span>
+    </title>
+  </head>
+  <body>
+    <tal:block metal:fill-slot="messages">
+      <div tal:condition="view/status" 
+        class="message-error"
+        tal:define="e view/errors"
+        tal:attributes="class python:e and 'message-error' or 'message-result'">
+        <p class="form-status" tal:content="structure view/status"/>
+        <dl tal:condition="view/errors">
+          <tal:block repeat="widget view/widgets">
+            <tal:block tal:condition="widget/error">
+              <dt tal:content="widget/label">Widget Name</dt>
+              <dd class="error" 
+                tal:content="structure widget/error">Error message</dd>
+            </tal:block>
+          </tal:block>
+        </dl>
+      </div>
+    </tal:block>
+    <tal:block metal:fill-slot="body">
+      <form enctype="multipart/form-data"  method="post" action="."
+        id="register.form"
+        tal:attributes="action request/URL"
+        tal:define="siteName view/siteInfo/get_name">
+        
+        <h1 tal:content="view/label">Sign up</h1>
+        
+        <p>You must sign up with
+          <span class="site" tal:content="siteName">this site</span>
+          before you can join groups, post messages, or receive email
+          messages from groups.
+          Enter your email address below, and click the 
+          <samp class="button" 
+            tal:define="action python:[a for a in view.actions][0].label"
+            tal:content="action">Big R</samp> 
+          button, to sign up with 
+          <span class="site" tal:content="siteName">this site</span>.
+          Afterwards, the following will happen.
+        </p>
+        <ol>
+          <li>You will be <strong>sent an email message,</strong> to 
+            verify that the address you entered is correct.</li>
+          <li>You will be able to <strong>fill out your profile,</strong>
+            while waiting for the verification message to arrive in
+            your email inbox.</li>
+          <li>You will <strong>verify your email address.</strong></li>
+          <li>Finally, you will <strong>set a password,</strong> which 
+            you  will use to log in to
+            <span class="site" tal:content="siteName">this site</span>.
+          </li>
+        </ol>
+        
+        <p>Once you have signed up, you will be logged into 
+          <span class="site" tal:content="siteName">this site</span> 
+          &#8212; and you will be able to join groups,
+          post messages, and receive email messages from groups.</p>
+        
+        <div id="tc" class="disclosureWidget">
+          <p>
+            <a class="disclosureButton" id="tc-button"
+              href="javascript:showHideDisclosure('tc')">By signing up
+              with
+              <span class="site" tal:content="siteName">this site</span>,
+              you agree to the acceptable use policy.</a>
+          </p>
+          <div class="disclosureShowHide" style="display: none;">
+            <div id="tc-content">Loading&#8230;</div>
+          </div>
+        </div>
+       
+        <div id="privacy" class="disclosureWidget">
+          <p>
+            <a class="disclosureButton" id="privacy-button"
+              href="javascript:showHideDisclosure('privacy')">Your privacy is
+              important, and will be maintained  according to the privacy
+              policy of 
+              <span class="site" tal:content="siteName">this site</span>.</a>
+          </p>
+          <div class="disclosureShowHide" style="display: none;">
+            <div id="privacy-content">Loading&#8230;</div>
+          </div>
+        </div>
+        <tal:block define="widgets python:[[w for w in view.widgets][0]]">
+          <div tal:replace="structure provider:groupserver.FormWidgets"/>
+        </tal:block>
+        <tal:block repeat="widget python:[w for w in view.widgets][1:]">
+          <span tal:replace="structure widget/hidden"/>
+        </tal:block>
+        <p class="note">
+          Before clicking the
+          <samp class="button" 
+            tal:define="action python:[a for a in view.actions][0].label"
+            tal:content="action">Big R</samp> 
+          button,
+          <strong>add the contact
+            <span class="vcard" tal:define="sn view/siteInfo/get_name">
+              <abbr tal:attributes="title string:${sn} Verification" 
+                title="Verification" class="fn hide">&#160;</abbr>
+              <code><a href="#"
+                tal:content="view/verificationEmailAddress"
+                tal:attributes="href string:mailto:${view/verificationEmailAddress}"
+                class="email">validation@valid.valid</a></code>
+            </span><!--vcard-->
+          </strong>
+          to your email address book, to ensure that you receive the
+          verification message.
+          <strong id="addressBookHelp" style="display:none;">
+            Help with
+            <a id="gmail"
+              title="How do I add people to my Contacts list? GMail Help Center"
+              href="http://mail.google.com/support/bin/answer.py?answer=8933&amp;topic=1530"
+              class="weblink">GMail</a>
+            <a id="yahoo"
+              title="How do I add a contact? Yahoo! Address Book" 
+              href="http://help.yahoo.com/l/us/yahoo/addressbook/updating/updating-02.html"
+              class="weblink">Yahoo! Mail</a>
+            <a id="hotmail"
+              title="Add a contact: MSN Hotmail Help"
+              href="http://help.msn.com/(ZmlsdGVyPURIX0ZSRUUmcHJvamVjdD1ob3RtYWlscGltdjEwJm1hcmtldD1lbi1VUyZjdT0mdG10PUhvdG1haWxQSU12MTAma2M9JmZvcm1hdD0=)/Help.aspx?market=en-US&amp;project=HotmailPIMv10&amp;querytype=topic&amp;query=PIM_PROC_AddContact.htm"
+              class="weblink">MSN Hotmail</a>
+          </strong><!--addressbook-->
+        </p>
+        <div id="emailHelp">
+          <p class="message-error" style="display: none;">
+            The email address is not valid.
+            Please enter a valid email address.
+          </p>
+        </div><!--Password Help-->
+        <div class="buttons" tal:condition="view/availableActions">
+          <tal:block repeat="action view/actions">
+            <div class="formelementbutton">
+              <span tal:replace="structure action/render">Button</span>
+            </div>
+          </tal:block>
+        </div><!--buttons-->
+      </form>
+    </tal:block>
+    <tal:block metal:fill-slot="javascript">
+      <script type="text/javascript"
+        src="++resource++check_email-20080214.js">&#160;</script>
+      <script type="text/javascript">
+        jQuery.noConflict()
+        jQuery(document).ready( function () {
+            var webmail = new Array('gmail', 'hotmail', 'yahoo');
+            GSCheckEmailAddress.init(
+                '#form\\.email',
+                '#form\\.actions\\.register',
+                '#addressBookHelp',
+                webmail,
+                '#emailHelp');
+        
+            jQuery("#privacy-button").click( function () {
+                var uri = "/policies/privacy/ #privacy";
+                jQuery("#privacy-content").load(uri);
+            });
+
+            jQuery("#tc-button").click( function () {
+                var uri = "/policies/aup/ #aup";
+                jQuery("#tc-content").load(uri);
+            });
+        });
+      </script>
+    </tal:block>
+  </body>
+</html>
+

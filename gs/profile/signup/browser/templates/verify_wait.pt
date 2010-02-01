@@ -1,0 +1,171 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  metal:use-macro="context/@@groupserver_site_home_layout/page">
+  <head>
+    <title metal:fill-slot="title">
+      <span tal:replace="string:${view/label}: ${view/userName}: ${view/siteInfo/get_name}">
+        Awaiting Verification
+      </span>
+    </title>
+  </head>
+  <body>
+    <div metal:fill-slot="messages" tal:condition="view/status" 
+      class="message-error"
+      tal:define="e view/errors"
+      tal:attributes="class python:e and 'message-error' or 'message-result'">
+      <p class="form-status" tal:content="structure view/status"/>
+      <dl tal:condition="view/errors">
+        <tal:block repeat="widget view/widgets">
+          <tal:block tal:condition="widget/error">
+            <dt tal:content="widget/label">Widget Name</dt>
+            <dd class="error" 
+              tal:content="structure widget/error">Error message</dd>
+          </tal:block>
+        </tal:block>
+      </dl>
+    </div>
+    <tal:block metal:fill-slot="contextnavigation">
+    </tal:block>
+    <tal:block metal:fill-slot="sitenavigation">
+      <div id="sitenavigation">&#160;</div>
+    </tal:block>
+    <tal:block metal:fill-slot="utilitylinks">
+      <div id="utilitylinks">&#160;</div>
+    </tal:block>
+    <tal:block metal:fill-slot="body">
+      <form enctype="multipart/form-data"  method="post" action="."
+        tal:attributes="action request/URL" id="edit-profile">
+        
+        <h1 tal:content="view/label">Awaiting Verification</h1>
+        <p>
+          Your email address must be verified before you can use it with
+          <span class="site" 
+            tal:content="view/siteInfo/get_name">this site</span>.
+          A message has been sent to
+          <code class="email" 
+            tal:content="python:view.userEmail[0]">your@email.address</code>
+          to verify that you control the address.
+          However, 
+          <span class="site" 
+            tal:content="view/siteInfo/get_name">this site</span> 
+          has not received a response &#8212; and without one you cannot
+          receive email messages from groups or post messages to groups.
+          With this page, your browser will regularly check 
+          <span class="site" 
+            tal:content="view/siteInfo/get_name">this site</span> 
+          to determine if your address has been verified.
+          Once it is,  the 
+          <samp class="button" 
+            tal:define="action python:[a for a in view.actions][0].label"
+            tal:content="action">Big R</samp> 
+          button will become avaliable, and you should click it.
+        </p>
+        <tal:block repeat="widget python:[[w for w in view.widgets][-1]]">
+          <span tal:replace="structure widget/hidden"/>
+        </tal:block>
+        <div class="buttons" tal:condition="view/availableActions">
+          <span id="checking">
+            Checking verification status
+            <img src="/++resource++anim/wait.gif"/>
+          </span>
+          <tal:block define="action python:[a for a in view.actions][0]">
+            <span class="formelementbutton">
+              <span tal:replace="structure action/render">Button</span>
+            </span>
+          </tal:block>
+        </div><!--buttons-->
+        
+        <div id="thingsToCheck">
+          <h2>Things to Check</h2>
+          <ul>
+            <li><strong>Check your <q>junk</q> or <q>spam</q> folder</strong>
+               for the verification message.</li>
+            <li>Ensure that the address 
+              <code tal:content="view/verificationEmailAddress"
+                class="email">foo@bar.wibble</code> is in 
+              <strong>your address  book.</strong>
+              If it was not, add it, and click the 
+              <samp class="button" 
+                tal:define="action python:[a for a in view.actions][1].label"
+                tal:content="action">Big R</samp> 
+              button to send another email address verification message.</li>
+            <li>Confirm that <strong>your email address is correct.</strong>
+              If it is not, you can correct it in the entry below 
+              and click the 
+              <samp class="button" 
+                tal:define="action python:[a for a in view.actions][1].label"
+                tal:content="action">Big R</samp> 
+              button.</li>
+          </ul>
+
+          <tal:block define="widget python:[w for w in view.widgets][0]">
+            <div class="form-widget" id="widget-abc123" 
+              tal:define="req widget/required;
+                style python:req and 'required' or 'not-required'"
+              tal:attributes="id string:widget-${widget/name};
+                class string:form-widget ${style}">
+              <label for="abc123" title="The hint for the widget"
+                tal:condition="python:widget.type != 'checkbox'"
+                tal:attributes="for widget/name; title widget/hint"
+                tal:content="widget/label">
+                A label
+              </label>
+                          
+              <p class="error" tal:condition="widget/error"
+                tal:content="structure widget/error">
+                Error message
+              </p>
+              
+              <span id="abc123" 
+                tal:replace="structure widget">Widget</span>
+                
+              <label for="abc123" title="The hint for the widget"
+                class="checkboxLabel"
+                tal:condition="python:widget.type == 'checkbox'"
+                tal:attributes="for widget/name; title widget/hint"
+                tal:content="widget/label">
+                A label
+              </label>
+            </div><!--form-widget-->
+          </tal:block>
+          <div id="emailHelp">
+            <p class="message-error" style="display: none;">
+              The email address is not valid.
+              Please enter a valid email address.
+            </p>
+          </div><!--Password Help-->
+          <div class="buttons" tal:condition="view/availableActions">
+            <tal:block define="action python:[a for a in view.actions][1]">
+              <div class="formelementbutton">
+                <span tal:replace="structure action/render">Button</span>
+              </div>
+            </tal:block>
+          </div><!--buttons-->
+        </div><!--thingsToCheck-->
+      </form>
+    </tal:block>
+    <tal:block metal:fill-slot="javascript">
+      <script type="text/javascript"
+        src="/++resource++check_required-20071214.js">&#160;</script>
+      <script type="text/javascript"
+        tal:define="widgets view/widgets; 
+          button string:#form\\.actions\\.change"
+        tal:content="provider:groupserver.RequiredWidgetsJavaScript">
+        alert("I have not been replaced.");
+      </script>
+      <script type="text/javascript"
+        src="/++resource++popup_help-20071218.js">&#160;</script>
+      <script type="text/javascript"
+        src="/++resource++check_email_verified-20080408.js">&#160;</script>
+      <script type="text/javascript"
+        src="/++resource++check_email-20080214.js">&#160;</script>
+      <script type="text/javascript" 
+        tal:define="email python:view.userEmail[0]"
+        tal:content="provider:groupserver.AwaitingVerificationJavaScript">
+        alert("I have not been replaced either.");
+      </script>
+    </tal:block>
+  </body>
+</html>
+

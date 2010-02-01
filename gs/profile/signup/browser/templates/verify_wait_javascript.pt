@@ -1,0 +1,10 @@
+<tal:block>
+  jQuery.noConflict()
+  jQuery(document).ready( function () {
+      GSCheckEmailVerified.init('<tal:block replace="options/view/email"/>',  
+        '#form\\.actions\\.next', '#checking', '#thingsToCheck');
+      GSCheckEmailAddress.init('#form\\.email', 
+        '#form\\.actions\\.send', null, null, '#emailHelp');
+  });
+</tal:block>
+

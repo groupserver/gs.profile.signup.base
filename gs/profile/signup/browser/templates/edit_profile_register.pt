@@ -1,0 +1,120 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  metal:use-macro="context/@@groupserver_site_home_layout/page">
+  <head>
+    <title metal:fill-slot="title">
+      <span tal:replace="string:${view/label}: ${view/siteInfo/get_name}">
+        Edit Profile
+      </span>
+    </title>
+  </head>
+  <body>
+    <tal:block metal:fill-slot="contextnavigation">
+    </tal:block>
+    <tal:block metal:fill-slot="sitenavigation">
+      <div id="sitenavigation">&#160;</div>
+    </tal:block>
+    <tal:block metal:fill-slot="utilitylinks">
+      <div id="utilitylinks">&#160;</div>
+    </tal:block>
+    <div metal:fill-slot="messages" tal:condition="view/status" 
+      class="message-error"
+      tal:define="e view/errors"
+      tal:attributes="class python:e and 'message-error' or 'message-result'">
+      <p class="form-status" tal:content="structure view/status"/>
+      <dl tal:condition="view/errors">
+        <tal:block repeat="widget view/widgets">
+          <tal:block tal:condition="widget/error">
+            <dt tal:content="widget/label">Widget Name</dt>
+            <dd class="error" 
+              tal:content="structure widget/error">Error message</dd>
+          </tal:block>
+        </tal:block>
+      </dl>
+    </div>
+    <tal:block metal:fill-slot="body">
+      <h1 tal:content="view/label">Edit Profile</h1>
+      <p>
+        <strong>Thanks for that!</strong>
+        Your password has been set.
+      </p>
+      <p>
+        You can now change your profile.
+        When you have finished, click the 
+        <samp class="button" 
+          tal:define="action python:[a for a in view.actions][0].label"
+          tal:content="action">Big R</samp> 
+        button.
+        Some profile fields are required (and are marked
+        <span class="required"><label style="display:inline;margin:0px;">like this</label></span>).
+        Required fields must be filled in before you can click the
+        <samp class="button" 
+          tal:define="action python:[a for a in view.actions][0].label"
+          tal:content="action">Big R</samp> 
+        button.
+      </p>
+      <p>
+        Most of your profile properties are only visible to other
+        logged in users of
+        <span class="site" 
+          tal:content="view/siteInfo/get_name">this site</span>,
+        when they visit your profile page.
+        However, if you post to a public group, then your name will be
+        visible to all visitors to that group, even if
+        they are not logged in.
+        You will be able to change all your profile properties later.
+      </p>
+      <div id="privacy" class="disclosureWidget">
+        <p>
+          <a class="disclosureButton" id="privacy-button"
+            href="javascript:showHideDisclosure('privacy')">Your privacy 
+            is important, and will be maintained  according to the 
+            privacy policy of 
+            <span class="site" tal:content="siteName">this site</span>.</a>
+        </p>
+        <div class="disclosureShowHide" style="display: none;">
+          <div id="privacy-content">Loading&#8230;</div>
+        </div><!--disclosureShowHide-->
+      </div><!--privacy-->
+      <form enctype="multipart/form-data"  method="post" action="."
+        tal:attributes="action request/URL" id="edit-profile">
+        <tal:block define="widgets python:[w for w in view.widgets][:-1]">
+          <tal:block replace="structure provider:groupserver.FormWidgets"/>
+        </tal:block>
+        <tal:block repeat="widget python:[[w for w in view.widgets][-1]]">
+          <span tal:replace="structure widget/hidden"/>
+        </tal:block>
+        <div class="buttons" tal:condition="view/availableActions">
+          <tal:block repeat="action view/actions">
+            <div class="formelementbutton">
+              <span tal:replace="structure action/render">Button</span>
+            </div>
+          </tal:block>
+        </div>
+      </form>
+    </tal:block>
+    <tal:block metal:fill-slot="javascript">
+      <script type="text/javascript"
+        src="/++resource++check_required-20071214.js">&#160;</script>
+      <script type="text/javascript"
+        tal:define="widgets view/widgets; 
+          button string:#form\\.actions\\.change"
+        tal:content="provider:groupserver.RequiredWidgetsJavaScript">
+        alert("I have not been replaced.");
+      </script>
+      <script type="text/javascript"
+        src="/++resource++popup_help-20071218.js">&#160;</script>
+      <script type="text/javascript">
+        jQuery(document).ready( function() {
+            GSPopupFormHelp.init('#edit-profile');
+        });
+      </script>
+      <script type="text/javascript" 
+        src="/++resource++wymeditor-20090831/jquery.wymeditor.js">&#160;</script>
+      <script type="text/javascript"
+        src="/++resource++gswym.js">&#160;</script>
+    </tal:block>
+  </body>
+</html>
+
