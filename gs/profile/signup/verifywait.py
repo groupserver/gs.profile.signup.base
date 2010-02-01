@@ -1,9 +1,9 @@
 # coding=utf-8
-from Products.Five.formlib.formbase import PageForm
 from zope.component import createObject
 from zope.formlib import form
+from Products.Five.formlib.formbase import PageForm
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-from Products.XWFCore import getOption
+from Products.XWFCore.XWFUtils import getOption
 from Products.GSProfile.utils import address_exists, \
     send_verification_message
 from interfaces import IGSVerifyWait

@@ -1,5 +1,6 @@
 # coding=utf-8
 from zope.component import createObject
+from zope.formlib import form
 from Products.Five.formlib.formbase import PageForm
 from Products.Five.browser.pagetemplatefile \
     import ZopeTwoPageTemplateFile

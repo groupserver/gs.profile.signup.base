@@ -13,7 +13,7 @@ from Products.GSProfile.emailaddress import NewEmailAddress, \
 from interfaces import IGSRequestRegistration
 import logging
 log = logging.getLogger('GSProfile')
-from profileaudit import *
+from Products.GSProfile.profileaudit import *
 
 class RequestRegistrationForm(PageForm):
     form_fields = form.Fields(IGSRequestRegistration)

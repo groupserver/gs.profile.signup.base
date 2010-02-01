@@ -4,6 +4,7 @@ from zope.contentprovider.interfaces import IContentProvider
 from zope.interface.interface import Interface, Invalid, invariant
 from zope.schema import *
 from Products.GSProfile.interfaces import IGSEmailAddressEntry
+from Products.GSProfile.emailaddress import EmailAddress
 
 class IGSRequestRegistrationMarker(Interface):
     """Marker interface for the request registration page.

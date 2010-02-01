@@ -6,6 +6,7 @@ from Products.Five.formlib.formbase import PageForm
 from Products.CustomUserFolder.userinfo import GSUserInfo
 from Products.GSGroupMember.utils import inform_ptn_coach_of_join
 from Products.GSProfile.set_password import set_password
+from interfaces import IGSSetPasswordRegister
 
 class SetPasswordForm(PageForm):
     form_fields = form.Fields(IGSSetPasswordRegister)
@@ -13,7 +14,7 @@ class SetPasswordForm(PageForm):
     pageTemplateFileName = 'browser/templates/set_password_register.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
     
-     def __init__(self, context, request):
+    def __init__(self, context, request):
         PageForm.__init__(self, context, request)
         self.siteInfo = createObject('groupserver.SiteInfo', context)
         self.userInfo = GSUserInfo(context)
