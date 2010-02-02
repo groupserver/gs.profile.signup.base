@@ -11,7 +11,7 @@ from interfaces import IGSSetPasswordRegister
 class SetPasswordForm(PageForm):
     form_fields = form.Fields(IGSSetPasswordRegister)
     label = u'Set Password'
-    pageTemplateFileName = 'browser/templates/set_password_register.pt'
+    pageTemplateFileName = 'browser/templates/setpassword.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
     
     def __init__(self, context, request):

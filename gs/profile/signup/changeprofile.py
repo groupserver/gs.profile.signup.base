@@ -19,7 +19,7 @@ class ChangeProfileForm(EditProfileForm):
     to join groups.
     """
     label = u'Change Profile'
-    pageTemplateFileName = 'browser/templates/edit_profile_register.pt'
+    pageTemplateFileName = 'browser/templates/changeprofile.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
 
     def __init__(self, context, request):

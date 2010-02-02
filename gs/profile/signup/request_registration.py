@@ -18,7 +18,7 @@ from Products.GSProfile.profileaudit import *
 class RequestRegistrationForm(PageForm):
     form_fields = form.Fields(IGSRequestRegistration)
     label = u'Sign Up'
-    pageTemplateFileName = 'browser/templates/request_register.pt'
+    pageTemplateFileName = 'browser/templates/signup.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
 
     def __init__(self, context, request):

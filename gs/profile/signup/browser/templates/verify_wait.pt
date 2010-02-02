@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
-  metal:use-macro="context/@@groupserver_site_home_layout/page">
+  metal:use-macro="context/@@groupserver_layout/page">
   <head>
     <title metal:fill-slot="title">
       <span tal:replace="string:${view/label}: ${view/userName}: ${view/siteInfo/get_name}">
@@ -25,13 +25,19 @@
         </tal:block>
       </dl>
     </div>
-    <tal:block metal:fill-slot="contextnavigation">
-    </tal:block>
     <tal:block metal:fill-slot="sitenavigation">
       <div id="sitenavigation">&#160;</div>
     </tal:block>
     <tal:block metal:fill-slot="utilitylinks">
       <div id="utilitylinks">&#160;</div>
+    </tal:block>
+    <tal:block metal:fill-slot="contextnavigation">
+      <ul id="progress">
+        <li class="done">Enter email</li>
+        <li class="done">Set password</li>
+        <li class="done">Change profile</li>
+        <li class="current">Verify email</li>
+      </ul>
     </tal:block>
     <tal:block metal:fill-slot="body">
       <form enctype="multipart/form-data"  method="post" action="."

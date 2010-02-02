@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
-  metal:use-macro="context/@@groupserver_site_home_layout/page">
+  metal:use-macro="context/@@groupserver_layout/page">
   <head>
     <title metal:fill-slot="title">
       <span tal:replace="view/label">
@@ -11,6 +11,14 @@
     </title>
   </head>
   <body>
+    <tal:block metal:fill-slot="contextnavigation">
+      <ul id="progress">
+        <li class="current">Enter email</li>
+        <li>Set password</li>
+        <li>Change profile</li>
+        <li>Verify email</li>
+      </ul>
+    </tal:block>
     <tal:block metal:fill-slot="messages">
       <div tal:condition="view/status" 
         class="message-error"
@@ -29,74 +37,67 @@
       </div>
     </tal:block>
     <tal:block metal:fill-slot="body">
-      <form enctype="multipart/form-data"  method="post" action="."
-        id="register.form"
-        tal:attributes="action request/URL"
-        tal:define="siteName view/siteInfo/get_name">
-        
-        <h1 tal:content="view/label">Sign up</h1>
-        
-        <p>You must sign up with
-          <span class="site" tal:content="siteName">this site</span>
-          before you can join groups, post messages, or receive email
-          messages from groups.
-          Enter your email address below, and click the 
-          <samp class="button" 
-            tal:define="action python:[a for a in view.actions][0].label"
-            tal:content="action">Big R</samp> 
-          button, to sign up with 
-          <span class="site" tal:content="siteName">this site</span>.
-          Afterwards, the following will happen.
+      <h1 tal:content="view/label">Sign up</h1>
+      <p id="intro"><strong>Sign up with
+          <span class="site" tal:content="siteName">this site</span></strong>
+        so you can join groups, post messages, and receive email from
+        your groups.
+        Enter your email address below, and click the 
+        <samp class="button" 
+          tal:define="action python:[a for a in view.actions][0].label"
+          tal:content="action">Big R</samp> 
+        button, to sign up with 
+        <span class="site" tal:content="siteName">this site</span>.
+        Afterwards, the following will happen.
+      </p>
+      <ol id="upcoming-tasks">
+        <li>You will be <strong>sent an email message,</strong> to 
+          verify that the address you entered is correct.</li>
+        <li>You will will <strong>set a password.</strong>
+        <li>You will <strong>change your profile.</strong></li>
+        <li>You will <strong>verify your email address.</strong></li>
+      </ol>
+      <p id="future-tasks">Once you have signed up, you will be logged into 
+        <span class="site" tal:content="siteName">this site</span> 
+        &#8212; and you will be able to join groups,
+        post messages, and receive email messages from groups.</p>
+      
+      <div id="tc" class="disclosureWidget">
+        <p>
+          <a class="disclosureButton" id="tc-button"
+            href="javascript:showHideDisclosure('tc')">By signing up
+            with
+            <span class="site" tal:content="siteName">this site</span>,
+            you agree to the acceptable use policy.</a>
         </p>
-        <ol>
-          <li>You will be <strong>sent an email message,</strong> to 
-            verify that the address you entered is correct.</li>
-          <li>You will be able to <strong>fill out your profile,</strong>
-            while waiting for the verification message to arrive in
-            your email inbox.</li>
-          <li>You will <strong>verify your email address.</strong></li>
-          <li>Finally, you will <strong>set a password,</strong> which 
-            you  will use to log in to
-            <span class="site" tal:content="siteName">this site</span>.
-          </li>
-        </ol>
-        
-        <p>Once you have signed up, you will be logged into 
-          <span class="site" tal:content="siteName">this site</span> 
-          &#8212; and you will be able to join groups,
-          post messages, and receive email messages from groups.</p>
-        
-        <div id="tc" class="disclosureWidget">
-          <p>
-            <a class="disclosureButton" id="tc-button"
-              href="javascript:showHideDisclosure('tc')">By signing up
-              with
-              <span class="site" tal:content="siteName">this site</span>,
-              you agree to the acceptable use policy.</a>
-          </p>
-          <div class="disclosureShowHide" style="display: none;">
-            <div id="tc-content">Loading&#8230;</div>
-          </div>
+        <div class="disclosureShowHide" style="display: none;">
+          <div id="tc-content">Loading&#8230;</div>
         </div>
-       
-        <div id="privacy" class="disclosureWidget">
-          <p>
-            <a class="disclosureButton" id="privacy-button"
-              href="javascript:showHideDisclosure('privacy')">Your privacy is
-              important, and will be maintained  according to the privacy
-              policy of 
-              <span class="site" tal:content="siteName">this site</span>.</a>
-          </p>
-          <div class="disclosureShowHide" style="display: none;">
-            <div id="privacy-content">Loading&#8230;</div>
-          </div>
+      </div>
+      
+      <div id="privacy" class="disclosureWidget">
+        <p>
+          <a class="disclosureButton" id="privacy-button"
+            href="javascript:showHideDisclosure('privacy')">Your privacy is
+            important, and will be maintained  according to the privacy
+            policy of 
+            <span class="site" tal:content="siteName">this site</span>.</a>
+        </p>
+        <div class="disclosureShowHide" style="display: none;">
+          <div id="privacy-content">Loading&#8230;</div>
         </div>
-        <tal:block define="widgets python:[[w for w in view.widgets][0]]">
+      </div>
+      <form enctype="multipart/form-data"  method="post" action="."
+        id="register.form" tal:attributes="action request/URL"
+        tal:define="siteName view/siteInfo/get_name">
+
+        <tal:block define="widgets python:[view.widgets['email']]">
           <div tal:replace="structure provider:groupserver.FormWidgets"/>
         </tal:block>
-        <tal:block repeat="widget python:[w for w in view.widgets][1:]">
+        <tal:block repeat="widget python:[view.widgets['groupId'], view.widgets['came_from']]">
           <span tal:replace="structure widget/hidden"/>
         </tal:block>
+        
         <p class="note">
           Before clicking the
           <samp class="button" 
@@ -104,8 +105,8 @@
             tal:content="action">Big R</samp> 
           button,
           <strong>add the contact
-            <span class="vcard" tal:define="sn view/siteInfo/get_name">
-              <abbr tal:attributes="title string:${sn} Verification" 
+            <span class="vcard">
+              <abbr tal:attributes="title string:${siteName} Verification" 
                 title="Verification" class="fn hide">&#160;</abbr>
               <code><a href="#"
                 tal:content="view/verificationEmailAddress"
@@ -174,4 +175,4 @@
     </tal:block>
   </body>
 </html>
-
+  
