@@ -26,23 +26,20 @@ class ChangeProfileForm(EditProfileForm):
         self.siteInfo = createObject('groupserver.SiteInfo', context)
         self.groupsInfo = createObject('groupserver.GroupsInfo', context)
         self.userInfo = IGSUserInfo(context)
+
         interfaceName = '%sRegister' % profile_interface_name(context)
         self.interface = interface = getattr(interfaces,interfaceName)
         enforce_schema(context, interface)
-        print 'Here'
+
         request.form['form.tz'] = self.get_timezone() # Look, a hack!
         self.form_fields = form.Fields(interface, render_context=True)
-        print 'Here 1'
+
         self.form_fields['tz'].custom_widget = select_widget
-        print 'Here 1.1'
         self.form_fields['biography'].custom_widget = wym_editor_widget
-        print 'Here 1.2'
-        assert self.form_fields.has_key('joinable_groups'), \
-            'No joinable_groups in %s' % interfaceName
-        print 'Here 1.3'
+        #assert self.form_fields.has_key('joinable_groups'), \
+        #    'No joinable_groups in %s' % interfaceName
         self.form_fields['joinable_groups'].custom_widget = \
           multi_check_box_widget
-        print 'Here 2'
 
     def get_timezone(self):
         gTz = siteTz = self.siteInfo.get_property('tz', 'UTC')
