@@ -34,9 +34,12 @@ class ChangeProfileForm(EditProfileForm):
         self.form_fields = form.Fields(interface, render_context=True)
         print 'Here 1'
         self.form_fields['tz'].custom_widget = select_widget
+        print 'Here 1.1'
         self.form_fields['biography'].custom_widget = wym_editor_widget
+        print 'Here 1.2'
         assert self.form_fields.has_key('joinable_groups'), \
             'No joinable_groups in %s' % interfaceName
+        print 'Here 1.3'
         self.form_fields['joinable_groups'].custom_widget = \
           multi_check_box_widget
         print 'Here 2'
