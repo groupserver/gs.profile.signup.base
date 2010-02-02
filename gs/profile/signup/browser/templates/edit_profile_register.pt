@@ -40,7 +40,7 @@
         Your password has been set.
       </p>
       <p>
-        You can now change your profile.
+        You can now <strong>change your profile.</strong>
         When you have finished, click the 
         <samp class="button" 
           tal:define="action python:[a for a in view.actions][0].label"

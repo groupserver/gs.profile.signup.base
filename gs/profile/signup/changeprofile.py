@@ -11,6 +11,7 @@ from Products.GSProfile.edit_profile import EditProfileForm,\
 from Products.GSProfile.utils import profile_interface_name, \
     profile_interface, enforce_schema
 from Products.GSProfile import interfaces
+from Products.GSProfile.profileaudit import *
 
 class ChangeProfileForm(EditProfileForm):
     """The Change Profile page used during registration is slightly 
