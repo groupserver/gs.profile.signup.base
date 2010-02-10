@@ -4,9 +4,9 @@
   metal:use-macro="context/@@groupserver_layout/page">
   <head>
     <title metal:fill-slot="title">
-      <span tal:replace="string:${view/label}: ${view/userName}: ${view/siteInfo/get_name}">
-        Awaiting Verification
-      </span>
+      <span tal:replace="view/label"/>:
+      <span tal:replace="view/userInfo/name"/>:
+      <span tal:replace="view/siteInfo/name"/>
     </title>
     <style type="text/css" metal:fill-slot="style">
       #progress li {

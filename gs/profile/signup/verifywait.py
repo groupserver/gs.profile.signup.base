@@ -4,6 +4,7 @@ from zope.formlib import form
 from Products.Five.formlib.formbase import PageForm
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.XWFCore.XWFUtils import getOption
+from Products.CustomUserFolder.interfaces import IGSUserInfo
 from Products.GSProfile.utils import address_exists, \
     send_verification_message
 from interfaces import IGSVerifyWait
@@ -19,7 +20,15 @@ class VerifyWaitForm(PageForm):
     def __init__(self, context, request):
         PageForm.__init__(self, context, request)
         self.siteInfo = createObject('groupserver.SiteInfo', context)
-
+        self.__userInfo = None
+        
+    @property
+    def userInfo(self):
+        if self.__userInfo == None:
+            self.__userInfo = IGSUserInfo(self.context)
+        assert self.__userInfo
+        return self.__userInfo
+        
     @property
     def verificationEmailAddress(self):
         retval = getOption(self.context, 'userVerificationEmail')
@@ -51,14 +60,14 @@ class VerifyWaitForm(PageForm):
     
     def actual_handle_send(self, data):        
         newEmail = data['email']
-        if utils.address_exists(self.context, newEmail):
+        if address_exists(self.context, newEmail):
             if newEmail in self.userEmail:
                 m ='GSVerifyWait: Resending verification message to ' \
                   '<%s> for the user "%s"' % (newEmail, self.context.getId())
                 log.info(m)
                 
                 siteObj = self.siteInfo.siteObj
-                utils.send_verification_message(siteObj, self.context,
+                send_verification_message(siteObj, self.context,
                   newEmail)
                 self.status = u'''Another email address verification
                   message has been sent to
@@ -76,7 +85,7 @@ class VerifyWaitForm(PageForm):
             self.add_new_email(newEmail)
             self.status = u'''Changed your email address from
               <code class="email">%s</code> to
-              <code class="email">%s</code>.''' % (newEmail, oldEmail)
+              <code class="email">%s</code>.''' % (oldEmail, newEmail)
 
     def remove_old_email(self):
         oldEmail = self.userEmail[0]
@@ -93,7 +102,7 @@ class VerifyWaitForm(PageForm):
         self.context.add_emailAddress(email, is_preferred=True)
         
         siteObj = self.siteInfo.siteObj
-        utils.send_verification_message(siteObj, self.context, email)
+        send_verification_message(siteObj, self.context, email)
         assert email in self.context.get_emailAddresses()
         return email
 

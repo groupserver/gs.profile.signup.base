@@ -172,6 +172,14 @@
     <tal:block metal:fill-slot="javascript">
       <script type="text/javascript"
         src="++resource++check_email-20080214.js">&#160;</script>
+      <script type="text/javascript"
+        src="/++resource++check_required-20071214.js">&#160;</script>
+      <script type="text/javascript"
+        tal:define="widgets view/widgets; 
+          button string:#form\\.actions\\.5369676e207570"
+        tal:content="provider:groupserver.RequiredWidgetsJavaScript">
+        alert("I have not been replaced.");
+      </script>
       <script type="text/javascript">
         jQuery.noConflict()
         jQuery(document).ready( function () {

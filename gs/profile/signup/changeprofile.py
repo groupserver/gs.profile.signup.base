@@ -5,6 +5,7 @@ from Products.Five.formlib.formbase import PageForm
 from Products.Five.browser.pagetemplatefile \
     import ZopeTwoPageTemplateFile
 from Products.CustomUserFolder.interfaces import IGSUserInfo
+from Products.GSGroupMember.groupmembership import join_group
 from Products.GSGroupMember.utils import inform_ptn_coach_of_join
 from Products.GSProfile.edit_profile import EditProfileForm,\
     select_widget, wym_editor_widget, multi_check_box_widget
