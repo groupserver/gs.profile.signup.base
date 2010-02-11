@@ -101,7 +101,7 @@ class RequestRegistrationForm(PageForm):
             gid = str(data.get('groupId'))
             if gid == 'None':
               gid = ''
-            uri = '%s?form.joinable_groups:list=%s&form.came_from=%s' %\
+            uri = '%s?form.groupId=%s&form.came_from=%s' %\
               (uri, gid, cf)
             return self.request.RESPONSE.redirect(uri)
 

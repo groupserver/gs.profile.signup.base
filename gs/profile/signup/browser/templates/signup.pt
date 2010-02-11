@@ -4,9 +4,7 @@
   metal:use-macro="context/@@groupserver_layout/page">
   <head>
     <title metal:fill-slot="title">
-      <span tal:replace="view/label">
-        Register
-      </span>:
+      <span tal:replace="view/label">Register</span>:
       <span tal:replace="view/siteInfo/get_name">this site</span>
     </title>
     <style type="text/css" metal:fill-slot="style">
