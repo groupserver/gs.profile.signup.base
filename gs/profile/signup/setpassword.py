@@ -40,6 +40,12 @@ class SetPasswordForm(PageForm):
             (uri, gid, cf)
         return self.request.RESPONSE.redirect(uri)
 
+    def handle_set_action_failure(self, action, data, errors):
+        if len(errors) == 1:
+            self.status = u'<p>There is an error:</p>'
+        else:
+            self.status = u'<p>There are errors:</p>'
+
     @property
     def userEmail(self):
         retval = self.context.get_emailAddresses()

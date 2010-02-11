@@ -100,6 +100,12 @@ class ChangeProfileForm(EditProfileForm):
 
         return self.request.RESPONSE.redirect(uri)
         
+    def handle_set_action_failure(self, action, data, errors):
+        if len(errors) == 1:
+            self.status = u'<p>There is an error:</p>'
+        else:
+            self.status = u'<p>There are errors:</p>'
+        
     def actual_handle_set(self, action, data):
         groupsToJoin = None
         if 'joinable_groups' in data.keys():
