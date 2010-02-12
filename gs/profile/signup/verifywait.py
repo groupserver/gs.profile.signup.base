@@ -22,6 +22,16 @@ class VerifyWaitForm(PageForm):
         self.siteInfo = createObject('groupserver.SiteInfo', context)
         self.__userInfo = None
         
+    def setUpWidgets(self, ignore_request=False):
+        data = {
+          'email':   self.userEmail[0],
+        }
+        self.widgets = form.setUpWidgets(
+            self.form_fields, self.prefix, self.context,
+            self.request, form=self, data=data,
+            ignore_request=ignore_request)
+        assert self.widgets
+
     @property
     def userInfo(self):
         if self.__userInfo == None:
