@@ -154,7 +154,7 @@ None.'''
         changedProfile = email.split('@')[0] != userInfo.name
         verified = emailUser.get_verifiedEmailAddresses() != []
 
-        if not password_set(emailUser):
+        if not password_set(self.context, emailUser):
             # Go to the Set Password page. This is no worse than
             # someone just registering with someone else's email
             # address. (That is, pointless as the address cannot be 
