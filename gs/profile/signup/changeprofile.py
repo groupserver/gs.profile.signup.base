@@ -45,7 +45,7 @@ class ChangeProfileForm(EditProfileForm):
 
     def get_timezone(self):
         if self.request.form.get('form.tz', ''):
-            retval = self.request.form.get['form.tz']
+            retval = self.request.form['form.tz']
         else:
             gTz = siteTz = self.siteInfo.get_property('tz', 'UTC')
             joinableGroups = self.request.form.get('form.joinable_groups',[])
@@ -117,7 +117,6 @@ class ChangeProfileForm(EditProfileForm):
             groupsToJoin = data.pop('joinable_groups')
 
         self.form_fields = self.form_fields.omit('joinable_groups')
-        print '======== Timezone: %s' % data['tz']
         self.set_data(data)
 
         if groupsToJoin:
