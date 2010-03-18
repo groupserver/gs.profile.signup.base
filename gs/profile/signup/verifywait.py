@@ -3,7 +3,7 @@ from zope.component import createObject
 from zope.formlib import form
 from Products.Five.formlib.formbase import PageForm
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-from Products.XWFCore.XWFUtils import getOption
+from Products.XWFCore.XWFUtils import get_support_email
 from Products.CustomUserFolder.interfaces import IGSUserInfo
 from Products.GSProfile.utils import address_exists, \
     send_verification_message
@@ -41,7 +41,7 @@ class VerifyWaitForm(PageForm):
         
     @property
     def verificationEmailAddress(self):
-        retval = getOption(self.context, 'userVerificationEmail')
+        retval = get_support_email(self.context, self.siteInfo.id)
         assert type(retval) == str
         assert '@' in retval
         return retval
