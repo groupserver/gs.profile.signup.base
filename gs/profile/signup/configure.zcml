@@ -50,6 +50,6 @@
     permission="zope2.ManageProperties" />
   <browser:resource name="check_email_verified-20080408.js"
     file="browser/javascript/check_email_verified.js"
-    permission="zope2.View" />
+    permission="zope2.Public" />
 </configure>
 
