@@ -1,8 +1,12 @@
 # coding=utf-8
+try:
+    from five.formlib.formbase import PageForm
+except ImportError:
+    from Products.Five.formlib.formbase import PageForm
+
 from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-from Products.Five.formlib.formbase import PageForm
 from Products.CustomUserFolder.userinfo import GSUserInfo
 from Products.GSGroupMember.utils import inform_ptn_coach_of_join
 from Products.GSProfile.set_password import set_password
