@@ -38,7 +38,7 @@ class IGSRequestRegistration(IGSEmailAddressEntry):
       required=False)
 
     came_from = URI(title=u'Came From',
-      description=u'The page to return to after retistration has finished',
+      description=u'The page to return to after registration has finished',
       required=False)
       
 class IGSSetPasswordRegister(Interface):
