@@ -1,8 +1,15 @@
 # coding=utf-8
 from zope.component import createObject
 from zope.formlib import form
-from Products.Five.formlib.formbase import PageForm
-from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
+try:
+    from five.formlib.formbase import PageForm
+except ImportError:
+    from Products.Five.formlib.formbase import PageForm
+from Products.Five.browser.pagetemplatefile import \
+    ZopeTwoPageTemplateFile
+from gs.profile.invite.queries import InvitationQuery
+from gs.group.member.join.interfaces import IGSJoiningUser
+from gs.profile.invite.invitation import Invitation
 from Products.XWFCore.XWFUtils import get_support_email
 from Products.CustomUserFolder.interfaces import IGSUserInfo
 from Products.GSProfile.utils import address_exists, \
@@ -35,7 +42,7 @@ class VerifyWaitForm(PageForm):
     @property
     def userInfo(self):
         if self.__userInfo == None:
-            self.__userInfo = IGSUserInfo(self.context)
+            self.__userInfo = IGSUserInfo(self.context.aq_self)
         assert self.__userInfo
         return self.__userInfo
         
@@ -48,6 +55,9 @@ class VerifyWaitForm(PageForm):
 
     @form.action(label=u'Next', failure='handle_set_action_failure')
     def handle_set(self, action, data):
+        
+        self.join_groups()
+    
         uri = str(data.get('came_from'))
         if uri == 'None':
             uri = '/'
@@ -72,6 +82,7 @@ class VerifyWaitForm(PageForm):
         newEmail = data['email']
         if address_exists(self.context, newEmail):
             if newEmail in self.userEmail:
+                # TODO: Audit
                 m ='GSVerifyWait: Resending verification message to ' \
                   '<%s> for the user "%s"' % (newEmail, self.context.getId())
                 log.info(m)
@@ -83,6 +94,7 @@ class VerifyWaitForm(PageForm):
                   message has been sent to
                   <code class="email">%s</code>.''' % newEmail
             else:
+                # TODO: Audit
                 m ='GSVerifyWait: Attempt to use another email address ' \
                   '<%s> by the user "%s"' % (newEmail, self.context.getId())
                 log.info(m)
@@ -99,6 +111,7 @@ class VerifyWaitForm(PageForm):
 
     def remove_old_email(self):
         oldEmail = self.userEmail[0]
+        # TODO: Audit
         log.info('GSVerifyWait: Removing <%s> from the user "%s"' % \
           (oldEmail, self.context.getId()))
         self.context.remove_emailAddressVerification(oldEmail)
@@ -107,6 +120,7 @@ class VerifyWaitForm(PageForm):
         return oldEmail
         
     def add_new_email(self, email):
+        # TODO: Audit
         log.info('GSVerifyWait: Adding <%s> to the user "%s"' % \
           (email, self.context.getId()))
         self.context.add_emailAddress(email, is_preferred=True)
@@ -121,4 +135,31 @@ class VerifyWaitForm(PageForm):
         retval = self.context.get_emailAddresses()
         assert retval
         return retval
+
+    def join_groups(self):
+        # --=mpj17=-- This may seem a bit mad, but there is method to my
+        #   madness. We have to join the groups *after* verifying the
+        #   email address, otherwise the new group member will never get
+        #   the Welcome email from the group
+        #   <https://projects.iopen.net/groupserver/ticket/303>. 
+        # The way I record groups that the new member is about to join
+        #   is with *invitations*. The user indicates that he or she
+        #   wants to join a group on the previous Change Profile page.
+        #   There I create a heap of invitations: from the user to the
+        #   user. Here I pick the invitations up and actually join the
+        #   groups, sending the Welcome message as a side effect.
+        da = self.context.zsqlalchemy
+        assert da, 'No data adaptor found'
+        query = InvitationQuery(da)
+        # The user should only have invitations that he or she has
+        #   issued, as the user is brand new. *Should*  being the 
+        #   right word here. I hope this does not bite me\ldots
+        invs = query.get_current_invitiations_for_site(self.siteInfo.id, 
+                self.userInfo.id)
+        invitations = [Invitation(self.context.aq_self, i['invitation_id']) 
+                        for i in invs]
+        joiningUser = IGSJoiningUser(self.userInfo)
+        for invite in invitations:
+            joiningUser.join(invite.groupInfo)
+            invite.accept()
 

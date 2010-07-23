@@ -1,10 +1,15 @@
 # coding=utf-8
 from zope.component import createObject
 from zope.formlib import form
-from Products.Five.formlib.formbase import PageForm
+try:
+    from five.formlib.formbase import PageForm
+except ImportError:
+    from Products.Five.formlib.formbase import PageForm
 from Products.Five.browser.pagetemplatefile \
     import ZopeTwoPageTemplateFile
 from Products.CustomUserFolder.interfaces import IGSUserInfo
+from gs.group.member.join.interfaces import IGSJoiningUser
+from gs.group.member.invite.inviter import Inviter
 from Products.GSGroupMember.groupmembership import join_group
 from Products.GSGroupMember.utils import inform_ptn_coach_of_join
 from Products.GSProfile.edit_profile import EditProfileForm,\
@@ -25,9 +30,8 @@ class ChangeProfileForm(EditProfileForm):
 
     def __init__(self, context, request):
         PageForm.__init__(self, context, request)
-        self.siteInfo = createObject('groupserver.SiteInfo', context)
-        self.groupsInfo = createObject('groupserver.GroupsInfo', context)
-        self.userInfo = IGSUserInfo(context)
+        self.siteInfo = createObject('groupserver.SiteInfo', context.aq_self)
+        self.userInfo = IGSUserInfo(context.aq_self)
 
         interfaceName = '%sRegister' % profile_interface_name(context)
         self.interface = interface = getattr(interfaces,interfaceName)
@@ -92,7 +96,7 @@ class ChangeProfileForm(EditProfileForm):
         cf = str(data.pop('came_from'))
         if cf == 'None':
           cf = ''
-        if self.user_has_verified_email():
+        if self.user_has_verified_email:
             uri = str(data.get('came_from'))
             if uri == 'None':
                 uri = '/'
@@ -119,32 +123,36 @@ class ChangeProfileForm(EditProfileForm):
         self.form_fields = self.form_fields.omit('joinable_groups')
         self.set_data(data)
 
-        if groupsToJoin:
+        if groupsToJoin and self.user_has_verified_email:
             self.join_groups(groupsToJoin)
-        
+        elif groupsToJoin:
+            self.invite_groups(groupsToJoin)
+            
+    @property
     def user_has_verified_email(self):
         email = self.context.get_emailAddresses()[0]
         retval = self.context.emailAddress_isVerified(email)
         return retval
 
     def join_groups(self, groupsToJoin):
-        ui = IGSUserInfo(self.context)
-        joinableGroups = \
-            self.groupsInfo.get_joinable_group_ids_for_user(self.context)
-
+        joiningUser = IGSJoiningUser(self.userInfo)
         for groupId in groupsToJoin:
-            assert groupId in joinableGroups, \
-              '%s not a joinable group' % groupId
             groupInfo = createObject('groupserver.GroupInfo', 
-                                      self.groupsInfo.groupsObj,
-                                      groupId)
-            
-            join_group(self.context, groupInfo)
+                                      self.context.aq_self, groupId)
+            joiningUser.join(groupInfo)
 
-            ptnCoachId = groupInfo.get_property('ptn_coach_id', '')
-            if ptnCoachId:
-                ptnCoachInfo = createObject('groupserver.UserFromId', 
-                                            self.context, ptnCoachId)
-                inform_ptn_coach_of_join(ptnCoachInfo, self.userInfo,
-                                         groupInfo)
+    def invite_groups(self, groupsToJoin):
+        # --=mpj17=-- See the verifywait.VerifyWaitForm.join_groups
+        #   method for the reason we do this.
+        initial = True
+        for groupId in groupsToJoin:
+            groupInfo = createObject('groupserver.GroupInfo', 
+                            self.context.aq_self, groupId)
+            # TODO: Create an inviter that is not so clunky. See
+            #   IGSJoiningUser for a better pattern.
+            inviter = Inviter(self.context.aq_self, self.request, 
+                                self.userInfo, self.userInfo, 
+                                self.siteInfo, groupInfo)
+            inviter.create_invitation({}, initial)
+            initial = False
 
