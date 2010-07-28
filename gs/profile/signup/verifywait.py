@@ -7,7 +7,7 @@ except ImportError:
     from Products.Five.formlib.formbase import PageForm
 from Products.Five.browser.pagetemplatefile import \
     ZopeTwoPageTemplateFile
-from gs.profile.invite.queries import InvitationQuery
+from gs.group.member.invite.queries import InvitationQuery
 from gs.group.member.join.interfaces import IGSJoiningUser
 from gs.profile.invite.invitation import Invitation
 from Products.XWFCore.XWFUtils import get_support_email
