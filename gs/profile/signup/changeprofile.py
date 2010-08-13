@@ -172,7 +172,7 @@ class ChangeProfileForm(EditProfileForm):
         joiningUser = IGSJoiningUser(self.userInfo)
         for groupId in groupsToJoin:
             groupInfo = createObject('groupserver.GroupInfo', 
-                                      self.context.aq_self, groupId)
+                                      self.ctx, groupId)
             joiningUser.join(groupInfo)
 
     def invite_groups(self, groupsToJoin):
@@ -181,10 +181,10 @@ class ChangeProfileForm(EditProfileForm):
         initial = True
         for groupId in groupsToJoin:
             groupInfo = createObject('groupserver.GroupInfo', 
-                            self.context.aq_self, groupId)
+                            self.ctx, groupId)
             # TODO: Create an inviter that is not so clunky. See
             #   IGSJoiningUser for a better pattern.
-            inviter = Inviter(self.context.aq_self, self.request, 
+            inviter = Inviter(self.ctx, self.request, 
                                 self.userInfo, self.userInfo, 
                                 self.siteInfo, groupInfo)
             inviter.create_invitation({}, initial)
