@@ -33,6 +33,8 @@ class ChangeProfileForm(EditProfileForm):
 
         interfaceName = '%sRegister' % profile_interface_name(context)
         self.interface = interface = getattr(interfaces, interfaceName)
+        enforce_schema(context, interface)
+
         self.__formFields = None
         
     @property
@@ -126,7 +128,6 @@ class ChangeProfileForm(EditProfileForm):
         if 'joinable_groups' in data.keys():
             groupsToJoin = data.pop('joinable_groups')
 
-        enforce_schema(self.context, self.interface)
         fields = self.form_fields.omit('joinable_groups')
         for field in fields:
             field.interface = self.interface            
