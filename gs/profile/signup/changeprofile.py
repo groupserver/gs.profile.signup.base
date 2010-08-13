@@ -10,8 +10,6 @@ from Products.Five.browser.pagetemplatefile \
 from Products.CustomUserFolder.interfaces import IGSUserInfo
 from gs.group.member.join.interfaces import IGSJoiningUser
 from gs.group.member.invite.inviter import Inviter
-from Products.GSGroupMember.groupmembership import join_group
-from Products.GSGroupMember.utils import inform_ptn_coach_of_join
 from Products.GSProfile.edit_profile import EditProfileForm,\
     select_widget, wym_editor_widget, multi_check_box_widget
 from Products.GSProfile.utils import profile_interface_name, \
@@ -34,18 +32,27 @@ class ChangeProfileForm(EditProfileForm):
         self.userInfo = IGSUserInfo(context.aq_self)
 
         interfaceName = '%sRegister' % profile_interface_name(context)
-        self.interface = interface = getattr(interfaces,interfaceName)
-        enforce_schema(context, interface)
+        self.interface = interface = getattr(interfaces, interfaceName)
+        self.__formFields = None
         
-        request.form['form.tz'] = self.get_timezone() # Look, a hack!
-        self.form_fields = form.Fields(interface, render_context=True)
-
-        self.form_fields['tz'].custom_widget = select_widget
-        self.form_fields['biography'].custom_widget = wym_editor_widget
-        #assert self.form_fields.has_key('joinable_groups'), \
-        #    'No joinable_groups in %s' % interfaceName
-        self.form_fields['joinable_groups'].custom_widget = \
-          multi_check_box_widget
+    @property
+    def form_fields(self):
+        if self.__formFields == None:
+            self.__formFields = form.Fields(self.interface, 
+                                    render_context=True)
+            self.__formFields['tz'].custom_widget = select_widget
+            self.__formFields['biography'].custom_widget = \
+                wym_editor_widget
+            self.__formFields['joinable_groups'].custom_widget = \
+                multi_check_box_widget
+        return self.__formFields
+        
+    def setUpWidgets(self, ignore_request=False):
+        data = {'tz': self.get_timezone()}
+        self.widgets = form.setUpWidgets(
+            self.form_fields, self.prefix, self.context,
+            self.request, form=self, data=data,
+            ignore_request=ignore_request)
 
     def get_timezone(self):
         if self.request.form.get('form.tz', ''):
@@ -117,11 +124,13 @@ class ChangeProfileForm(EditProfileForm):
     def actual_handle_set(self, action, data):
         groupsToJoin = None
         if 'joinable_groups' in data.keys():
-            # --=mpj17=-- Site member?
             groupsToJoin = data.pop('joinable_groups')
 
-        self.form_fields = self.form_fields.omit('joinable_groups')
-        self.set_data(data)
+        enforce_schema(self.context, self.interface)
+        fields = self.form_fields.omit('joinable_groups')
+        for field in fields:
+            field.interface = self.interface            
+        changed = form.applyChanges(self.context, fields, data)
 
         if groupsToJoin and self.user_has_verified_email:
             self.join_groups(groupsToJoin)

@@ -10,7 +10,8 @@ from Products.Five.browser.pagetemplatefile import \
 from gs.group.member.invite.queries import InvitationQuery
 from gs.group.member.join.interfaces import IGSJoiningUser
 from gs.profile.invite.invitation import Invitation
-from Products.XWFCore.XWFUtils import get_support_email
+from Products.XWFCore.XWFUtils import get_support_email,\
+    get_the_actual_instance_from_zope
 from Products.CustomUserFolder.interfaces import IGSUserInfo
 from Products.GSProfile.utils import address_exists, \
     send_verification_message
@@ -38,11 +39,15 @@ class VerifyWaitForm(PageForm):
             self.request, form=self, data=data,
             ignore_request=ignore_request)
         assert self.widgets
-
+    
+    @property
+    def ctx(self):
+        return get_the_actual_instance_from_zope(self.context)
+        
     @property
     def userInfo(self):
         if self.__userInfo == None:
-            self.__userInfo = IGSUserInfo(self.context.aq_self)
+            self.__userInfo = IGSUserInfo(self.ctx)
         assert self.__userInfo
         return self.__userInfo
         
@@ -156,7 +161,7 @@ class VerifyWaitForm(PageForm):
         #   right word here. I hope this does not bite me\ldots
         invs = query.get_current_invitiations_for_site(self.siteInfo.id, 
                 self.userInfo.id)
-        invitations = [Invitation(self.context.aq_self, i['invitation_id']) 
+        invitations = [Invitation(self.ctx, i['invitation_id']) 
                         for i in invs]
         joiningUser = IGSJoiningUser(self.userInfo)
         for invite in invitations:
