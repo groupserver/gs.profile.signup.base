@@ -8,14 +8,15 @@ except ImportError:
 from Products.Five.browser.pagetemplatefile \
     import ZopeTwoPageTemplateFile
 from Products.CustomUserFolder.interfaces import IGSUserInfo
-from gs.group.member.join.interfaces import IGSJoiningUser
-from gs.group.member.invite.inviter import Inviter
+from Products.XWFCore.XWFUtils import get_the_actual_instance_from_zope
+from Products.GSProfile import interfaces
+from Products.GSProfile.profileaudit import *
 from Products.GSProfile.edit_profile import EditProfileForm,\
     select_widget, wym_editor_widget, multi_check_box_widget
 from Products.GSProfile.utils import profile_interface_name, \
     profile_interface, enforce_schema
-from Products.GSProfile import interfaces
-from Products.GSProfile.profileaudit import *
+from gs.group.member.join.interfaces import IGSJoiningUser
+from gs.group.member.invite.inviter import Inviter
 
 class ChangeProfileForm(EditProfileForm):
     """The Change Profile page used during registration is slightly 
@@ -28,14 +29,11 @@ class ChangeProfileForm(EditProfileForm):
 
     def __init__(self, context, request):
         PageForm.__init__(self, context, request)
-        self.siteInfo = createObject('groupserver.SiteInfo', context.aq_self)
-        self.userInfo = IGSUserInfo(context.aq_self)
-
         interfaceName = '%sRegister' % profile_interface_name(context)
         self.interface = interface = getattr(interfaces, interfaceName)
         enforce_schema(context, interface)
 
-        self.__formFields = None
+        self.__formFields = self.__userInfo = self.__siteInfo = None
         
     @property
     def form_fields(self):
@@ -90,7 +88,33 @@ class ChangeProfileForm(EditProfileForm):
             retval = gTz
         assert retval
         return retval
-        
+
+    @property
+    def siteInfo(self):
+        if self.__siteInfo == None:
+            self.__siteInfo = createObject('groupserver.SiteInfo', 
+                                self.ctx)
+        assert self.__siteInfo
+        return self.__siteInfo
+
+    @property
+    def ctx(self):
+        return get_the_actual_instance_from_zope(self.context)
+
+    @property
+    def groupsInfo(self):
+        if self.__groupsInfo == None:
+            self.__groupsInfo = createObject('groupserver.GroupsInfo', 
+                self.ctx)
+        return self.__groupsInfo
+
+    @property
+    def userInfo(self):
+        if self.__userInfo == None:
+            self.__userInfo = IGSUserInfo(self.ctx)
+        assert self.__userInfo
+        return self.__userInfo
+                
     @property
     def userEmail(self):
         retval = self.context.get_emailAddresses()
