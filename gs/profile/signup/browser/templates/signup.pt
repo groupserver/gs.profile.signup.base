@@ -198,6 +198,7 @@
                 var uri = "/policies/aup/ #aup";
                 jQuery("#tc-content").load(uri);
             });
+            jQuery('#form\\.email').focus();
         });
       </script>
     </tal:block>

@@ -136,7 +136,7 @@
       <script type="text/javascript">
         jQuery(document).ready( function() {
             GSPopupFormHelp.init('#edit-profile');
-            jQuery('#form\\fn').focus();
+            jQuery('#form\\.fn').focus();
         });
       </script>
       <script type="text/javascript" 
