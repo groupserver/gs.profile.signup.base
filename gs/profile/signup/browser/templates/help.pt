@@ -1,0 +1,88 @@
+<div id="gs-profile-signup" class="section">
+  <h2>Sign Up</h2>
+  <p>
+    You must sign up in order to post to a group or receive email when
+    someone posts to a group.
+    Signing up is a four-step process. 
+  </p>
+  <ol>
+    <li><a href="#gs-profile-signup-email">Enter an email address</a></li>
+    <li><a href="#gs-profile-signup-password">Set a password</a></li>
+    <li><a href="#gs-profile-signup-profile">Change your profile</a></li>
+    <li><a href="#gs-profile-signup-verify">Verify your email
+      address</a></li>
+  </ol>
+  <div id="gs-profile-signup-email" class="section">
+    <h3>Enter Email</h3>
+    <ol>
+      <li>Click the <samp class="button">Sign up</samp> button.
+        An email message will be sent to you, verifying that you control
+        the address you entered.
+        You will be taken to the 
+        <a href="#gs-profile-signup-password">Set Password</a> page.</li>
+    </ol>
+  </div><!--gs-profile-signup-email-->
+  <div id="gs-profile-signup-password" class="section">
+    <h3>Set Password</h3>
+  </div><!--gs-profile-signup-password-->
+  <div id="gs-profile-signup-profile" class="section">
+    <h3>Change Profile</h3>    
+  </div><!--gs-profile-signup-profile-->
+  <div id="gs-profile-signup-verify" class="section">
+    <h3>Verify Email</h3>
+    <p>
+      To verify your email address
+    </p>
+    <ol>
+      <li>Check your email. 
+        It should contain a message asking you to verify the
+        address.
+        If it does not go through the procedures in 
+        <a href="#gs-profile-signup-verify-trouble">Trouble Shooting</a>
+        below.</li>
+      <li>Click the link in the email. 
+        You will be taken to the <cite class="page">Address 
+          Verified</cite> page.</li>
+      <li>Close the <cite class="page">Address Verified</cite> page.</li>
+      <li>Find the window showing the 
+        <cite class="page">Awaiting Verification</cite> page.
+        The <samp class="button">Finish</samp> button on the page will
+        be available.</li>
+      <li>
+        Click on the <samp class="button">Finish</samp> button to finish
+        sign up.
+        You will be taken to&#8230;
+      </li>
+    </ol>
+    <div id="gs-profile-signup-verify-trouble" class="section">
+      <h4>Trouble Shooting</h4>
+      <p>
+        If your email does not contain a message asking you to verify
+        your address carry out the following tasks. 
+      </p>
+      <ol>
+        <li id="gs-profile-signup-verify-trouble-junk">Check the
+          <samp>Junk</samp> folder in your email to see if the message
+          is there.
+          If it is then you should go carry out steps 2&#8213;5 in the 
+          <a href="gs-profile-signup-verify">Verify Email</a> section 
+          above.</li><!--gs-profile-signup-verify-trouble-junk-->
+        <li id="gs-profile-signup-verify-trouble-correct">Check that
+          your email address is correct.
+          If the address is incorrect
+          <ol>
+            <li>Enter a new address in the
+              <samp class="entry">Email Address</samp> entry.</li>
+            <li>Click the
+              <samp class="entry">Send</samp> button.
+              A new verification email will be sent to you.</li>
+            <li>Carry out the steps in the
+              <a href="gs-profile-signup-verify">Verify Email</a> section 
+              above.</li>
+          </ol>
+        </li><!--gs-profile-signup-verify-trouble-correct-->
+      </ol>
+    </div><!--gs-profile-signup-verify-trouble-->
+  </div><!--gs-profile-signup-verify-->
+</div><!--gs-profile-signup-->
+
