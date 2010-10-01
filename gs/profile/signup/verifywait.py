@@ -58,7 +58,7 @@ class VerifyWaitForm(PageForm):
         assert '@' in retval
         return retval
 
-    @form.action(label=u'Next', failure='handle_set_action_failure')
+    @form.action(label=u'Finish', failure='handle_set_action_failure')
     def handle_set(self, action, data):
         
         self.join_groups()

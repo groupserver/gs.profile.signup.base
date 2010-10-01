@@ -15,7 +15,7 @@ GSCheckEmailVerified = function () {
     var UNVERIFIED_MSG = 'The email address is '+
       '<strong>not verified.</strong>';
     var VERIFIED_MSG = 'The email address is <strong>verified.</strong> ' +
-      'Click <samp class="button">Next</samp> to go to the next page.';
+      'Click the <samp class="button">Finish</samp> button.';
     // Private methods
 
     // Public methods and properties. The "checkServer" and "checkReturn"

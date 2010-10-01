@@ -67,27 +67,18 @@
         
         <h1 tal:content="view/label">Awaiting Verification</h1>
         <p>
-          Your email address must be verified before you can use it with
-          <span class="site" 
-            tal:content="view/siteInfo/get_name">this site</span>.
-          A message has been sent to
+          An email message has been sent to
           <code class="email" 
             tal:content="python:view.userEmail[0]">your@email.address</code>
-          to verify that you control the address.
-          However, 
-          <span class="site" 
-            tal:content="view/siteInfo/get_name">this site</span> 
-          has not received a response &#8212; and without one you cannot
-          receive email messages from groups or post messages to groups.
-          With this page, your browser will regularly check 
-          <span class="site" 
-            tal:content="view/siteInfo/get_name">this site</span> 
-          to determine if your address has been verified.
-          Once it is,  the 
+          to check that the address works.
+          When you receive the message follow the instructions in it to
+          verify the address.
+          Once it is the 
           <samp class="button" 
             tal:define="action python:[a for a in view.actions][0].label"
             tal:content="action">Big R</samp> 
-          button will become avaliable, and you should click it.
+          button will become available.
+          Click it to finish sign up.
         </p>
         <tal:block repeat="widget python:[[w for w in view.widgets][-1]]">
           <span tal:replace="structure widget/hidden"/>
@@ -103,30 +94,30 @@
             </span>
           </tal:block>
         </div><!--buttons-->
-        
         <div id="thingsToCheck">
           <h2>Things to Check</h2>
           <ul>
-            <li><strong>Check your <q>junk</q> or <q>spam</q> folder</strong>
-               for the verification message.</li>
-            <li>Ensure that the address 
-              <code tal:content="view/verificationEmailAddress"
-                class="email">foo@bar.wibble</code> is in 
-              <strong>your address  book.</strong>
-              If it was not, add it, and click the 
-              <samp class="button" 
-                tal:define="action python:[a for a in view.actions][1].label"
-                tal:content="action">Big R</samp> 
-              button to send another email address verification message.</li>
-            <li>Confirm that <strong>your email address is correct.</strong>
-              If it is not, you can correct it in the entry below 
-              and click the 
+            <li><strong>Check your email</strong> for the verification 
+              message.
+              It may be in the <samp>Junk</samp> or <samp>Spam</samp>
+              folders.</li>
+            <li>Check that <strong>your address is
+                correct.</strong>
+              You can correct it in the entry below and click the 
               <samp class="button" 
                 tal:define="action python:[a for a in view.actions][1].label"
                 tal:content="action">Big R</samp> 
               button.</li>
+            <li>Add 
+              <code tal:content="view/verificationEmailAddress"
+                class="email">foo@bar.wibble</code> to
+              <strong>your address book.</strong>
+              Then click the 
+              <samp class="button" 
+                tal:define="action python:[a for a in view.actions][1].label"
+                tal:content="action">Big R</samp> 
+              button to send another verification message.</li>
           </ul>
-
           <tal:block define="widget python:[w for w in view.widgets][0]">
             <div class="form-widget" id="widget-abc123" 
               tal:define="req widget/required;
