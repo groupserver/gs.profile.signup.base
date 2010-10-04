@@ -67,18 +67,16 @@
         
         <h1 tal:content="view/label">Awaiting Verification</h1>
         <p>
-          An email message has been sent to
+          An email has been sent to
           <code class="email" 
             tal:content="python:view.userEmail[0]">your@email.address</code>
-          to check that the address works.
-          When you receive the message follow the instructions in it to
-          verify the address.
-          Once it is the 
+          to check that it works.
+          When you receive the email, follow the instructions in it, 
+          then click the
           <samp class="button" 
             tal:define="action python:[a for a in view.actions][0].label"
             tal:content="action">Big R</samp> 
-          button will become available.
-          Click it to finish sign up.
+          button below to finish sign up.
         </p>
         <tal:block repeat="widget python:[[w for w in view.widgets][-1]]">
           <span tal:replace="structure widget/hidden"/>
@@ -95,12 +93,8 @@
           </tal:block>
         </div><!--buttons-->
         <div id="thingsToCheck">
-          <h2>Things to Check</h2>
+          <h2>Haven't got the Email?</h2>
           <ul>
-            <li><strong>Check your email</strong> for the verification 
-              message.
-              It may be in the <samp>Junk</samp> or <samp>Spam</samp>
-              folders.</li>
             <li>Check that <strong>your address is
                 correct.</strong>
               You can correct it in the entry below and click the 
