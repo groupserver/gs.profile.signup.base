@@ -5,6 +5,7 @@ from zope.interface.interface import Interface, Invalid, invariant
 from zope.schema import *
 from Products.GSProfile.interfaces import IGSEmailAddressEntry
 from Products.GSProfile.emailaddress import EmailAddress
+from gs.profile.password.interfaces import ISetPassword
 
 class IGSRequestRegistrationMarker(Interface):
     """Marker interface for the request registration page.
@@ -41,14 +42,7 @@ class IGSRequestRegistration(IGSEmailAddressEntry):
       description=u'The page to return to after registration has finished',
       required=False)
       
-class IGSSetPasswordRegister(Interface):
-    password1 = TextLine(title=u'Password',
-        description=u'Your new password. For security, your password '\
-          u'should contain a mixture of letters and numbers, and '\
-          u'must be over four letters long.',
-        required=True,
-        min_length=4)
-
+class IGSSetPasswordRegister(ISetPassword):
     groupId = GroupID(title=u'Group Identifier',
       description=u'The identifier for the group that you '
         u'wish to join.',

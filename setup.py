@@ -34,8 +34,10 @@ setup(name='gs.profile.signup',
     install_requires=[
         'setuptools',
         'Products.GSProfile',
+        'gs.content.form',
         'gs.group.member.join',
         'gs.group.member.invite',
+        'gs.profile.password',
         # -*- Extra requirements: -*-
     ],
     entry_points="""

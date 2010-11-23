@@ -1,26 +1,21 @@
 # coding=utf-8
-try:
-    from five.formlib.formbase import PageForm
-except ImportError:
-    from Products.Five.formlib.formbase import PageForm
-
 from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.CustomUserFolder.userinfo import GSUserInfo
 from Products.GSGroupMember.utils import inform_ptn_coach_of_join
-from Products.GSProfile.set_password import set_password
+from gs.content.form.form import SiteForm
+from gs.profile.password.interfaces import IGSPasswordUser
 from interfaces import IGSSetPasswordRegister
 
-class SetPasswordForm(PageForm):
+class SetPasswordForm(SiteForm):
     form_fields = form.Fields(IGSSetPasswordRegister)
     label = u'Set Password'
     pageTemplateFileName = 'browser/templates/setpassword.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
     
     def __init__(self, context, request):
-        PageForm.__init__(self, context, request)
-        self.siteInfo = createObject('groupserver.SiteInfo', context)
+        SiteForm.__init__(self, context, request)
         self.userInfo = GSUserInfo(context)
                
     @form.action(label=u'Set', failure='handle_set_action_failure')
@@ -30,7 +25,8 @@ class SetPasswordForm(PageForm):
         assert action
         assert data
 
-        set_password(self.context, data['password1'])
+        pu = IGSPasswordUser(self.userInfo)
+        pu.set_password(data['password1'])
 
         userInfo = createObject('groupserver.LoggedInUser', self.context)
         uri = '%s/registration_profile.html' % userInfo.url
