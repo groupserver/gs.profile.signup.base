@@ -19,11 +19,22 @@
         An email message will be sent to you, verifying that you control
         the address you entered.
         You will be taken to the 
-        <a href="#gs-profile-signup-password">Set Password</a> page.</li>
+        <a href="#gs-profile-signup-password"><cite class="page">Set
+            Password</cite></a> 
+        page.</li>
     </ol>
   </div><!--gs-profile-signup-email-->
   <div id="gs-profile-signup-password" class="section">
     <h3>Set Password</h3>
+    <ol>
+      <li>Enter a password in the 
+        <cite class="entry">Password</cite> entry.</li>
+      <li>Click the <cite class="button">Set</cite> button.
+        You will be taken to the 
+        <a href="gs-profile-signup-profile"><cite class="page">Change
+            Profile</cite></a> 
+        page.</li>
+    </ol>
   </div><!--gs-profile-signup-password-->
   <div id="gs-profile-signup-profile" class="section">
     <h3>Change Profile</h3>    
