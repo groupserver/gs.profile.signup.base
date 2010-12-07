@@ -8,27 +8,6 @@
       Sign Up:
       <span tal:replace="view/siteInfo/get_name"/>
     </title>
-    <style type="text/css" metal:fill-slot="style">
-      #progress li {
-        list-style: none;
-        padding-left: 2.08em;
-      }
-      #progress .done:before {
-        content: "\2713 "; /*A check box*/
-      }
-      #progress .current {
-        font-weight: bold;
-      }
-      #progress .current:before {
-        content: "\2023 "; /*A triangle*/
-      }
-      #progress .done {
-        padding-left: 1.39em;
-      }
-      #progress .current {
-        padding-left: 0.69px;
-      }
-    </style>
   </head>
   <body>
     <tal:block metal:fill-slot="sitenavigation">
@@ -39,7 +18,7 @@
     </tal:block>
     <div id="contextnav" metal:fill-slot="contextnavigation">
       <p class="label">Sign Up</p>
-      <ul id="progress">
+      <ul id="signup-progress">
         <li class="done">Enter email</li>
         <li class="done">Set password</li>
         <li class="current">Change profile</li>
