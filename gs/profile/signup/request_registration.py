@@ -8,11 +8,10 @@ from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.XWFCore.XWFUtils import get_support_email
-from Products.CustomUserFolder.interfaces import IGSUserInfo
-from Products.GSProfile.utils import login, create_user_from_email, \
-    send_verification_message
+from Products.GSProfile.utils import login, create_user_from_email
 from Products.GSProfile.emailaddress import NewEmailAddress, \
     EmailAddressExists
+from gs.profile.email.verify.emailverificationuser import EmailVerificationUser
 from interfaces import IGSRequestRegistration
 import logging
 log = logging.getLogger('GSProfile')
@@ -220,8 +219,8 @@ Side Effects
         auditer = ProfileAuditer(user)
         auditer.info(REGISTER, email)
 
-        site = self.siteInfo.siteObj
-        send_verification_message(site, user, email)
+        eu = EmailVerificationUser(self.context, userInfo, email)
+        eu.send_verification_message()
         
         return userInfo        
 

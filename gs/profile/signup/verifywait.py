@@ -13,8 +13,7 @@ from gs.profile.invite.invitation import Invitation
 from Products.XWFCore.XWFUtils import get_support_email,\
     get_the_actual_instance_from_zope
 from Products.CustomUserFolder.interfaces import IGSUserInfo
-from Products.GSProfile.utils import address_exists, \
-    send_verification_message
+from Products.GSProfile.utils import address_exists
 from interfaces import IGSVerifyWait
 import logging
 log = logging.getLogger('gs.profile.signup')
@@ -92,9 +91,9 @@ class VerifyWaitForm(PageForm):
                   '<%s> for the user "%s"' % (newEmail, self.context.getId())
                 log.info(m)
                 
-                siteObj = self.siteInfo.siteObj
-                send_verification_message(siteObj, self.context,
-                  newEmail)
+                eu = createObject('groupserver.EmailVerificationUserFromEmail', 
+                                  self.context, newEmail)
+                eu.send_verification_message()
                 self.status = u'''Another email address verification
                   message has been sent to
                   <code class="email">%s</code>.''' % newEmail
@@ -119,7 +118,6 @@ class VerifyWaitForm(PageForm):
         # TODO: Audit
         log.info('GSVerifyWait: Removing <%s> from the user "%s"' % \
           (oldEmail, self.context.getId()))
-        self.context.remove_emailAddressVerification(oldEmail)
         self.context.remove_emailAddress(oldEmail)
         assert oldEmail not in self.context.get_emailAddresses()
         return oldEmail
@@ -129,9 +127,9 @@ class VerifyWaitForm(PageForm):
         log.info('GSVerifyWait: Adding <%s> to the user "%s"' % \
           (email, self.context.getId()))
         self.context.add_emailAddress(email, is_preferred=True)
-        
-        siteObj = self.siteInfo.siteObj
-        send_verification_message(siteObj, self.context, email)
+        eu = createObject('groupserver.EmailVerificationUserFromEmail', 
+                          self.context, email)
+        eu.send_verification_message()
         assert email in self.context.get_emailAddresses()
         return email
 

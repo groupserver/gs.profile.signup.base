@@ -43,11 +43,6 @@
     name="verify_wait.html"
     class=".verifywait.VerifyWaitForm"
     permission="zope2.ManageProperties" />
-   <browser:page 
-    for="Products.CustomUserFolder.interfaces.ICustomUser"
-    name="verify_email.ajax"
-    class=".viewaddressverified.AddressVerifiedView"
-    permission="zope2.ManageProperties" />
   <browser:resource name="check_email_verified-20080408.js"
     file="browser/javascript/check_email_verified.js"
     permission="zope2.Public" />

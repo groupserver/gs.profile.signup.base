@@ -8,7 +8,7 @@ GSCheckEmailVerified = function () {
     var satusUpdate = null;
     var thingsToCheck = null;
     
-    var ADDRESS = 'verify_email.ajax';
+    var ADDRESS = 'checkemailverified.ajax';
     var TIMEOUT_DELTA = 8000;
     var CHECKING_MSG = '<strong>Checking</strong> verification ' +
       'status&#160;<img src="/++resource++anim/wait.gif"/>';
@@ -19,7 +19,7 @@ GSCheckEmailVerified = function () {
     // Private methods
 
     // Public methods and properties. The "checkServer" and "checkReturn"
-    // methods have to b public, due to oddities with "setTimeout".
+    // methods have to be public, due to oddities with "setTimeout".
     return {
         init: function (e, b, s, c) {
             /* Add the address-checking code to the correct widgets
