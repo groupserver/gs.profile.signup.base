@@ -48,13 +48,13 @@
       <li>Check your email. 
         It should contain a message asking you to verify the
         address.
-        If it does not go through the procedures in 
+        If it does not, go through the procedures in 
         <a href="#gs-profile-signup-verify-trouble">Trouble Shooting</a>
         below.</li>
       <li>Click the link in the email. 
-        You will be taken to the <cite class="page">Address 
-          Verified</cite> page.</li>
-      <li>Close the <cite class="page">Address Verified</cite> page.</li>
+        You will be taken to the <cite class="page">Verify Email 
+          Address</cite> page.</li>
+      <li>Close the <cite class="page">Verify Email Address</cite> page.</li>
       <li>Find the window showing the 
         <cite class="page">Awaiting Verification</cite> page.
         The <samp class="button">Finish</samp> button on the page will
@@ -69,7 +69,7 @@
       <h4>Trouble Shooting</h4>
       <p>
         If your email does not contain a message asking you to verify
-        your address carry out the following tasks. 
+        your address, carry out the following tasks. 
       </p>
       <ol>
         <li id="gs-profile-signup-verify-trouble-junk">Check the
