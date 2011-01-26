@@ -17,6 +17,7 @@ from Products.GSProfile.utils import profile_interface_name, \
     profile_interface, enforce_schema
 from gs.group.member.join.interfaces import IGSJoiningUser
 from gs.group.member.invite.inviter import Inviter
+from gs.profile.email.base.emailuser import EmailUser
 
 class ChangeProfileForm(EditProfileForm):
     """The Change Profile page used during registration is slightly 
@@ -33,7 +34,8 @@ class ChangeProfileForm(EditProfileForm):
         self.interface = interface = getattr(interfaces, interfaceName)
         enforce_schema(context, interface)
 
-        self.__formFields = self.__userInfo = self.__siteInfo = None
+        self.__userInfo = self.__emailUser = None
+        self.__formFields = self.__siteInfo = None
         
     @property
     def form_fields(self):
@@ -114,10 +116,16 @@ class ChangeProfileForm(EditProfileForm):
             self.__userInfo = IGSUserInfo(self.ctx)
         assert self.__userInfo
         return self.__userInfo
-                
+    
+    @property
+    def emailUser(self):
+        if self.__emailUser == None:
+            self.__emailUser = EmailUser(self.ctx, self.userInfo)
+        return self.__emailUser
+    
     @property
     def userEmail(self):
-        retval = self.context.get_emailAddresses()
+        retval = self.emailUser.get_addresses()
         assert retval
         return retval
 
@@ -128,14 +136,14 @@ class ChangeProfileForm(EditProfileForm):
 
         cf = str(data.pop('came_from'))
         if cf == 'None':
-          cf = ''
+            cf = ''
         if self.user_has_verified_email:
             uri = str(data.get('came_from'))
             if uri == 'None':
                 uri = '/'
             uri = '%s?welcome=1' % uri
         else:
-            email = self.context.get_emailAddresses()[0]
+            email = self.emailUser.get_addresses()[0]
             uri = 'verify_wait.html?form.email=%s&form.came_from=%s' %\
               (email, cf)
 
@@ -164,8 +172,8 @@ class ChangeProfileForm(EditProfileForm):
             
     @property
     def user_has_verified_email(self):
-        email = self.context.get_emailAddresses()[0]
-        retval = self.context.emailAddress_isVerified(email)
+        email = self.emailUser.get_addresses()[0]
+        retval = self.emailUser.is_address_verified(email)
         return retval
 
     def join_groups(self, groupsToJoin):

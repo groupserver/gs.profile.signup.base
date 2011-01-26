@@ -2,9 +2,9 @@
 from zope.component import createObject
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface.interface import Interface, Invalid, invariant
-from zope.schema import *
+from zope.schema import ASCIILine, Text, URI, ValidationError
 from Products.GSProfile.interfaces import IGSEmailAddressEntry
-from Products.GSProfile.emailaddress import EmailAddress
+from gs.profile.email.base.emailaddress import EmailAddress
 from gs.profile.password.interfaces import ISetPassword
 
 class IGSRequestRegistrationMarker(Interface):
@@ -49,7 +49,7 @@ class IGSSetPasswordRegister(ISetPassword):
       required=False)
 
     came_from = URI(title=u'Came From',
-      description=u'The page to return to after retistration has finished',
+      description=u'The page to return to after registration has finished',
       required=False)
 
 # Change Profile is a bit special
@@ -64,7 +64,7 @@ class IGSVerifyWait(IGSEmailAddressEntry):
     waits for verification of his or her email address."""
     
     came_from = URI(title=u'Came From',
-      description=u'The page to return to after retistration has finished',
+      description=u'The page to return to after registration has finished',
       required=False)
       
 class IGSAwaitingVerificationJavaScriptContentProvider(IContentProvider):

@@ -3,8 +3,8 @@ from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.CustomUserFolder.userinfo import GSUserInfo
-from Products.GSGroupMember.utils import inform_ptn_coach_of_join
 from gs.content.form.form import SiteForm
+from gs.profile.email.base.emailuser import EmailUser
 from gs.profile.password.interfaces import IGSPasswordUser
 from interfaces import IGSSetPasswordRegister
 
@@ -17,6 +17,7 @@ class SetPasswordForm(SiteForm):
     def __init__(self, context, request):
         SiteForm.__init__(self, context, request)
         self.userInfo = GSUserInfo(context)
+        self.emailUser = EmailUser(context, self.userInfo)
                
     @form.action(label=u'Set', failure='handle_set_action_failure')
     def handle_set(self, action, data):
@@ -48,7 +49,7 @@ class SetPasswordForm(SiteForm):
 
     @property
     def userEmail(self):
-        retval = self.context.get_emailAddresses()
+        retval = self.emailUser.get_addresses()
         assert retval
         return retval
 

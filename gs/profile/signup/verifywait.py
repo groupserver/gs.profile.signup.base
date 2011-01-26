@@ -1,10 +1,7 @@
 # coding=utf-8
 from zope.component import createObject
 from zope.formlib import form
-try:
-    from five.formlib.formbase import PageForm
-except ImportError:
-    from Products.Five.formlib.formbase import PageForm
+from five.formlib.formbase import PageForm
 from Products.Five.browser.pagetemplatefile import \
     ZopeTwoPageTemplateFile
 from gs.group.member.invite.queries import InvitationQuery
@@ -13,7 +10,8 @@ from gs.profile.invite.invitation import Invitation
 from Products.XWFCore.XWFUtils import get_support_email,\
     get_the_actual_instance_from_zope
 from Products.CustomUserFolder.interfaces import IGSUserInfo
-from Products.GSProfile.utils import address_exists
+from gs.profile.email.base.emailaddress import address_exists
+from gs.profile.email.base.emailuser import EmailUser
 from interfaces import IGSVerifyWait
 import logging
 log = logging.getLogger('gs.profile.signup')
@@ -27,7 +25,7 @@ class VerifyWaitForm(PageForm):
     def __init__(self, context, request):
         PageForm.__init__(self, context, request)
         self.siteInfo = createObject('groupserver.SiteInfo', context)
-        self.__userInfo = None
+        self.__userInfo = self.__emailUser = None
         
     def setUpWidgets(self, ignore_request=False):
         data = {
@@ -49,6 +47,12 @@ class VerifyWaitForm(PageForm):
             self.__userInfo = IGSUserInfo(self.ctx)
         assert self.__userInfo
         return self.__userInfo
+
+    @property
+    def emailUser(self):
+        if self.__emailUser == None:
+            self.__emailUser = EmailUser(self.context, self.userInfo)
+        return self.__emailUser
         
     @property
     def verificationEmailAddress(self):
@@ -115,27 +119,21 @@ class VerifyWaitForm(PageForm):
 
     def remove_old_email(self):
         oldEmail = self.userEmail[0]
-        # TODO: Audit
-        log.info('GSVerifyWait: Removing <%s> from the user "%s"' % \
-          (oldEmail, self.context.getId()))
-        self.context.remove_emailAddress(oldEmail)
-        assert oldEmail not in self.context.get_emailAddresses()
+        self.emailUser.remove_address(oldEmail)
+        assert oldEmail not in self.emailUser.get_addresses()
         return oldEmail
         
     def add_new_email(self, email):
-        # TODO: Audit
-        log.info('GSVerifyWait: Adding <%s> to the user "%s"' % \
-          (email, self.context.getId()))
-        self.context.add_emailAddress(email, is_preferred=True)
+        self.emailUser.add_address(email, isPreferred=True)
         eu = createObject('groupserver.EmailVerificationUserFromEmail', 
                           self.context, email)
         eu.send_verification_message()
-        assert email in self.context.get_emailAddresses()
+        assert email in self.emailUser.get_addresses()
         return email
 
     @property
     def userEmail(self):
-        retval = self.context.get_emailAddresses()
+        retval = self.emailUser.get_addresses()
         assert retval
         return retval
 

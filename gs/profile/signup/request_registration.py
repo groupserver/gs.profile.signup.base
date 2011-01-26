@@ -9,7 +9,7 @@ from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.XWFCore.XWFUtils import get_support_email
 from Products.GSProfile.utils import login, create_user_from_email
-from Products.GSProfile.emailaddress import NewEmailAddress, \
+from gs.profile.email.base.emailaddress import NewEmailAddress, \
     EmailAddressExists
 from gs.profile.email.verify.emailverificationuser import EmailVerificationUser
 from interfaces import IGSRequestRegistration
@@ -17,6 +17,8 @@ import logging
 log = logging.getLogger('GSProfile')
 from Products.GSProfile.profileaudit import *
 from Products.GSAuditTrail.queries import AuditQuery
+from gs.profile.password.audit import SET, \
+  SUBSYSTEM as GS_PROFILE_PASSWORD_SUBSYSTEM
 
 class RequestRegistrationForm(PageForm):
     form_fields = form.Fields(IGSRequestRegistration)
@@ -147,16 +149,16 @@ None.'''
         uri = ''
         m = u''
         systemLoginRequired = False
-            
-        acl_users = self.context.acl_users
-        emailUser = acl_users.get_userByEmail(email)
-        userInfo = IGSUserInfo(emailUser)
+        
+        emailUser = createObject('groupserver.EmailUserFromEmailAddress', 
+                                 self.context, email)
+        userInfo = emailUser.userInfo
 
         # Checks for incomplete sign up.
         changedProfile = email.split('@')[0] != userInfo.name
-        verified = emailUser.get_verifiedEmailAddresses() != []
+        verified = emailUser.get_verified_addresses() != []
 
-        if not password_set(self.context, emailUser):
+        if not password_set(self.context, userInfo.user):
             # Go to the Set Password page. This is no worse than
             # someone just registering with someone else's email
             # address. (That is, pointless as the address cannot be 
@@ -279,8 +281,10 @@ set-password events.'''
     q = AuditQuery(context.zsqlalchemy)
     items = q.get_instance_user_events(user.getId(), limit=128)
     setPasswordItems = [i for i in items 
-                        if ((i['subsystem'] == SUBSYSTEM)
-                            and (i['code'] == SET_PASSWORD))]
+        if (((i['subsystem'] == SUBSYSTEM) and 
+             (i['code'] == SET_PASSWORD)) or
+            ((i['subsystem'] == GS_PROFILE_PASSWORD_SUBSYSTEM) and
+             (i['code'] == SET)))]
     retval = bool(setPasswordItems)
     return retval
 
