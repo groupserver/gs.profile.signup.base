@@ -285,6 +285,7 @@ set-password events.'''
              (i['code'] == SET_PASSWORD)) or
             ((i['subsystem'] == GS_PROFILE_PASSWORD_SUBSYSTEM) and
              (i['code'] == SET)))]
+
     retval = bool(setPasswordItems)
     return retval
 
