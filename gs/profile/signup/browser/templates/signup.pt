@@ -134,7 +134,7 @@
     </tal:block>
     <tal:block metal:fill-slot="javascript">
       <script type="text/javascript"
-        src="++resource++check_email-20080214.js">&#160;</script>
+        src="++resource++check_email-20110222.js">&#160;</script>
       <script type="text/javascript"
         src="/++resource++check_required-20071214.js">&#160;</script>
       <script type="text/javascript"

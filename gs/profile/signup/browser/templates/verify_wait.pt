@@ -139,7 +139,7 @@
       <script type="text/javascript"
         src="/++resource++check_email_verified-20110105.js">&#160;</script>
       <script type="text/javascript"
-        src="/++resource++check_email-20080214.js">&#160;</script>
+        src="/++resource++check_email-20110222.js">&#160;</script>
       <script type="text/javascript" 
         tal:define="email python:view.userEmail[0]"
         tal:content="provider:groupserver.AwaitingVerificationJavaScript">
