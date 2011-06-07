@@ -155,6 +155,9 @@ class VerifyWaitForm(PageForm):
         # The user should only have invitations that he or she has
         #   issued, as the user is brand new. *Should*  being the 
         #   right word here. I hope this does not bite me\ldots
+        # One odd side-effect of hacking on top of Invites is that it
+        #   deals with a corner case of a person being invited then
+        #   requesting membership.
         invs = query.get_current_invitiations_for_site(self.siteInfo.id, 
                 self.userInfo.id)
         invitations = [Invitation(self.ctx, i['invitation_id']) 
