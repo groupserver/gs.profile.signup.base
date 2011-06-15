@@ -13,6 +13,9 @@
     <tal:block metal:fill-slot="sitenavigation">
       <div id="sitenavigation">&#160;</div>
     </tal:block>
+    <tal:block metal:fill-slot="search">
+      <div id="searcharea">&#160;</div>
+    </tal:block>
     <tal:block metal:fill-slot="utilitylinks">
       <div id="utilitylinks">&#160;</div>
     </tal:block>

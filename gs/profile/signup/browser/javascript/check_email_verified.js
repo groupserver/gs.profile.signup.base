@@ -9,23 +9,26 @@ GSCheckEmailVerified = function () {
     var thingsToCheck = null;
     
     var ADDRESS = 'checkemailverified.ajax';
-    var TIMEOUT_DELTA = 8000;
+    var TIMEOUT_DELTA = 4000;
+    var AUTOSUBMIT_TIMEOUT = 20000;
     var CHECKING_MSG = '<strong>Checking</strong> verification ' +
       'status&#160;<img src="/++resource++anim/wait.gif"/>';
     var UNVERIFIED_MSG = 'The email address is '+
       '<strong>not verified.</strong>';
     var VERIFIED_MSG = 'The email address is <strong>verified.</strong> ' +
-      'Click the <samp class="button">Finish</samp> button.';
+      'You may now click the <samp class="button">Finish</samp> button, or ' +
+      'simply wait XSEC seconds.';
     // Private methods
 
     // Public methods and properties. The "checkServer" and "checkReturn"
     // methods have to be public, due to oddities with "setTimeout".
     return {
-        init: function (e, b, s, c) {
+        init: function (e, f, b, s, c) {
             /* Add the address-checking code to the correct widgets
             
             ARGUMENTS
               e:  String containing the selector for the email address
+              f:  String containing the selector for the form
               b:  String containing the selector for the submit button 
                   for the form
               s:  String containing the selector for the status-update
@@ -34,9 +37,11 @@ GSCheckEmailVerified = function () {
                   section.
             */
             email = e;
+            form = f;
             button = b;
             statusUpdate = s;
             thingsToCheck = c;
+            submitCount = AUTOSUBMIT_TIMEOUT / 1000;
             GSCheckEmailVerified.checkServer();
         },
         checkServer: function () {
@@ -53,7 +58,9 @@ GSCheckEmailVerified = function () {
             if (verified) {
                 jQuery(button).attr("disabled","");
                 jQuery(thingsToCheck + ' input').attr("disabled","disabled");
-                jQuery(statusUpdate).html(VERIFIED_MSG);
+                GSCheckEmailVerified.updateVerifiedMessage();
+                setTimeout("GSCheckEmailVerified.autoSubmitForm()",
+                    AUTOSUBMIT_TIMEOUT);
             } else {
                 jQuery(button).attr("disabled","disabled");
                 setTimeout("GSCheckEmailVerified.checkServer()",
@@ -64,6 +71,16 @@ GSCheckEmailVerified = function () {
         },
         changeCheckingMessage: function() {
             jQuery(statusUpdate).html(UNVERIFIED_MSG);              
+        },
+        updateVerifiedMessage: function() {
+            vm = VERIFIED_MSG.replace('XSEC',submitCount)
+            jQuery(statusUpdate).html(vm);
+            submitCount -= 1;
+            setTimeout("GSCheckEmailVerified.updateVerifiedMessage()", 1000);
+        },
+        autoSubmitForm: function() {
+            jQuery(button).click();
+            jQuery(button).submit();
         }
     };
 }(); // GSCheckEmailVerified
