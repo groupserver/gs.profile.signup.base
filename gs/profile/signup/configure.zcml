@@ -43,7 +43,7 @@
     name="verify_wait.html"
     class=".verifywait.VerifyWaitForm"
     permission="zope2.ManageProperties" />
-  <browser:resource name="check_email_verified-20110105.js"
+  <browser:resource name="check_email_verified-20110615.js"
     file="browser/javascript/check_email_verified.js"
     permission="zope2.Public" />
     
