@@ -10,7 +10,7 @@ GSCheckEmailVerified = function () {
     
     var ADDRESS = 'checkemailverified.ajax';
     var TIMEOUT_DELTA = 4000;
-    var AUTOSUBMIT_TIMEOUT = 20000;
+    var AUTOSUBMIT_TIMEOUT = 5000;
     var CHECKING_MSG = '<strong>Checking</strong> verification ' +
       'status&#160;<img src="/++resource++anim/wait.gif"/>';
     var UNVERIFIED_MSG = 'The email address is '+
