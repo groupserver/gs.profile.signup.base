@@ -3,6 +3,7 @@ from zope.component import createObject
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface.interface import Interface, Invalid, invariant
 from zope.schema import ASCIILine, Text, URI, ValidationError
+from zope.viewlet.interfaces import IViewletManager
 from Products.GSProfile.interfaces import IGSEmailAddressEntry
 from gs.profile.email.base.emailaddress import EmailAddress
 from gs.profile.password.interfaces import ISetPassword
@@ -78,3 +79,5 @@ class IGSAwaitingVerificationJavaScriptContentProvider(IContentProvider):
         description=u'Your email address.',
         required=True)
 
+class ISignupMethods(IViewletManager):
+    '''A viewlet manager for the alternative signup methods '''

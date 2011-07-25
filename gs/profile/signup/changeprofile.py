@@ -18,6 +18,7 @@ from Products.GSProfile.utils import profile_interface_name, \
 from gs.group.member.join.interfaces import IGSJoiningUser
 from gs.group.member.invite.inviter import Inviter
 from gs.profile.email.base.emailuser import EmailUser
+from zope.app.apidoc.interface import getFieldsInOrder
 
 class ChangeProfileForm(EditProfileForm):
     """The Change Profile page used during registration is slightly 
@@ -30,23 +31,29 @@ class ChangeProfileForm(EditProfileForm):
 
     def __init__(self, context, request):
         PageForm.__init__(self, context, request)
-        interfaceName = '%sRegister' % profile_interface_name(context)
-        self.interface = interface = getattr(interfaces, interfaceName)
+        profileInterfaceName = profile_interface_name(context)
+        registerInterfaceName = '%sRegister' % profileInterfaceName
+        
+        self.profileInterface = getattr(interfaces, profileInterfaceName)
+        self.registerInterface = interface = getattr(interfaces, registerInterfaceName)
         enforce_schema(context, interface)
 
         self.__userInfo = self.__emailUser = None
         self.__formFields = self.__siteInfo = None
-        
+        self.__profileFields = None
+        self.__hiddenFieldNames = ['form.came_from']
+    
     @property
     def form_fields(self):
         if self.__formFields == None:
-            self.__formFields = form.Fields(self.interface, 
+            self.__formFields = form.Fields(self.registerInterface, 
                                     render_context=True)
             self.__formFields['tz'].custom_widget = select_widget
             self.__formFields['biography'].custom_widget = \
                 wym_editor_widget
             self.__formFields['joinable_groups'].custom_widget = \
                 multi_check_box_widget
+                
         return self.__formFields
         
     def setUpWidgets(self, ignore_request=False):
@@ -162,7 +169,7 @@ class ChangeProfileForm(EditProfileForm):
 
         fields = self.form_fields.omit('joinable_groups')
         for field in fields:
-            field.interface = self.interface            
+            field.interface = self.registerInterface            
         changed = form.applyChanges(self.context, fields, data)
 
         if groupsToJoin and self.user_has_verified_email:
@@ -198,3 +205,40 @@ class ChangeProfileForm(EditProfileForm):
             inviter.create_invitation({}, initial)
             initial = False
 
+    @property
+    def profileWidgetNames(self):
+        if self.__profileFields == None:
+            self.__profileFields = \
+                ['form.%s' % f[0] for f in getFieldsInOrder(self.profileInterface)]
+            self.__profileFields = [f for f in self.__profileFields if f not in self.__hiddenFieldNames]
+        assert type(self.__profileFields) == list
+        
+        return self.__profileFields
+    
+    @property
+    def profileWidgets(self):
+        widgets = [widget for widget in self.widgets if widget.name in self.profileWidgetNames]
+        return widgets
+    
+    @property
+    def nonProfileWidgets(self):
+        widgets = [widget for widget in self.widgets if widget.name not in (self.profileWidgetNames+self.__hiddenFieldNames)]
+        return widgets
+
+    @property
+    def hiddenWidgets(self):
+        widgets = [widget for widget in self.widgets if widget.name in self.__hiddenFieldNames]
+        
+        return widgets    
+        
+    @property  
+    def requiredProfileWidgets(self):
+        widgets = [widget for widget in self.profileWidgets if widget.required == True]
+
+        return widgets
+    
+    @property
+    def optionalProfileWidgets(self):
+        widgets = [widget for widget in self.profileWidgets if widget.required == False]
+            
+        return widgets

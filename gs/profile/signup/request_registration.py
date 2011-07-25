@@ -13,12 +13,13 @@ from gs.profile.email.base.emailaddress import NewEmailAddress, \
     EmailAddressExists
 from gs.profile.email.verify.emailverificationuser import EmailVerificationUser
 from interfaces import IGSRequestRegistration
-import logging
-log = logging.getLogger('GSProfile')
 from Products.GSProfile.profileaudit import *
 from Products.GSAuditTrail.queries import AuditQuery
 from gs.profile.password.audit import SET, \
   SUBSYSTEM as GS_PROFILE_PASSWORD_SUBSYSTEM
+
+import logging
+log = logging.getLogger('gs.profile.signup')
 
 class RequestRegistrationForm(PageForm):
     form_fields = form.Fields(IGSRequestRegistration)
@@ -39,7 +40,18 @@ class RequestRegistrationForm(PageForm):
             if gId in self.groupsInfo.get_visible_group_ids():
                 self.groupInfo = createObject('groupserver.GroupInfo',
                                               context, gId)
-            
+                
+        # handle errors from other signup methods where the user has already been registered
+        # wih a given email address
+        if 'email' in request.form.keys():
+            try:
+                nextPage = self.next_page_from_email(request.form['email'])
+                self.status = nextPage.message
+                self.errors = []
+            except:
+                log.error("Passed an email %s, but an error occurred while processing it."
+                          % request.form['email'])
+             
     @property
     def verificationEmailAddress(self):
         retval = get_support_email(self.context, self.siteInfo.id)
@@ -138,7 +150,7 @@ Returns
     
 A ``NextPageInfo`` containing 
     * The link to the new page, if needed,
-    * A message, if neede,
+    * A message, if needed,
     * A flag to say if the user should be automatically logged in
       by the system, or not.
 
@@ -227,7 +239,7 @@ Side Effects
         return userInfo        
 
     def get_uri_end(self,data):
-        '''Get the snippit of a URI that comes at the end of all redirects
+        '''Get the snippet of a URI that comes at the end of all redirects
         from this page.'''
         cf = str(data.get('came_from'))
         if cf == 'None':
@@ -243,7 +255,6 @@ class NextPageInfo(object):
         self.uri = uri
         self.message = message
         self.systemLoginRequired = systemLoginRequired
-
 
 def password_set(context, user):
     '''Check if a password has ever been set.
