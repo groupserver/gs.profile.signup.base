@@ -1,0 +1,34 @@
+<div id="signupmethod-email">
+      <form enctype="multipart/form-data" method="post"
+            action="/request_registration.html"
+            id="register.form">
+          
+  <div class="form-widget required" id="widget-form.email">
+    <label for="form.email" title="Your email address.">Email Address</label>
+    
+    <input class="textType" id="form.email" name="form.email" size="20" type="text" value=""  />
+    
+    
+  </div><!--form-widget-->
+        
+          <input class="hiddenType" id="form.groupId" name="form.groupId" type="hidden" value="example_group"  />
+        
+          <input class="hiddenType" id="form.came_from" name="form.came_from" type="hidden" value=""  />
+         
+       
+        <div id="emailHelp">
+          <p class="message-error" style="display: none;">
+            The email address is not valid.
+            Please enter a valid email address.
+          </p>
+        </div><!--Password Help-->
+        <div class="buttons">
+
+          
+            <div class="formelementbutton">
+              <input type="submit" id="form.actions.5369676e207570" name="form.actions.5369676e207570" value="Sign up" class="button" />
+            </div>
+          
+        </div><!--buttons-->
+      </form>
+</div>
