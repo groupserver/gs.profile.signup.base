@@ -5,7 +5,7 @@ from version import get_version
 
 version = get_version()
 
-setup(name='gs.profile.signup',
+setup(name='gs.profile.signup.base',
     version=version,
     description="The profile pages that are required for user-initiated"\
         "sign up (registration)",
@@ -28,7 +28,7 @@ setup(name='gs.profile.signup',
     url='http://groupserver.org',
     license='ZPL',
     packages=find_packages(exclude=['ez_setup']),
-    namespace_packages=['gs', 'gs.profile'],
+    namespace_packages=['gs', 'gs.profile', 'gs.profile.signup'],
     include_package_data=True,
     zip_safe=False,
     install_requires=[
