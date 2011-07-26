@@ -61,7 +61,7 @@
     template="browser/templates/alternativesignupmethods.pt"/>
     
   <browser:viewlet name="gs-email-register-method"
-    manager="gs.profile.signup.interfaces.ISignupMethods"
+    manager="gs.profile.signup.base.interfaces.ISignupMethods"
     template="browser/templates/signupmethod-email.pt"
     permission="zope.Public"
     weight="1000" />

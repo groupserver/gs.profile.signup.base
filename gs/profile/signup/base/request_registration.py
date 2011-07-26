@@ -19,7 +19,7 @@ from gs.profile.password.audit import SET, \
   SUBSYSTEM as GS_PROFILE_PASSWORD_SUBSYSTEM
 
 import logging
-log = logging.getLogger('gs.profile.signup')
+log = logging.getLogger('gs.profile.signup.base')
 
 class RequestRegistrationForm(PageForm):
     form_fields = form.Fields(IGSRequestRegistration)
