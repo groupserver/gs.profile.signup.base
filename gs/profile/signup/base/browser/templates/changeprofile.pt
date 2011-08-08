@@ -44,13 +44,8 @@
           tal:define="action python:[a for a in view.actions][0].label"
           tal:content="action">Big R</samp> 
         button.
-        Some profile fields are required (and are marked
-        <span class="required"><label style="display:inline;margin:0px;">like this</label></span>).
-        Required fields must be filled in before you can click the
-        <samp class="button" 
-          tal:define="action python:[a for a in view.actions][0].label"
-          tal:content="action">Big R</samp> 
-        button.
+        Some profile fields are required, and are marked
+        <span class="required"><label style="display:inline;margin:0px;">like this</label></span>.
       </p>
       <p>
         Most of your profile properties are only visible to other
@@ -77,12 +72,38 @@
       </div><!--privacy-->
       <form enctype="multipart/form-data"  method="post" action="."
         tal:attributes="action request/URL" id="edit-profile">
-        <tal:block define="widgets python:[w for w in view.widgets][:-1]">
-          <tal:block replace="structure provider:groupserver.FormWidgets"/>
-        </tal:block>
-        <tal:block repeat="widget python:[[w for w in view.widgets][-1]]">
-          <span tal:replace="structure widget/hidden"/>
-        </tal:block>
+        <div id="standardProfileFields">
+          <tal:block define="widgets view/requiredProfileWidgets">
+            <tal:block
+              replace="structure provider:groupserver.FormWidgets"/>
+          </tal:block>          
+        </div><!--standardProfileFields-->
+         <div id="advancedProfileFields" class="disclosureWidget">
+          <p>
+            <a class="disclosureButton" href="javascript:showHideDisclosure('advancedProfileFields')">You may optionally change other parts of your profile.</a>
+          </p>
+          <div class="disclosureShowHide" style="display: none;">
+           
+          <tal:block define="widgets view/optionalProfileWidgets">
+            <tal:block
+              replace="structure provider:groupserver.FormWidgets"/>
+          </tal:block>
+        </div><!--advancedProfileFields-->
+        
+        <div id="nonProfileFields">
+          <tal:block define="widgets view/nonProfileWidgets">
+            <tal:block
+              replace="structure provider:groupserver.FormWidgets"/>
+          </tal:block>          
+        </div><!--nonProfileFields-->
+        
+        <div id="hiddenFields">
+          <tal:block repeat="widget view/hiddenWidgets">
+            <tal:block
+              replace="structure widget/hidden"/>
+          </tal:block>          
+        </div><!--hiddenFields-->
+        
         <div class="buttons" tal:condition="view/availableActions">
           <tal:block repeat="action view/actions">
             <div class="formelementbutton">
@@ -90,6 +111,7 @@
             </div>
           </tal:block>
         </div>
+        
       </form>
     </tal:block>
     <tal:block metal:fill-slot="javascript">

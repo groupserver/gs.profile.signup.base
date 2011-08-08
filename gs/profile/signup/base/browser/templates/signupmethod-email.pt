@@ -2,20 +2,19 @@
       <form enctype="multipart/form-data" method="post"
             action="/request_registration.html"
             id="register.form">
-          
+
   <div class="form-widget required" id="widget-form.email">
-    <label for="form.email" title="Your email address.">Email Address</label>
     
-    <input class="textType" id="form.email" name="form.email" size="20" type="text" value=""  />
+        <tal:block define="widgets python:[view.__parent__.widgets['email']]">
+          <div tal:replace="structure provider:groupserver.FormWidgets"/>
+        </tal:block>
+        <tal:block repeat="widget python:[view.__parent__.widgets['groupId'], view.__parent__.widgets['came_from']]">
+          <span tal:replace="structure widget/hidden"/>
+        </tal:block>
     
     
   </div><!--form-widget-->
         
-          <input class="hiddenType" id="form.groupId" name="form.groupId" type="hidden" value="example_group"  />
-        
-          <input class="hiddenType" id="form.came_from" name="form.came_from" type="hidden" value=""  />
-         
-       
         <div id="emailHelp">
           <p class="message-error" style="display: none;">
             The email address is not valid.
