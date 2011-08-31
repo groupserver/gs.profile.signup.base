@@ -1,11 +1,14 @@
 <div id="signupmethods" tal:condition="options/viewlets">
-  <tal:block tal:condition="python:len(options['viewlets']) > 1">Start your signup by choosing <strong>one</strong> of the following:</tal:block><tal:block tal:condition="python:len(options['viewlets']) == 1">:</tal:block>
-    <tal:block repeat="viewlet options/viewlets">
-    <div tal:attributes="class python:repeat['viewlet'].odd() == True and 'odd' or 'even'">
-      	<tal:block content="structure viewlet/render">
-        	Some links
-      	</tal:block>
+  <span id="signupmethods-start-multiple" 
+    tal:condition="python:len(options['viewlets']) > 1">Start your
+    signup by choosing <strong>one</strong> 
+    of the following:</span>
+  <tal:block repeat="viewlet options/viewlets">
+    <div tal:attributes="class python:repeat['viewlet'].odd() and 'odd' or 'even'">
+      <tal:block content="structure viewlet/render">
+        Some links
+      </tal:block>
     </div>
-    </tal:block>
+  </tal:block>
 </div>
 
