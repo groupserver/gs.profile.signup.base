@@ -16,8 +16,16 @@ class GroupIDNotFound(ValidationError):
     """Group identifier not found"""
     def __init__(self, value):
         self.value = value
+        
+    def __unicode__(self):
+        retval = u'The group with the identifier %s is not in the '\
+            u'list of visible groups.' % repr(self.value)
+        return retval
+        
     def __str__(self):
-        return 'Group identifier %s not found' % repr(self.value)
+        retval = unicode(self).encode('ascii', 'ignore')
+        return retval
+        
     def doc(self):
         return self.__str__()
         
