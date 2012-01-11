@@ -39,6 +39,8 @@ GSCheckEmailVerified = function () {
             email = e;
             form = f;
             button = b;
+            VERIFIED_MSG = VERIFIED_MSG.replace('Finish', 
+                                                jQuery(b).attr('value'))
             statusUpdate = s;
             thingsToCheck = c;
             submitCount = AUTOSUBMIT_TIMEOUT / 1000;
