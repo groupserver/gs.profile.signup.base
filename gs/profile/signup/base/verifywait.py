@@ -1,9 +1,8 @@
 # coding=utf-8
+from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
 from zope.formlib import form
-from five.formlib.formbase import PageForm
-from Products.Five.browser.pagetemplatefile import \
-    ZopeTwoPageTemplateFile
+from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from gs.group.member.invite.queries import InvitationQuery
 from gs.group.member.join.interfaces import IGSJoiningUser
 from gs.profile.invite.invitation import Invitation
@@ -12,20 +11,19 @@ from Products.XWFCore.XWFUtils import get_support_email,\
 from Products.CustomUserFolder.interfaces import IGSUserInfo
 from gs.profile.email.base.emailaddress import address_exists
 from gs.profile.email.base.emailuser import EmailUser
+from gs.content.form.form import SiteForm
 from interfaces import IGSVerifyWait
 import logging
 log = logging.getLogger('gs.profile.signup.base')
 
-class VerifyWaitForm(PageForm):
+class VerifyWaitForm(SiteForm):
     label = u'Awaiting Verification'
     pageTemplateFileName = 'browser/templates/verify_wait.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
     form_fields = form.Fields(IGSVerifyWait)
 
     def __init__(self, context, request):
-        PageForm.__init__(self, context, request)
-        self.siteInfo = createObject('groupserver.SiteInfo', context)
-        self.__userInfo = self.__emailUser = None
+        SiteForm.__init__(self, context, request)
         
     def setUpWidgets(self, ignore_request=False):
         data = {
@@ -41,18 +39,17 @@ class VerifyWaitForm(PageForm):
     def ctx(self):
         return get_the_actual_instance_from_zope(self.context)
         
-    @property
+    @Lazy
     def userInfo(self):
-        if self.__userInfo == None:
-            self.__userInfo = IGSUserInfo(self.ctx)
-        assert self.__userInfo
-        return self.__userInfo
+        retval = IGSUserInfo(self.ctx)
+        assert retval
+        return retval
 
-    @property
+    @Lazy
     def emailUser(self):
-        if self.__emailUser == None:
-            self.__emailUser = EmailUser(self.context, self.userInfo)
-        return self.__emailUser
+        retval = EmailUser(self.context, self.userInfo)
+        assert retval
+        return retval
         
     @property
     def verificationEmailAddress(self):
