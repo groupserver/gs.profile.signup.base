@@ -234,7 +234,7 @@ Side Effects
         auditer.info(REGISTER, email)
 
         eu = EmailVerificationUser(self.context, userInfo, email)
-        eu.send_verification_message()
+        eu.send_verification(self.request)
         
         return userInfo        
 
