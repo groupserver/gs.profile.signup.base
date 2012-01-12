@@ -232,9 +232,11 @@ Side Effects
 
         auditer = ProfileAuditer(user)
         auditer.info(REGISTER, email)
-
-        eu = EmailVerificationUser(self.context, userInfo, email)
-        eu.send_verification(self.request)
+        #   We want the user to be in the context of the site.
+        #     It makes as much sense as the rest of aquisition.
+        ctx = self.context.acl_users.getUser(userInfo.id)
+        evu = EmailVerificationUser(ctx, userInfo, email)
+        evu.send_verification(self.request)
         
         return userInfo        
 
