@@ -14,20 +14,6 @@
     class=".request_registration.RequestRegistrationForm"
     permission="zope2.ManageProperties"/>
 
-  <!-- The Verification message -->
-  <browser:page 
-    for="Products.CustomUserFolder.interfaces.ICustomUser"
-    name="verification-mesg.html"
-    class=".notifymessages.VerifyAddress"
-    template="browser/templates/verify-address.pt"
-    permission="zope2.View" />
-  <browser:page 
-    for="Products.CustomUserFolder.interfaces.ICustomUser"
-    name="verification-mesg.txt"
-    class=".notifymessages.VerifyAddressText"
-    template="browser/templates/verify-address-txt.pt"
-    permission="zope2.ManageProperties" />
-
   <browser:page 
     for="Products.XWFChat.interfaces.IGSGroupFolder"
     name="admin_remote_request_register.html"
