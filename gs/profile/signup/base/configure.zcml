@@ -12,7 +12,7 @@
     for="*"
     name="request_registration.html"
     class=".request_registration.RequestRegistrationForm"
-    permission="zope2.ManageProperties"/>
+    permission="zope2.View"/>
 
   <browser:page 
     for="Products.XWFChat.interfaces.IGSGroupFolder"
