@@ -12,22 +12,36 @@
     for="*"
     name="request_registration.html"
     class=".request_registration.RequestRegistrationForm"
-    permission="zope2.Public"/>
+    permission="zope2.ManageProperties"/>
 
-   <browser:page 
+  <!-- The Verification message -->
+  <browser:page 
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
+    name="verification-mesg.html"
+    class=".notifymessages.VerifyAddress"
+    template="browser/templates/verify-address.pt"
+    permission="zope2.View" />
+  <browser:page 
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
+    name="verification-mesg.txt"
+    class=".notifymessages.VerifyAddressText"
+    template="browser/templates/verify-address-txt.pt"
+    permission="zope2.ManageProperties" />
+
+  <browser:page 
     for="Products.XWFChat.interfaces.IGSGroupFolder"
     name="admin_remote_request_register.html"
     class=".request_registration_remote.GSRemoteRequestRegistration"
     template="browser/templates/signup_remote.pt"
     permission="zope2.View" />
 
-   <browser:page
+  <browser:page
     for="Products.CustomUserFolder.interfaces.ICustomUser"
     name="register_password.html"
     class=".setpassword.SetPasswordForm"
     permission="zope2.ManageProperties" />
 
-   <browser:page 
+  <browser:page 
     for="Products.CustomUserFolder.interfaces.ICustomUser"
     name="registration_profile.html"
     class=".changeprofile.ChangeProfileForm"
