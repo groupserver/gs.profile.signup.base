@@ -33,7 +33,8 @@
         <a tal:attributes="href view/siteInfo/url"
           href="#" tal:content="view/siteInfo/name">this site</a>.
         The person that added the address is probably you, but 
-        sometimes an administrator adds an address to a profile.
+        some administrators can also add address to the profiles of
+        other members.
       </dd>
       <dt style="margin: 1.385em 0 0 0;">Why do I have to verify my 
         address?</dt>
