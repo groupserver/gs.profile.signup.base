@@ -3,7 +3,7 @@ from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-from gs.group.member.invite.queries import InvitationQuery
+from gs.group.member.invite.base.queries import InvitationQuery
 from gs.group.member.join.interfaces import IGSJoiningUser
 from gs.profile.invite.invitation import Invitation
 from Products.XWFCore.XWFUtils import get_support_email,\

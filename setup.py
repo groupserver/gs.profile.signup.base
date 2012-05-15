@@ -36,7 +36,7 @@ setup(name='gs.profile.signup.base',
         'Products.GSProfile',
         'gs.content.form',
         'gs.group.member.join',
-        'gs.group.member.invite',
+        'gs.group.member.invite.base',
         'gs.profile.password',
         # -*- Extra requirements: -*-
     ],

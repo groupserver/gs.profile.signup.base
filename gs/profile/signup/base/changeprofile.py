@@ -16,7 +16,7 @@ from Products.GSProfile.edit_profile import EditProfileForm,\
 from Products.GSProfile.utils import profile_interface_name, \
     profile_interface, enforce_schema
 from gs.group.member.join.interfaces import IGSJoiningUser
-from gs.group.member.invite.inviter import Inviter
+from gs.group.member.invite.base.inviter import Inviter
 from gs.profile.email.base.emailuser import EmailUser
 from zope.app.apidoc.interface import getFieldsInOrder
 
