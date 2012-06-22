@@ -291,7 +291,7 @@ Acknowledgements
 
 Thanks to Alice for suggesting that I trawl the audit-logs for the 
 set-password events.'''
-    q = AuditQuery(context.zsqlalchemy)
+    q = AuditQuery()
     items = q.get_instance_user_events(user.getId(), limit=128)
     setPasswordItems = [i for i in items 
         if (((i['subsystem'] == SUBSYSTEM) and 

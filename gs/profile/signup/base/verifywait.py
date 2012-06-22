@@ -146,9 +146,7 @@ class VerifyWaitForm(SiteForm):
         #   There I create a heap of invitations: from the user to the
         #   user. Here I pick the invitations up and actually join the
         #   groups, sending the Welcome message as a side effect.
-        da = self.context.zsqlalchemy
-        assert da, 'No data adaptor found'
-        query = InvitationQuery(da)
+        query = InvitationQuery()
         # The user should only have invitations that he or she has
         #   issued, as the user is brand new. *Should*  being the 
         #   right word here. I hope this does not bite me\ldots
