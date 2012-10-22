@@ -8,17 +8,18 @@ from gs.profile.email.base.emailuser import EmailUser
 from gs.profile.password.interfaces import IGSPasswordUser
 from interfaces import IGSSetPasswordRegister
 
+
 class SetPasswordForm(SiteForm):
     form_fields = form.Fields(IGSSetPasswordRegister)
     label = u'Set Password'
     pageTemplateFileName = 'browser/templates/setpassword.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
-    
+
     def __init__(self, context, request):
         SiteForm.__init__(self, context, request)
         self.userInfo = GSUserInfo(context)
         self.emailUser = EmailUser(context, self.userInfo)
-               
+
     @form.action(label=u'Set', failure='handle_set_action_failure')
     def handle_set(self, action, data):
         assert self.context
@@ -52,4 +53,3 @@ class SetPasswordForm(SiteForm):
         retval = self.emailUser.get_addresses()
         assert retval
         return retval
-

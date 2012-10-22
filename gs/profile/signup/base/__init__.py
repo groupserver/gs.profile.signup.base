@@ -1,3 +1,2 @@
 # coding=utf-8
-import  awaitingverificationcontentprovider
-
+import  awaitingverificationcontentprovider  # lint:ok

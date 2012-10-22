@@ -16,6 +16,7 @@ from interfaces import IGSVerifyWait
 import logging
 log = logging.getLogger('gs.profile.signup.base')
 
+
 class VerifyWaitForm(SiteForm):
     label = u'Awaiting Verification'
     pageTemplateFileName = 'browser/templates/verify_wait.pt'
@@ -24,21 +25,20 @@ class VerifyWaitForm(SiteForm):
 
     def __init__(self, context, request):
         SiteForm.__init__(self, context, request)
-        
+
     def setUpWidgets(self, ignore_request=False):
-        data = {
-          'email':   self.userEmail[0],
-        }
+        data = {'email': self.userEmail[0], }
+
         self.widgets = form.setUpWidgets(
             self.form_fields, self.prefix, self.context,
             self.request, form=self, data=data,
             ignore_request=ignore_request)
         assert self.widgets
-    
+
     @property
     def ctx(self):
         return get_the_actual_instance_from_zope(self.context)
-        
+
     @Lazy
     def userInfo(self):
         retval = IGSUserInfo(self.ctx)
@@ -50,7 +50,7 @@ class VerifyWaitForm(SiteForm):
         retval = EmailUser(self.context, self.userInfo)
         assert retval
         return retval
-        
+
     @property
     def verificationEmailAddress(self):
         retval = get_support_email(self.context, self.siteInfo.id)
@@ -60,39 +60,39 @@ class VerifyWaitForm(SiteForm):
 
     @form.action(label=u'Finish', failure='handle_set_action_failure')
     def handle_set(self, action, data):
-        
+
         self.join_groups()
-    
+
         uri = str(data.get('came_from'))
         if uri == 'None':
             uri = '/'
         uri = '%s?welcome=1' % uri
         return self.request.RESPONSE.redirect(uri)
-        
+
     def handle_set_action_failure(self, action, data, errors):
         if len(errors) == 1:
             self.status = u'<p>There is an error:</p>'
         else:
             self.status = u'<p>There are errors:</p>'
-            
+
     @form.action(label=u'Send', failure='handle_set_action_failure')
     def handle_send(self, action, data):
         assert data
         assert 'email' in data.keys()
         self.actual_handle_send(data)
         assert self.status
-        assert type(self.status) == unicode        
-    
-    def actual_handle_send(self, data):        
+        assert type(self.status) == unicode
+
+    def actual_handle_send(self, data):
         newEmail = data['email']
         if address_exists(self.context, newEmail):
             if newEmail in self.userEmail:
                 # TODO: Audit
-                m ='GSVerifyWait: Resending verification message to ' \
+                m = 'GSVerifyWait: Resending verification message to ' \
                   '<%s> for the user "%s"' % (newEmail, self.context.getId())
                 log.info(m)
-                
-                eu = createObject('groupserver.EmailVerificationUserFromEmail', 
+
+                eu = createObject('groupserver.EmailVerificationUserFromEmail',
                                   self.context, newEmail)
                 eu.send_verification(self.request)
                 self.status = u'''Another email address verification
@@ -100,14 +100,14 @@ class VerifyWaitForm(SiteForm):
                   <code class="email">%s</code>.''' % newEmail
             else:
                 # TODO: Audit
-                m ='GSVerifyWait: Attempt to use another email address ' \
+                m = 'GSVerifyWait: Attempt to use another email address ' \
                   '<%s> by the user "%s"' % (newEmail, self.context.getId())
                 log.info(m)
 
-                self.status=u'''The address
+                self.status = u'''The address
                   <code class="email">%s</code> is already registered
                   to another user.''' % newEmail
-        else: # The address does not exist
+        else:  # The address does not exist
             oldEmail = self.remove_old_email()
             self.add_new_email(newEmail)
             self.status = u'''Changed your email address from
@@ -119,10 +119,10 @@ class VerifyWaitForm(SiteForm):
         self.emailUser.remove_address(oldEmail)
         assert oldEmail not in self.emailUser.get_addresses()
         return oldEmail
-        
+
     def add_new_email(self, email):
         self.emailUser.add_address(email, isPreferred=True)
-        eu = createObject('groupserver.EmailVerificationUserFromEmail', 
+        eu = createObject('groupserver.EmailVerificationUserFromEmail',
                           self.context, email)
         eu.send_verification(self.request)
         assert email in self.emailUser.get_addresses()
@@ -139,7 +139,7 @@ class VerifyWaitForm(SiteForm):
         #   madness. We have to join the groups *after* verifying the
         #   email address, otherwise the new group member will never get
         #   the Welcome email from the group
-        #   <https://projects.iopen.net/groupserver/ticket/303>. 
+        #   <https://projects.iopen.net/groupserver/ticket/303>.
         # The way I record groups that the new member is about to join
         #   is with *invitations*. The user indicates that he or she
         #   wants to join a group on the previous Change Profile page.
@@ -148,17 +148,16 @@ class VerifyWaitForm(SiteForm):
         #   groups, sending the Welcome message as a side effect.
         query = InvitationQuery()
         # The user should only have invitations that he or she has
-        #   issued, as the user is brand new. *Should*  being the 
+        #   issued, as the user is brand new. *Should*  being the
         #   right word here. I hope this does not bite me\ldots
         # One odd side-effect of hacking on top of Invites is that it
         #   deals with a corner case of a person being invited then
         #   requesting membership.
-        invs = query.get_current_invitiations_for_site(self.siteInfo.id, 
+        invs = query.get_current_invitiations_for_site(self.siteInfo.id,
                 self.userInfo.id)
-        invitations = [Invitation(self.ctx, i['invitation_id']) 
+        invitations = [Invitation(self.ctx, i['invitation_id'])
                         for i in invs]
         joiningUser = IGSJoiningUser(self.userInfo)
         for invite in invitations:
             joiningUser.join(invite.groupInfo)
             invite.accept()
-
