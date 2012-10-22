@@ -7,7 +7,7 @@ version = get_version()
 
 setup(name='gs.profile.signup.base',
     version=version,
-    description="The profile pages that are required for user-initiated"\
+    description="The profile pages that are required for user-initiated"
         "sign up (registration)",
     long_description=open("README.txt").read() + "\n" +
                     open(os.path.join("docs", "HISTORY.txt")).read(),
@@ -33,15 +33,33 @@ setup(name='gs.profile.signup.base',
     zip_safe=False,
     install_requires=[
         'setuptools',
-        'Products.GSProfile',
+        'zope.app.apidoc',
+        'zope.cachedescriptors',
+        'zope.component',
+        'zope.contentprovider',
+        'zope.formlib',
+        'zope.interface',
+        'zope.pagetemplate',
+        'zope.publisher',
+        'zope.schema',
+        'zope.viewlet',
+        'Zope2',
+        'gs.content.base',
         'gs.content.form',
         'gs.group.member.join',
         'gs.group.member.invite.base',
+        'gs.help',  # For the help viewlet
+        'gs.profile.email.base',
+        'gs.profile.email.verify',
+        'gs.profile.invite',
         'gs.profile.password',
-        # -*- Extra requirements: -*-
+        'gs.viewlet',  # For the help viewlet
+        'Products.GSAuditTrail',
+        'Products.GSProfile',
+        'Products.XWFCore',
+        'Products.CustomUserFolder',
     ],
     entry_points="""
     # -*- Entry points: -*-
     """,
 )
-
