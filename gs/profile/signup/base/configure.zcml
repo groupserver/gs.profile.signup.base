@@ -47,17 +47,11 @@
     file="browser/javascript/check_email_verified.js"
     permission="zope2.Public" />
     
-  <browser:viewlet name="gs-profile-signup-help"
-    manager="gs.help.interfaces.IUserHelp"
-    template="browser/templates/help.pt"
-    permission="zope.Public"
-    weight="0" />
-    
   <browser:viewletManager
     name="groupserver.SignupMethods"
     permission="zope2.View"
     provides=".interfaces.ISignupMethods"
-    class="gs.viewlet.manager.WeightOrderedViewletManager"
+    class="gs.viewlet.WeightOrderedViewletManager"
     template="browser/templates/alternativesignupmethods.pt"/>
     
   <browser:viewlet name="gs-email-register-method"
@@ -65,6 +59,15 @@
     template="browser/templates/signupmethod-email.pt"
     permission="zope.Public"
     weight="1000" />
+
+  <!--Help-->
+  <browser:viewlet 
+    name="gs-profile-signup-help"
+    manager="gs.help.interfaces.IUserHelp"
+    class="gs.viewlet.SiteViewlet"
+    template="browser/templates/help.pt"
+    permission="zope.Public"
+    weight="0" />
     
 </configure>
 
