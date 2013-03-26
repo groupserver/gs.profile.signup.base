@@ -1,7 +1,7 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 '''Implementation of the Remote Request Registration form.
 '''
-from gs.content.base.page import SitePage
+from gs.content.base import SitePage
 
 
 class GSRemoteRequestRegistration(SitePage):

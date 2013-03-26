@@ -1,23 +1,19 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
+from zope.app.apidoc.interface import getFieldsInOrder
 from zope.component import createObject
 from zope.formlib import form
-try:
-    from five.formlib.formbase import PageForm
-except ImportError:
-    from Products.Five.formlib.formbase import PageForm  # lint:ok
-from Products.Five.browser.pagetemplatefile \
-    import ZopeTwoPageTemplateFile
-from Products.CustomUserFolder.interfaces import IGSUserInfo
-from Products.XWFCore.XWFUtils import get_the_actual_instance_from_zope
-from Products.GSProfile import interfaces
-from Products.GSProfile.profileaudit import *
-from Products.GSProfile.edit_profile import EditProfileForm,\
-    select_widget, wym_editor_widget, multi_check_box_widget
-from Products.GSProfile.utils import profile_interface_name, enforce_schema
+from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
+from gs.content.form import select_widget, multi_check_box_widget
+from gs.content.form.utils import enforce_schema
 from gs.group.member.join.interfaces import IGSJoiningUser
 from gs.group.member.invite.base.inviter import Inviter
 from gs.profile.email.base.emailuser import EmailUser
-from zope.app.apidoc.interface import getFieldsInOrder
+from Products.CustomUserFolder.interfaces import IGSUserInfo
+from Products.GSProfile import interfaces
+from Products.GSProfile.profileaudit import *
+from Products.GSProfile.edit_profile import EditProfileForm, wym_editor_widget
+from Products.GSProfile.utils import profile_interface_name
+from Products.XWFCore.XWFUtils import get_the_actual_instance_from_zope
 
 
 class ChangeProfileForm(EditProfileForm):
@@ -30,7 +26,7 @@ class ChangeProfileForm(EditProfileForm):
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
 
     def __init__(self, context, request):
-        PageForm.__init__(self, context, request)  # TODO: Is this right?
+        super(ChangeProfileForm, self).__init__(context, request)
         profileInterfaceName = profile_interface_name(context)
         registerInterfaceName = '%sRegister' % profileInterfaceName
 

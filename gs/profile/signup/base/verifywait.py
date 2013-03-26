@@ -11,7 +11,7 @@ from Products.XWFCore.XWFUtils import get_support_email,\
 from Products.CustomUserFolder.interfaces import IGSUserInfo
 from gs.profile.email.base.emailaddress import address_exists
 from gs.profile.email.base.emailuser import EmailUser
-from gs.content.form.form import SiteForm
+from gs.content.form import SiteForm
 from interfaces import IGSVerifyWait
 import logging
 log = logging.getLogger('gs.profile.signup.base')
