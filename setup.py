@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 import os
 from setuptools import setup, find_packages
 from version import get_version
@@ -46,18 +46,18 @@ setup(name='gs.profile.signup.base',
         'Zope2',
         'gs.content.base',
         'gs.content.form',
-        'gs.group.member.join',
         'gs.group.member.invite.base',
+        'gs.group.member.join',
         'gs.help',  # For the help viewlet
         'gs.profile.email.base',
         'gs.profile.email.verify',
         'gs.profile.invite',
         'gs.profile.password',
-        'gs.viewlet',  # For the help viewlet
+        'gs.viewlet',
+        'Products.CustomUserFolder',
         'Products.GSAuditTrail',
         'Products.GSProfile',
         'Products.XWFCore',
-        'Products.CustomUserFolder',
     ],
     entry_points="""
     # -*- Entry points: -*-
