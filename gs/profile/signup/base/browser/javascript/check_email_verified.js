@@ -3,21 +3,20 @@ jQuery.noConflict();
 GSCheckEmailVerified = function () {
 
     // Private variables
-    var email = null;
-    var button = null;
-    var satusUpdate = null;
-    var thingsToCheck = null;
-    
-    var ADDRESS = 'checkemailverified.ajax';
-    var TIMEOUT_DELTA = 4000;
-    var AUTOSUBMIT_TIMEOUT = 5000;
-    var CHECKING_MSG = '<strong>Checking</strong> verification ' +
-      'status&#160;<img src="/++resource++anim/wait.gif"/>';
-    var UNVERIFIED_MSG = 'The email address is '+
-      '<strong>not verified.</strong>';
-    var VERIFIED_MSG = 'The email address is <strong>verified.</strong> ' +
-      'You may now click the <samp class="button">Finish</samp> button, or ' +
-      'simply wait XSEC seconds.';
+    var email = null,
+        button = null,
+        satusUpdate = null,
+        thingsToCheck = null
+        ADDRESS = 'checkemailverified.ajax',
+        TIMEOUT_DELTA = 4000,
+        AUTOSUBMIT_TIMEOUT = 5000,
+        CHECKING_MSG = '<strong>Checking</strong> verification ' +
+            'status&#160;<img src="/++resource++anim/wait.gif"/>',
+        UNVERIFIED_MSG = 'The email address is '+
+            '<strong>not verified.</strong>',
+        VERIFIED_MSG = 'The email address is <strong>verified.</strong> '+
+            'You may now click the <samp class="button">Finish</samp> ' +
+            'button, or simply wait XSEC seconds.';
     // Private methods
 
     // Public methods and properties. The "checkServer" and "checkReturn"
@@ -86,4 +85,3 @@ GSCheckEmailVerified = function () {
         }
     };
 }(); // GSCheckEmailVerified
-
