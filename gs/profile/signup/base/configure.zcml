@@ -13,6 +13,10 @@
     name="request_registration.html"
     class=".request_registration.RequestRegistrationForm"
     permission="zope2.View"/>
+  <browser:resource 
+    name="gs-profile-signup-20130510.js"
+    file="browser/javascript/signup.js"
+    permission="zope2.Public" />
 
   <browser:page 
     for="Products.XWFChat.interfaces.IGSGroupFolder"
@@ -56,7 +60,9 @@
     name="verify_wait.html"
     class=".verifywait.VerifyWaitForm"
     permission="zope2.ManageProperties" />
-  <browser:resource name="check_email_verified-20110616.js"
+
+  <browser:resource 
+    name="check_email_verified-20110616.js"
     file="browser/javascript/check_email_verified.js"
     permission="zope2.Public" />
     
