@@ -1,6 +1,6 @@
 // GroupServer module for checking if email addresses are verified
 jQuery.noConflict();
-GSCheckEmailVerified = function () {
+var GSCheckEmailVerified = function () {
 
     // Private variables
     var email = null,
