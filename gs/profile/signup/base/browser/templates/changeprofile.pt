@@ -10,32 +10,17 @@
     </title>
   </head>
   <body>
-    <tal:block metal:fill-slot="sitenavigation">
-      <div id="sitenavigation">&#160;</div>
-    </tal:block>
-    <tal:block metal:fill-slot="search">
-      <div id="searcharea">&#160;</div>
-    </tal:block>
     <tal:block metal:fill-slot="utilitylinks">
       <div id="utilitylinks">&#160;</div>
     </tal:block>
-    <div id="contextnav" metal:fill-slot="contextnavigation">
-      <p class="label">Sign Up</p>
-      <ul id="signup-progress">
-        <li class="done">Enter email</li>
-        <li class="done">Set password</li>
-        <li class="current">Change profile</li>
-        <li>Verify email</li>
-      </ul>
-    </div><!--contextnav-->
     <tal:block content="structure provider:groupserver.FormStatusMessage"
       define="errors view/errors; status view/status; widgets view/widgets"
       metal:fill-slot="messages">&#160;</tal:block>
     <tal:block metal:fill-slot="body">
       <h1 tal:content="view/label">Edit Profile</h1>
       <p>
-        <strong>Thanks for that!</strong>
-        Your password has been set.
+        <strong>Thanks for that:</strong>
+        your password has been set.
       </p>
       <p>
         You can now <strong>change your profile.</strong>
@@ -115,26 +100,13 @@
       </form>
     </tal:block>
     <tal:block metal:fill-slot="javascript">
-      <script type="text/javascript"
-        src="/++resource++check_required-20071214.js">&#160;</script>
-      <script type="text/javascript"
-        tal:define="widgets view/widgets; 
-          button string:#form\\.actions\\.change"
-        tal:content="provider:groupserver.RequiredWidgetsJavaScript">
-        alert("I have not been replaced.");
-      </script>
-      <script type="text/javascript"
-        src="/++resource++popup_help-20071218.js">&#160;</script>
       <script type="text/javascript">
-        jQuery(document).ready( function() {
-            GSPopupFormHelp.init('#edit-profile');
-            jQuery('#form\\.fn').focus();
-        });
+        document.getElementById('#form\\.fn').focus();
       </script>
-      <script type="text/javascript" 
+      <!--script type="text/javascript" 
         src="/++resource++wymeditor-20090831/jquery.wymeditor.js">&#160;</script>
       <script type="text/javascript"
-        src="/++resource++gswym.js">&#160;</script>
+        src="/++resource++gswym.js">&#160;</script-->
     </tal:block>
   </body>
 </html>

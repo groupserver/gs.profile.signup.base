@@ -25,15 +25,15 @@ class ChangeProfileForm(EditProfileForm):
     pageTemplateFileName = 'browser/templates/changeprofile.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
 
-    def __init__(self, context, request):
-        super(ChangeProfileForm, self).__init__(context, request)
-        profileInterfaceName = profile_interface_name(context)
+    def __init__(self, profile, request):
+        super(ChangeProfileForm, self).__init__(profile, request)
+        profileInterfaceName = profile_interface_name(profile)
         registerInterfaceName = '%sRegister' % profileInterfaceName
 
         self.profileInterface = getattr(interfaces, profileInterfaceName)
         self.registerInterface = interface = getattr(interfaces,
                                                         registerInterfaceName)
-        enforce_schema(context, interface)
+        enforce_schema(profile, interface)
 
         self.__userInfo = self.__emailUser = None
         self.__formFields = self.__siteInfo = None
