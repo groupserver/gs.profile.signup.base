@@ -30,6 +30,10 @@
     name="register_password.html"
     class=".setpassword.SetPasswordForm"
     permission="zope2.ManageProperties" />
+  <browser:resource 
+    name="gs-profile-signup-password-20130514.js"
+    file="browser/javascript/set_password.js"
+    permission="zope2.Public" />
 
   <browser:page 
     for="Products.CustomUserFolder.interfaces.ICustomUser"

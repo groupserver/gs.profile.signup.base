@@ -1,4 +1,4 @@
-jQuery.noConflict()
+jQuery.noConflict();
 
 function GSProfilePasswordToggleVisibility (entryId, toggleId) {
     var entry = null, 
@@ -11,7 +11,7 @@ function GSProfilePasswordToggleVisibility (entryId, toggleId) {
     }
     
     function set_hidden () {
-        entry.atttr('type', 'password');
+        entry.attr('type', 'password');
         visible = false;
     }
 
@@ -19,7 +19,8 @@ function GSProfilePasswordToggleVisibility (entryId, toggleId) {
         return visibile;
     }
 
-    function toggle() {
+    function toggle_visibility() {
+        visible = ! visible;
         if ( visible ) {
             set_visible();
         } else {
@@ -30,9 +31,16 @@ function GSProfilePasswordToggleVisibility (entryId, toggleId) {
     function init () {
         entry = jQuery(entryId);
         toggle = jQuery(toggleId);
-        visible = toggle.attr('checked');
-        toggle();
-    }(); // Note the () for automatic execution
+        visible = Boolean(Number(toggle.val()));
+        if ( visible ) {
+            set_visible();
+        } else {
+            set_hidden();
+        }
+        toggle.change(toggle_visibility);
+        entry.focus();
+    }
+    init();
 
     return {
         get_visibility: function () { return get_visibility_value(); },

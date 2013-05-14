@@ -1,4 +1,4 @@
-jQuery.noConflict()
+jQuery.noConflict();
 
 function gs_profile_signup_init_disclosure () {
     jQuery("#privacy-button").click( function () {
