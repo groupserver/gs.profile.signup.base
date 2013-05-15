@@ -66,7 +66,7 @@
     permission="zope2.ManageProperties" />
 
   <browser:resource 
-    name="check_email_verified-20110616.js"
+    name="gs-profile-signup-verify-check-20130515.js"
     file="browser/javascript/check_email_verified.js"
     permission="zope2.Public" />
     
