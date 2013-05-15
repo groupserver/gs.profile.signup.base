@@ -41,24 +41,6 @@
     class=".changeprofile.ChangeProfileForm"
     permission="zope2.ManageProperties" />
 
-  <interface 
-    interface=".interfaces.IGSResendVerification" />
-
-  <interface 
-    interface=".interfaces.IGSAwaitingVerificationJavaScriptContentProvider"
-    type="zope.contentprovider.interfaces.ITALNamespaceData"/>
-  <class 
-    class=".awaitingverificationcontentprovider.GSAwaitingVerificationJavaScriptContentProvider">
-    <implements 
-      interface=".interfaces.IGSAwaitingVerificationJavaScriptContentProvider"/>
-  </class>
-  <adapter
-    for="zope.interface.Interface zope.publisher.interfaces.browser.IDefaultBrowserLayer zope.interface.Interface"
-    factory=".awaitingverificationcontentprovider.GSAwaitingVerificationJavaScriptContentProvider"
-    provides="zope.contentprovider.interfaces.IContentProvider"
-    name="groupserver.AwaitingVerificationJavaScript"/>
-
-
   <browser:page 
     for="Products.CustomUserFolder.interfaces.ICustomUser"
     name="verify_wait.html"
