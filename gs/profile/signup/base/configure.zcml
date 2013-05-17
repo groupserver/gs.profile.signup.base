@@ -31,7 +31,7 @@
     class=".setpassword.SetPasswordForm"
     permission="zope2.ManageProperties" />
   <browser:resource 
-    name="gs-profile-signup-password-20130514.js"
+    name="gs-profile-signup-password-20130517.js"
     file="browser/javascript/set_password.js"
     permission="zope2.Public" />
 
