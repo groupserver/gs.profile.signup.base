@@ -32,7 +32,6 @@
           <div id="tc-content">Loading&#8230;</div>
         </div>
       </div>
-      
       <div id="privacy" class="disclosureWidget">
         <p>
           <a class="disclosureButton" id="privacy-button"
@@ -45,12 +44,9 @@
           <div id="privacy-content">Loading&#8230;</div>
         </div>
       </div>
-      
-    <span tal:replace="structure provider:groupserver.SignupMethods" />
-       
+      <span tal:replace="structure provider:groupserver.SignupMethods" />
     </tal:block>
     <script metal:fill-slot="javascript" type="text/javascript" defer="true"
             src="/++resource++gs-profile-signup-20130510.js">&#160;</script>
   </body>
 </html>
-  
