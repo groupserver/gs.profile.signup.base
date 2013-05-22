@@ -1,33 +1,26 @@
 <div id="signupmethod-email">
-      <form enctype="multipart/form-data" method="post"
-            action="/request_registration.html"
-            id="register.form">
-
-  <div class="form-widget required" id="widget-form.email">
-    
-        <tal:block define="widgets python:[view.__parent__.widgets['email']]">
-          <div tal:replace="structure provider:groupserver.FormWidgets"/>
-        </tal:block>
-        <tal:block repeat="widget python:[view.__parent__.widgets['groupId'], view.__parent__.widgets['came_from']]">
-          <span tal:replace="structure widget/hidden"/>
-        </tal:block>
-    
-    
-  </div><!--form-widget-->
-        
-        <div id="emailHelp">
-          <p class="message-error" style="display: none;">
-            The email address is not valid.
-            Please enter a valid email address.
-          </p>
-        </div><!--Password Help-->
-        <div class="buttons">
-
-          
-            <div class="formelementbutton">
-              <input type="submit" id="form.actions.5369676e207570" name="form.actions.5369676e207570" value="Sign up" class="button" />
-            </div>
-          
-        </div><!--buttons-->
-      </form>
+  <form enctype="multipart/form-data" method="post"
+        action="/request_registration.html"
+        id="register.form">
+    <div class="form-widget required" id="widget-form.email">
+      <tal:block define="widgets python:[view.__parent__.widgets['email']]">
+        <div tal:replace="structure provider:groupserver.FormWidgets"/>
+      </tal:block>
+    </div><!--form-widget-->
+    <tal:block repeat="widget python:[view.__parent__.widgets['groupId'], view.__parent__.widgets['came_from']]">
+      <span tal:replace="structure widget/hidden"/>
+    </tal:block>
+    <div id="emailHelp">
+      <p class="message-error" style="display: none;">
+        The email address is not valid.
+        Please enter a valid email address.
+      </p>
+    </div><!--Password Help-->
+    <div class="buttons">
+      <div class="formelementbutton">
+        <input type="submit" id="form.actions.register" 
+               name="form.actions.register" value="Register" class="button" />
+      </div>
+    </div><!--buttons-->
+  </form>
 </div>

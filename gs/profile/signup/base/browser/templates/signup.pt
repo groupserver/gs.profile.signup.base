@@ -9,25 +9,17 @@
     </title>
   </head>
   <body>
-    <div id="contextnav" metal:fill-slot="contextnavigation">
-      <p class="label">Sign Up</p>
-      <ul id="signup-progress">
-        <li class="current">Choose method</li>
-        <li>Set password</li>
-        <li>Change profile</li>
-        <li>Verify email or Finish</li>
-      </ul>
-    </div><!--contextnav-->
     <tal:block content="structure provider:groupserver.FormStatusMessage"
       define="errors view/errors; status view/status; widgets view/widgets"
       metal:fill-slot="messages">&#160;</tal:block>
     <tal:block metal:fill-slot="body">
       <h1 tal:content="view/label">Sign up</h1>
-      <p id="intro"><strong>Sign up with
+      <p id="intro">
+        <strong>Register with
           <span class="site" tal:content="siteName">this site</span></strong>
-        so you can join groups, post messages, and receive email from
-        your groups.
-      
+          so you can join groups, post messages, and receive email from
+          your groups.
+      </p>
       <div id="tc" class="disclosureWidget">
         <p>
           <a class="disclosureButton" id="tc-button"

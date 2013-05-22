@@ -9,11 +9,11 @@ from gs.content.form import SiteForm
 from gs.profile.email.base.emailaddress import NewEmailAddress, \
     EmailAddressExists
 from gs.profile.email.verify.emailverificationuser import EmailVerificationUser
-from interfaces import IGSRequestRegistration
 from Products.GSProfile.profileaudit import *
 from Products.GSAuditTrail.queries import AuditQuery
 from gs.profile.password.audit import SET, \
-  SUBSYSTEM as GS_PROFILE_PASSWORD_SUBSYSTEM
+    SUBSYSTEM as GS_PROFILE_PASSWORD_SUBSYSTEM
+from interfaces import IGSRequestRegistration
 
 import logging
 log = logging.getLogger('gs.profile.signup.base')
@@ -21,7 +21,7 @@ log = logging.getLogger('gs.profile.signup.base')
 
 class RequestRegistrationForm(SiteForm):
     form_fields = form.Fields(IGSRequestRegistration)
-    label = u'Sign Up'
+    label = u'Register'
     pageTemplateFileName = 'browser/templates/signup.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
 
@@ -66,7 +66,7 @@ class RequestRegistrationForm(SiteForm):
     #   action to the "actions" instance variable (creating it if
     #   necessary). I did not need to explicitly state the label, but it
     #   helps with readability.
-    @form.action(label=u'Sign up', failure='handle_register_action_failure',
+    @form.action(label=u'Register', failure='handle_register_action_failure',
       validator='validate')
     def handle_register(self, action, data):
         assert self.form_fields
@@ -193,7 +193,7 @@ None.'''
                   <li><a href="%(resetUrl)s"><strong>Reset</strong> your
                       password,</a></li>
                   <li><a href="%(loginUrl)s"><strong>Login,</strong></a>
-                  <li><strong>Sign up</strong> with another email
+                  <li><strong>Register</strong> with another email
                     address.</li>
                 </ul>''' % d
 
