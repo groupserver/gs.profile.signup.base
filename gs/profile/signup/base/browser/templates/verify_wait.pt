@@ -16,9 +16,10 @@
     <tal:block metal:fill-slot="utilitylinks">
       <div id="utilitylinks">&#160;</div>
     </tal:block>
-    <form enctype="multipart/form-data"  method="post" action="."
-          id="gs-profile-signup-verify" metal:fill-slot="body"
-          tal:attributes="action request/URL" id="edit-profile">
+    <form id="gs-profile-signup-verify" class="gs-content-js-required" 
+          data-required-buttons="#form\.actions\.send"
+          enctype="multipart/form-data"  method="post" action="."
+          metal:fill-slot="body" tal:attributes="action request/URL">
       
       <h1 tal:content="view/label">Awaiting Verification</h1>
       <p>

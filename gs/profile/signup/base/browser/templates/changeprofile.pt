@@ -55,8 +55,9 @@
           <div id="privacy-content">Loading&#8230;</div>
         </div><!--disclosureShowHide-->
       </div><!--privacy-->
-      <form enctype="multipart/form-data"  method="post" action="."
-        tal:attributes="action request/URL" id="edit-profile">
+      <form id="edit-profile" class="gs-content-js-required" 
+            enctype="multipart/form-data" method="post" action="."
+            tal:attributes="action request/URL">
         <div id="standardProfileFields">
           <tal:block define="widgets view/requiredProfileWidgets">
             <tal:block
