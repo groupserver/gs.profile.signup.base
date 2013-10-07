@@ -1,5 +1,19 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+# Copyright © 2013 OnlineGroups.net and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
 '''Implementation of the Sign Up form.'''
+from __future__ import absolute_import
 from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
@@ -13,7 +27,7 @@ from Products.GSProfile.profileaudit import *
 from Products.GSAuditTrail.queries import AuditQuery
 from gs.profile.password.audit import SET, \
     SUBSYSTEM as GS_PROFILE_PASSWORD_SUBSYSTEM
-from interfaces import IGSRequestRegistration
+from .interfaces import IGSRequestRegistration
 
 import logging
 log = logging.getLogger('gs.profile.signup.base')
