@@ -12,12 +12,10 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-'''Implementation of the Remote Request Registration form.
-'''
-from gs.content.base import SitePage
+from gs.group.base import GroupPage
 
 
-class GSRemoteRequestRegistration(SitePage):
+class GSRemoteRequestRegistration(GroupPage):
     '''View object for the GroupServer Remote Request Registration'''
     def __init__(self, context, request):
         super(GSRemoteRequestRegistration, self).__init__(context, request)
