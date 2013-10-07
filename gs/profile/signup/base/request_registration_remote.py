@@ -13,6 +13,7 @@
 #
 ##############################################################################
 from gs.group.base import GroupPage
+# TODO: Move this to gs.group.remotesignup
 
 
 class GSRemoteRequestRegistration(GroupPage):
