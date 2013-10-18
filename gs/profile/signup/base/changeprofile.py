@@ -18,7 +18,6 @@ from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from gs.content.form import select_widget, multi_check_box_widget
 from gs.content.form.utils import enforce_schema
-from gs.group.member.join.interfaces import IGSJoiningUser
 from gs.group.member.invite.base.inviter import Inviter
 from gs.profile.email.base.emailuser import EmailUser
 from Products.CustomUserFolder.interfaces import IGSUserInfo
@@ -27,6 +26,7 @@ from Products.GSProfile.profileaudit import *
 from Products.GSProfile.edit_profile import EditProfileForm, wym_editor_widget
 from Products.GSProfile.utils import profile_interface_name
 from Products.XWFCore.XWFUtils import get_the_actual_instance_from_zope
+from .utils import join_group
 
 
 class ChangeProfileForm(EditProfileForm):
@@ -194,11 +194,10 @@ class ChangeProfileForm(EditProfileForm):
         return retval
 
     def join_groups(self, groupsToJoin):
-        joiningUser = IGSJoiningUser(self.userInfo)
         for groupId in groupsToJoin:
             groupInfo = createObject('groupserver.GroupInfo',
                                       self.ctx, groupId)
-            joiningUser.join(groupInfo)
+            join_group(self.userInfo, groupInfo, self.request)
 
     def invite_groups(self, groupsToJoin):
         # --=mpj17=-- See the verifywait.VerifyWaitForm.join_groups

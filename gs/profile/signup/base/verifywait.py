@@ -17,16 +17,17 @@ from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
+from gs.content.form import SiteForm
 from gs.group.member.invite.base.queries import InvitationQuery
-from gs.group.member.join.interfaces import IGSJoiningUser
-from gs.profile.invite.invitation import Invitation
-from Products.XWFCore.XWFUtils import get_support_email,\
-    get_the_actual_instance_from_zope
-from Products.CustomUserFolder.interfaces import IGSUserInfo
 from gs.profile.email.base.emailaddress import address_exists
 from gs.profile.email.base.emailuser import EmailUser
-from gs.content.form import SiteForm
+from gs.profile.invite.invitation import Invitation
+from Products.CustomUserFolder.interfaces import IGSUserInfo
+from Products.XWFCore.XWFUtils import get_support_email,\
+    get_the_actual_instance_from_zope
 from .interfaces import IGSVerifyWait
+from .utils import join_group
+
 import logging
 log = logging.getLogger('gs.profile.signup.base')
 
@@ -171,7 +172,6 @@ class VerifyWaitForm(SiteForm):
                 self.userInfo.id)
         invitations = [Invitation(self.ctx, i['invitation_id'])
                         for i in invs]
-        joiningUser = IGSJoiningUser(self.userInfo)
         for invite in invitations:
-            joiningUser.join(invite.groupInfo)
             invite.accept()
+            join_group(self.userInfo, invite.groupInfo, self.request)
