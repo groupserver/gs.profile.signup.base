@@ -109,7 +109,7 @@ class VerifyWaitForm(SiteForm):
 
                 eu = createObject('groupserver.EmailVerificationUserFromEmail',
                                   self.context, newEmail)
-                eu.send_verification(self.request)
+                eu.send_verification_message(self.request)
                 self.status = u'''Another email address verification
                   message has been sent to
                   <code class="email">%s</code>.''' % newEmail
@@ -139,7 +139,7 @@ class VerifyWaitForm(SiteForm):
         self.emailUser.add_address(email, isPreferred=True)
         eu = createObject('groupserver.EmailVerificationUserFromEmail',
                           self.context, email)
-        eu.send_verification(self.request)
+        eu.send_verification_message(self.request)
         assert email in self.emailUser.get_addresses()
         return email
 
