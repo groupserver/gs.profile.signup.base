@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:tal="http://xml.zope.org/namespaces/tal"
-  xmlns:metal="http://xml.zope.org/namespaces/metal"
-  metal:use-macro="context/@@groupserver_layout/page">
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="context/@@groupserver_layout/page">
   <head>
     <title metal:fill-slot="title">
       <span tal:replace="view/label"/>: 
@@ -14,8 +14,8 @@
       <div id="utilitylinks">&#160;</div>
     </tal:block>
     <tal:block content="structure provider:groupserver.FormStatusMessage"
-      define="errors view/errors; status view/status; widgets view/widgets"
-      metal:fill-slot="messages">&#160;</tal:block>
+               define="errors view/errors; status view/status; widgets view/widgets"
+               metal:fill-slot="messages">&#160;</tal:block>
     <tal:block metal:fill-slot="body">
       <h1 tal:content="view/label">Edit Profile</h1>
       <p>
@@ -26,8 +26,8 @@
         You can now <strong>change your profile.</strong>
         When you have finished, click the 
         <samp class="button" 
-          tal:define="action python:[a for a in view.actions][0].label"
-          tal:content="action">Big R</samp> 
+              tal:define="action python:[a for a in view.actions][0].label"
+              tal:content="action">Big R</samp> 
         button.
         Some profile fields are required, and are marked
         <span class="required"><label style="display:inline;margin:0px;">like this</label></span>.
@@ -36,7 +36,7 @@
         Most of your profile properties are only visible to other
         logged in users of
         <span class="site" 
-          tal:content="view/siteInfo/get_name">this site</span>,
+              tal:content="view/siteInfo/get_name">this site</span>,
         when they visit your profile page.
         However, if you post to a public group, then your name will be
         visible to all visitors to that group, even if
@@ -46,10 +46,10 @@
       <div id="privacy" class="disclosureWidget">
         <p>
           <a class="disclosureButton" id="privacy-button"
-            href="javascript:showHideDisclosure('privacy')">Your privacy 
-            is important, and will be maintained  according to the 
-            privacy policy of 
-            <span class="site" tal:content="siteName">this site</span>.</a>
+             href="javascript:showHideDisclosure('privacy')">Your privacy 
+          is important, and will be maintained  according to the 
+          privacy policy of 
+          <span class="site" tal:content="siteName">this site</span>.</a>
         </p>
         <div class="disclosureShowHide" style="display: none;">
           <div id="privacy-content">Loading&#8230;</div>
@@ -64,50 +64,50 @@
               replace="structure provider:groupserver.FormWidgets"/>
           </tal:block>          
         </div><!--standardProfileFields-->
-         <div id="advancedProfileFields" class="disclosureWidget">
+        <div id="advancedProfileFields" class="disclosureWidget">
           <p>
             <a class="disclosureButton" href="javascript:showHideDisclosure('advancedProfileFields')">You may optionally change other parts of your profile.</a>
           </p>
           <div class="disclosureShowHide" style="display: none;">
-           
-          <tal:block define="widgets view/optionalProfileWidgets">
-            <tal:block
-              replace="structure provider:groupserver.FormWidgets"/>
-          </tal:block>
-        </div><!--advancedProfileFields-->
-        
-        <div id="nonProfileFields">
-          <tal:block define="widgets view/nonProfileWidgets">
-            <tal:block
-              replace="structure provider:groupserver.FormWidgets"/>
-          </tal:block>          
-        </div><!--nonProfileFields-->
-        
-        <div id="hiddenFields">
-          <tal:block repeat="widget view/hiddenWidgets">
-            <tal:block
-              replace="structure widget/hidden"/>
-          </tal:block>          
-        </div><!--hiddenFields-->
-        
-        <div class="buttons" tal:condition="view/availableActions">
-          <tal:block repeat="action view/actions">
-            <div class="formelementbutton">
-              <span tal:replace="structure action/render">Button</span>
-            </div>
-          </tal:block>
-        </div>
-        
-      </form>
+            
+            <tal:block define="widgets view/optionalProfileWidgets">
+              <tal:block
+                replace="structure provider:groupserver.FormWidgets"/>
+            </tal:block>
+          </div><!--advancedProfileFields-->
+          
+          <div id="nonProfileFields">
+            <tal:block define="widgets view/nonProfileWidgets">
+              <tal:block
+                replace="structure provider:groupserver.FormWidgets"/>
+            </tal:block>          
+          </div><!--nonProfileFields-->
+          
+          <div id="hiddenFields">
+            <tal:block repeat="widget view/hiddenWidgets">
+              <tal:block
+                replace="structure widget/hidden"/>
+            </tal:block>          
+          </div><!--hiddenFields-->
+          
+          <div class="buttons" tal:condition="view/availableActions">
+            <tal:block repeat="action view/actions">
+              <div class="formelementbutton">
+                <span tal:replace="structure action/render">Button</span>
+              </div>
+            </tal:block>
+          </div><!--buttons-->
+        </div><!--disclosureWidget-->
+      </form><!--edit-profile-->
     </tal:block>
     <tal:block metal:fill-slot="javascript">
       <script type="text/javascript">
         document.getElementById('form.fn').focus();
       </script>
       <!--script type="text/javascript" 
-        src="/++resource++wymeditor-20090831/jquery.wymeditor.js">&#160;</script>
-      <script type="text/javascript"
-        src="/++resource++gswym.js">&#160;</script-->
+          src="/++resource++wymeditor-20090831/jquery.wymeditor.js">&#160;</script>
+          <script type="text/javascript"
+          src="/++resource++gswym.js">&#160;</script-->
     </tal:block>
   </body>
 </html>
