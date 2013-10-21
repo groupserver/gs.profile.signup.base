@@ -102,7 +102,7 @@
     </tal:block>
     <tal:block metal:fill-slot="javascript">
       <script type="text/javascript">
-        document.getElementById('#form\\.fn').focus();
+        document.getElementById('form.fn').focus();
       </script>
       <!--script type="text/javascript" 
         src="/++resource++wymeditor-20090831/jquery.wymeditor.js">&#160;</script>
