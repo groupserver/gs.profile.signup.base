@@ -246,7 +246,7 @@ Side Effects
         #     It makes as much sense as the rest of aquisition.
         ctx = self.context.acl_users.getUser(userInfo.id)
         evu = EmailVerificationUser(ctx, userInfo, email)
-        evu.send_verification_message(self.request)
+        evu.send_verification(self.request)
 
         return userInfo
 
