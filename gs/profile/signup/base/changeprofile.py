@@ -155,14 +155,11 @@ class ChangeProfileForm(EditProfileForm):
         self.actual_handle_set(action, data)
 
         cf = str(data.pop('came_from'))
-        if cf == 'None':
-            cf = ''
+        cf = cf if cf != 'None' else ''
         if self.user_has_verified_email:
-            uri = str(data.get('came_from'))
-            if uri == 'None':
-                uri = '/'
-            uri = '{0}?welcome=1'.format(uri)
-            uri = urlparse(uri)[2:]
+            parsedCameFrom = urlparse(cf)
+            p = parsedCameFrom.path if cf else '/'
+            uri = '{0}?welcome=1'.format(p)
         else:
             email = self.emailUser.get_addresses()[0]
             u = '{0}/verify_wait.html?{1}'

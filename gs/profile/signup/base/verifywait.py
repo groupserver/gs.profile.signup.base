@@ -79,11 +79,10 @@ class VerifyWaitForm(SiteForm):
 
         self.join_groups()
 
-        uri = str(data.get('came_from'))
-        if uri == 'None':
-            uri = '/'
-        uri = '{0}?welcome=1'.format(uri)
-        uri = urlparse(uri)[2:]
+        cameFrom = str(data.get('came_from'))
+        cameFrom = cameFrom if cameFrom != 'None' else '/'
+        parsedCameFrom = urlparse(cameFrom)
+        uri = '{0}?welcome=1'.format(parsedCameFrom.path)
         return self.request.RESPONSE.redirect(uri)
 
     def handle_set_action_failure(self, action, data, errors):
@@ -111,7 +110,7 @@ class VerifyWaitForm(SiteForm):
 
                 eu = createObject('groupserver.EmailVerificationUserFromEmail',
                                   self.context, newEmail)
-                eu.send_verification_message(self.request)
+                eu.send_verification(self.request)
                 self.status = u'''Another email address verification
                   message has been sent to
                   <code class="email">%s</code>.''' % newEmail
@@ -141,7 +140,7 @@ class VerifyWaitForm(SiteForm):
         self.emailUser.add_address(email, isPreferred=True)
         eu = createObject('groupserver.EmailVerificationUserFromEmail',
                           self.context, email)
-        eu.send_verification_message(self.request)
+        eu.send_verification(self.request)
         assert email in self.emailUser.get_addresses()
         return email
 
