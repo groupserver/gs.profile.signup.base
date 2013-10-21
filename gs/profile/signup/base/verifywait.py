@@ -13,6 +13,7 @@
 #
 ##############################################################################
 from __future__ import absolute_import
+from urlparse import urlparse
 from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
 from zope.formlib import form
@@ -81,7 +82,8 @@ class VerifyWaitForm(SiteForm):
         uri = str(data.get('came_from'))
         if uri == 'None':
             uri = '/'
-        uri = '%s?welcome=1' % uri
+        uri = '{0}?welcome=1'.format(uri)
+        uri = urlparse(uri)[2:]
         return self.request.RESPONSE.redirect(uri)
 
     def handle_set_action_failure(self, action, data, errors):

@@ -12,6 +12,9 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+from __future__ import absolute_import
+from urllib import urlencode
+from urlparse import urlparse
 from zope.app.apidoc.interface import getFieldsInOrder
 from zope.component import createObject
 from zope.formlib import form
@@ -158,11 +161,15 @@ class ChangeProfileForm(EditProfileForm):
             uri = str(data.get('came_from'))
             if uri == 'None':
                 uri = '/'
-            uri = '%s?welcome=1' % uri
+            uri = '{0}?welcome=1'.format(uri)
+            uri = urlparse(uri)[2:]
         else:
             email = self.emailUser.get_addresses()[0]
-            uri = 'verify_wait.html?form.email=%s&form.came_from=%s' %\
-              (email, cf)
+            u = '{0}/verify_wait.html?{1}'
+            d = {'form.email': email,
+                'form.came_from': cf}
+            queryString = urlencode(d)
+            uri = u.format(self.userInfo.url, queryString)
 
         return self.request.RESPONSE.redirect(uri)
 
