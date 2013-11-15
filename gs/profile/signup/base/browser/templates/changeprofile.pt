@@ -4,7 +4,7 @@
       metal:use-macro="context/@@groupserver_layout/page">
   <head>
     <title metal:fill-slot="title">
-      <span tal:replace="view/label"/>: 
+      <span tal:replace="view/label"/>:
       Sign Up:
       <span tal:replace="view/siteInfo/get_name"/>
     </title>
@@ -24,10 +24,10 @@
       </p>
       <p>
         You can now <strong>change your profile.</strong>
-        When you have finished, click the 
-        <samp class="button" 
+        When you have finished, click the
+        <samp class="button"
               tal:define="action python:[a for a in view.actions][0].label"
-              tal:content="action">Big R</samp> 
+              tal:content="action">Big R</samp>
         button.
         Some profile fields are required, and are marked
         <span class="required"><label style="display:inline;margin:0px;">like this</label></span>.
@@ -35,7 +35,7 @@
       <p>
         Most of your profile properties are only visible to other
         logged in users of
-        <span class="site" 
+        <span class="site"
               tal:content="view/siteInfo/get_name">this site</span>,
         when they visit your profile page.
         However, if you post to a public group, then your name will be
@@ -46,50 +46,50 @@
       <div id="privacy" class="disclosureWidget">
         <p>
           <a class="disclosureButton" id="privacy-button"
-             href="javascript:showHideDisclosure('privacy')">Your privacy 
-          is important, and will be maintained  according to the 
-          privacy policy of 
+             href="javascript:showHideDisclosure('privacy')">Your privacy
+          is important, and will be maintained  according to the
+          privacy policy of
           <span class="site" tal:content="siteName">this site</span>.</a>
         </p>
         <div class="disclosureShowHide" style="display: none;">
           <div id="privacy-content">Loading&#8230;</div>
         </div><!--disclosureShowHide-->
       </div><!--privacy-->
-      <form id="edit-profile" class="gs-content-js-required" 
+      <form id="edit-profile" class="gs-content-js-required"
             enctype="multipart/form-data" method="post" action="."
             tal:attributes="action request/URL">
         <div id="standardProfileFields">
           <tal:block define="widgets view/requiredProfileWidgets">
             <tal:block
               replace="structure provider:groupserver.FormWidgets"/>
-          </tal:block>          
+          </tal:block>
         </div><!--standardProfileFields-->
         <div id="advancedProfileFields" class="disclosureWidget">
           <p>
             <a class="disclosureButton" href="javascript:showHideDisclosure('advancedProfileFields')">You may optionally change other parts of your profile.</a>
           </p>
           <div class="disclosureShowHide" style="display: none;">
-            
+
             <tal:block define="widgets view/optionalProfileWidgets">
               <tal:block
                 replace="structure provider:groupserver.FormWidgets"/>
             </tal:block>
           </div><!--advancedProfileFields-->
-          
+
           <div id="nonProfileFields">
             <tal:block define="widgets view/nonProfileWidgets">
               <tal:block
                 replace="structure provider:groupserver.FormWidgets"/>
-            </tal:block>          
+            </tal:block>
           </div><!--nonProfileFields-->
-          
+
           <div id="hiddenFields">
             <tal:block repeat="widget view/hiddenWidgets">
               <tal:block
                 replace="structure widget/hidden"/>
-            </tal:block>          
+            </tal:block>
           </div><!--hiddenFields-->
-          
+
           <div class="buttons" tal:condition="view/availableActions">
             <tal:block repeat="action view/actions">
               <div class="formelementbutton">
@@ -104,11 +104,13 @@
       <script type="text/javascript">
         document.getElementById('form.fn').focus();
       </script>
-      <!--script type="text/javascript" 
-          src="/++resource++wymeditor-20090831/jquery.wymeditor.js">&#160;</script>
-          <script type="text/javascript"
-          src="/++resource++gswym.js">&#160;</script-->
+      <script
+        class="gs-content-js-wymeditor"
+        type="text/javascript"
+        data-text-element="#form\.biography"
+        data-submit="#form\.actions\.change"
+        src="/++resource++wymeditor-1.0.0b5/gswymeditor-min.js"
+        defer="true"> </script>
     </tal:block>
   </body>
 </html>
-
