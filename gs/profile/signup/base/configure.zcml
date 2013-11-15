@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright © 2013 OnlineGroups.net and Contributors. -->
+<!-- All Rights Reserved. -->
+
+<!-- This software is subject to the provisions of the Zope Public -->
+<!-- License, Version 2.1 (ZPL).  A copy of the ZPL should accompany this -->
+<!-- distribution. -->
+
+<!-- THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED -->
+<!-- WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED -->
+<!-- WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE. -->
 <configure xmlns="http://namespaces.zope.org/zope"
-  xmlns:browser="http://namespaces.zope.org/browser"
-  xmlns:five="http://namespaces.zope.org/five"
-  i18n_domain="groupserver">
-  <interface 
+           xmlns:browser="http://namespaces.zope.org/browser"
+           i18n_domain="groupserver">
+
+  <include package="zope.viewlet" file="meta.zcml" />
+
+  <interface
     interface=".interfaces.IGSRequestRegistration" />
-  <interface 
+  <interface
     interface=".interfaces.IGSRequestRegistrationMarker"
     type="zope.app.content.interfaces.IContentType" />
-  <browser:page 
+  <browser:page
     for="*"
     name="request_registration.html"
     class=".request_registration.RequestRegistrationForm"
     permission="zope2.View"/>
-  <browser:resource 
+  <browser:resource
     name="gs-profile-signup-20130510.js"
     file="browser/javascript/signup.js"
     permission="zope2.Public" />
 
-  <browser:page 
+  <browser:page
     for="Products.XWFChat.interfaces.IGSGroupFolder"
     name="admin_remote_request_register.html"
     class=".request_registration_remote.GSRemoteRequestRegistration"
@@ -30,49 +43,48 @@
     name="register_password.html"
     class=".setpassword.SetPasswordForm"
     permission="zope2.ManageProperties" />
-  <browser:resource 
+  <browser:resource
     name="gs-profile-signup-password-20130517.js"
     file="browser/javascript/set_password.js"
     permission="zope2.Public" />
 
-  <browser:page 
+  <browser:page
     for="Products.CustomUserFolder.interfaces.ICustomUser"
     name="registration_profile.html"
     class=".changeprofile.ChangeProfileForm"
     permission="zope2.ManageProperties" />
 
-  <browser:page 
+  <browser:page
     for="Products.CustomUserFolder.interfaces.ICustomUser"
     name="verify_wait.html"
     class=".verifywait.VerifyWaitForm"
     permission="zope2.ManageProperties" />
 
-  <browser:resource 
+  <browser:resource
     name="gs-profile-signup-verify-check-20130515.js"
     file="browser/javascript/check_email_verified.js"
     permission="zope2.Public" />
-    
+
   <browser:viewletManager
     name="groupserver.SignupMethods"
     permission="zope2.View"
     provides=".interfaces.ISignupMethods"
     class="gs.viewlet.WeightOrderedViewletManager"
     template="browser/templates/alternativesignupmethods.pt"/>
-    
+
   <browser:viewlet name="gs-email-register-method"
-    manager="gs.profile.signup.base.interfaces.ISignupMethods"
-    template="browser/templates/signupmethod-email.pt"
-    permission="zope.Public"
-    weight="1000" />
+                   manager="gs.profile.signup.base.interfaces.ISignupMethods"
+                   template="browser/templates/signupmethod-email.pt"
+                   permission="zope.Public"
+                   weight="1000" />
 
   <!--Help-->
-  <browser:viewlet 
+  <browser:viewlet
     name="gs-profile-signup-help"
     manager="gs.help.interfaces.IUserHelp"
     class="gs.viewlet.SiteViewlet"
     template="browser/templates/help.pt"
     permission="zope.Public"
     weight="0" />
-    
-</configure>
 
+</configure>
