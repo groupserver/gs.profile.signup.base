@@ -157,7 +157,7 @@
           <samp class="folder">Spam</samp>) folder to see if the message
           is there.
           If it is then you should go carry out steps 2&#8213;5 in the 
-          <a href="gs-profile-signup-verify">Verify Email</a> section 
+          <a href="#gs-profile-signup-verify">Verify Email</a> section 
           above.</li><!--gs-profile-signup-verify-trouble-junk-->
         <li id="gs-profile-signup-verify-trouble-correct">
           Check that your email address is correct.
