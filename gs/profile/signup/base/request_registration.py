@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright © 2013 OnlineGroups.net and Contributors.
+# Copyright © 2014 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -12,16 +12,15 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-'''Implementation of the Sign Up form.'''
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals
 from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.XWFCore.XWFUtils import get_support_email
 from Products.GSProfile.utils import login, create_user_from_email
 from gs.content.form import SiteForm
-from gs.profile.email.base.emailaddress import NewEmailAddress, \
-    EmailAddressExists
+from gs.profile.email.base import NewEmailAddress, EmailAddressExists, \
+    sanitise_address
 from gs.profile.email.verify.emailverificationuser import EmailVerificationUser
 from Products.GSProfile.profileaudit import *
 from Products.GSAuditTrail.queries import AuditQuery
@@ -35,7 +34,7 @@ log = logging.getLogger('gs.profile.signup.base')
 
 class RequestRegistrationForm(SiteForm):
     form_fields = form.Fields(IGSRequestRegistration)
-    label = u'Register'
+    label = 'Register'
     pageTemplateFileName = 'browser/templates/signup.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
 
@@ -44,7 +43,7 @@ class RequestRegistrationForm(SiteForm):
         self.groupsInfo = createObject('groupserver.GroupsInfo', context)
 
         self.groupInfo = None
-        if 'form.groupId' in request.form.keys():
+        if 'form.groupId' in request.form:
             gId = request.form['form.groupId']
             if gId in self.groupsInfo.get_visible_group_ids():
                 self.groupInfo = createObject('groupserver.GroupInfo',
@@ -52,20 +51,20 @@ class RequestRegistrationForm(SiteForm):
 
         # handle errors from other signup methods where the user has already
         # been registered wih a given email address
-        if 'email' in request.form.keys():
+        if 'email' in request.form:
             try:
                 nextPage = self.next_page_from_email(request.form['email'])
                 self.status = nextPage.message
                 self.errors = []
             except:
-                m = "Passed an email {}, but an error occurred while "\
+                m = "Passed an email {0}, but an error occurred while "\
                     "processing it.".format(request.form['email'])
                 log.error(m)
 
     @property
     def verificationEmailAddress(self):
         retval = get_support_email(self.context, self.siteInfo.id)
-        assert type(retval) == str
+        assert type(retval) in (str, unicode)
         assert '@' in retval
         return retval
 
@@ -87,8 +86,8 @@ class RequestRegistrationForm(SiteForm):
         assert action
         assert data
 
-        email = data['email'].strip()
-        emailChecker = NewEmailAddress(title=u'Email')
+        email = sanitise_address(data['email'])
+        emailChecker = NewEmailAddress(title='Email')
         emailChecker.context = self.context  # --=mpj17=-- Legit? Works!
         try:
             emailChecker.validate(email)
@@ -120,9 +119,9 @@ class RequestRegistrationForm(SiteForm):
 
     def handle_register_action_failure(self, action, data, errors):
         if len(errors) == 1:
-            self.status = u'<p>There is an error:</p>'
+            self.status = '<p>There is an error:</p>'
         else:
-            self.status = u'<p>There are errors:</p>'
+            self.status = '<p>There are errors:</p>'
 
     def next_page_from_email(self, email):
         '''Figure out the next page for the existing user
@@ -169,7 +168,7 @@ Side Effects
 
 None.'''
         uri = ''
-        m = u''
+        m = ''
         systemLoginRequired = False
 
         emailUser = createObject('groupserver.EmailUserFromEmailAddress',
@@ -200,7 +199,7 @@ None.'''
                 'resetUrl': 'reset_password.html?form.email=%s' % email,
                 'loginUrl': '/login.html',
             }
-            m = u'''A user with the email address
+            m = '''A user with the email address
                 <code class="email">%(email)s</code> already exists on
                 <span class="site">%(site)s</span>. Either
                 <ul>
@@ -253,10 +252,10 @@ Side Effects
     def get_uri_end(self, data):
         '''Get the snippet of a URI that comes at the end of all redirects
         from this page.'''
-        cf = str(data.get('came_from'))
+        cf = unicode(data.get('came_from'))
         if cf == 'None':
             cf = ''
-        gid = str(data.get('groupId'))
+        gid = unicode(data.get('groupId'))
         if gid == 'None':
             gid = ''
         retval = '?form.groupId=%s&form.came_from=%s' % (gid, cf)
