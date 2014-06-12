@@ -20,7 +20,7 @@ from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from gs.content.form.base import select_widget, multi_check_box_widget
-from gs.content.form.utils import enforce_schema
+from gs.content.form.base.utils import enforce_schema
 from gs.group.member.invite.base.inviter import Inviter
 from gs.profile.email.base.emailuser import EmailUser
 from Products.CustomUserFolder.interfaces import IGSUserInfo
