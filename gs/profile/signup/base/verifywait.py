@@ -18,7 +18,7 @@ from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-from gs.content.form import SiteForm
+from gs.content.form.base import SiteForm
 from gs.group.member.invite.base.queries import InvitationQuery
 from gs.profile.email.base.emailaddress import address_exists
 from gs.profile.email.base.emailuser import EmailUser

@@ -18,7 +18,7 @@ from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.XWFCore.XWFUtils import get_support_email
 from Products.GSProfile.utils import login, create_user_from_email
-from gs.content.form import SiteForm
+from gs.content.form.base import SiteForm
 from gs.profile.email.base import NewEmailAddress, EmailAddressExists, \
     sanitise_address
 from gs.profile.email.verify.emailverificationuser import EmailVerificationUser
