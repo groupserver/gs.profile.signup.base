@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
-# Copyright © 2013 OnlineGroups.net and Contributors.
+# Copyright © 2013, 2014 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -11,13 +11,14 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
+############################################################################
+from __future__ import absolute_import, unicode_literals
 from zope.component import createObject
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface.interface import Interface
 from zope.schema import ASCIILine, Text, URI, ValidationError
 from zope.viewlet.interfaces import IViewletManager
-from Products.GSProfile.interfaces import IGSEmailAddressEntry
+from gs.core import to_ascii
 from gs.profile.email.base.emailaddress import EmailAddress
 from gs.profile.password.interfaces import ISetPassword
 
@@ -33,16 +34,16 @@ class GroupIDNotFound(ValidationError):
         self.value = value
 
     def __unicode__(self):
-        retval = u'The group with the identifier %s is not in the '\
-            u'list of visible groups.' % repr(self.value)
+        retval = 'The group with the identifier %s is not in the '\
+                 'list of visible groups.' % repr(self.value)
         return retval
 
     def __str__(self):
-        retval = unicode(self).encode('ascii', 'ignore')
+        retval = to_ascii(unicode(self))
         return retval
 
     def doc(self):
-        return self.__str__()
+        return str(self)
 
 
 class GroupID(ASCIILine):
@@ -54,59 +55,75 @@ class GroupID(ASCIILine):
         return True
 
 
-class IGSRequestRegistration(IGSEmailAddressEntry):
+class IGSRequestRegistration(Interface):
     """Schema use to define the user-interface that start the whole
     registration process"""
     # Unfortunately the group identifier is not checked against the
     #   joinable groups, because there is no "user" to check with.
-    groupId = GroupID(title=u'Group Identifier',
-      description=u'The identifier for the group that you '
-        u'wish to join.',
-      required=False)
+    email = EmailAddress(
+        title='Email address',
+        description='Your email address.',
+        required=True)
+    groupId = GroupID(
+        title='Group Identifier',
+        description='The identifier for the group that you wish to join.',
+        required=False)
 
-    came_from = URI(title=u'Came From',
-      description=u'The page to return to after registration has finished',
-      required=False)
+    came_from = URI(
+        title='Came From',
+        description='The page to return to after registration has finished',
+        required=False)
 
 
 class IGSSetPasswordRegister(ISetPassword):
-    groupId = GroupID(title=u'Group Identifier',
-      description=u'The identifier for the group that you '
-        u'wish to join.',
-      required=False)
+    groupId = GroupID(
+        title='Group Identifier',
+        description='The identifier for the group that you wish to join.',
+        required=False)
 
-    came_from = URI(title=u'Came From',
-      description=u'The page to return to after registration has finished',
-      required=False)
+    came_from = URI(
+        title='Came From',
+        description='The page to return to after registration has finished',
+        required=False)
 
 
 # Change Profile is a bit special
 
 
-class IGSResendVerification(IGSEmailAddressEntry):
+class IGSResendVerification(Interface):
     """Schema use to define the user-interface that the user uses to
     resend his or her verification email, while in the middle of
     registration."""
+    email = EmailAddress(
+        title='Email address',
+        description='Your email address that you want to verify.',
+        required=True)
 
 
-class IGSVerifyWait(IGSEmailAddressEntry):
+class IGSVerifyWait(Interface):
     """Schema use to define the user-interface presented while the user
     waits for verification of his or her email address."""
-
-    came_from = URI(title=u'Came From',
-      description=u'The page to return to after registration has finished',
-      required=False)
+    email = EmailAddress(
+        title='Email address',
+        description='Your email address.',
+        required=True)
+    came_from = URI(
+        title='Came From',
+        description='The page to return to after registration has finished',
+        required=False)
 
 
 class IGSAwaitingVerificationJavaScriptContentProvider(IContentProvider):
-    pageTemplateFileName = Text(title=u"Page Template File Name",
-      description=u'The name of the ZPT file that is used to render the '
-        u'javascript.',
-      required=False,
-      default=u"browser/templates/verify_wait_javascript.pt")
+    pageTemplateFileName = Text(
+        title="Page Template File Name",
+        description='The name of the ZPT file that is used to render the '
+                    'javascript.',
+        required=False,
+        default="browser/templates/verify_wait_javascript.pt")
 
-    email = EmailAddress(title=u'Email Address',
-        description=u'Your email address.',
+    email = EmailAddress(
+        title='Email Address',
+        description='Your email address.',
         required=True)
 
 
