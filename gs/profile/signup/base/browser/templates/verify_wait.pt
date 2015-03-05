@@ -10,6 +10,20 @@
       <span tal:replace="view/userInfo/name"/>:
       <span tal:replace="view/siteInfo/name"/>
     </title>
+    <style type="text/css" metal:fill-slot="style">
+      .status {
+        max-width: 0;
+        max-height: 0;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .status-current {
+        max-width: 43.75em;
+        max-height: 2.5em;
+        -webkit-transition: max-width 1s;
+        transition: max-width 1s;
+      }
+    </style>
   </head>
   <body>
     <tal:block content="structure provider:groupserver.FormStatusMessage"
@@ -41,11 +55,26 @@
         <span tal:replace="structure widget/hidden"/>
       </tal:block>
       <div class="buttons" tal:condition="view/availableActions">
-        <span id="checking"
-              i18n:translate="verify-wait-status-checking">
+        <span id="gs-profile-signup-base-verify-wait-status-checking"
+              class="status" i18n:translate="verify-wait-status-checking">
           Checking verification status
           <span data-icon="&#xe619;" aria-hidden="true" class="loading"
                 i18n:name="loadingIcon"> </span>
+        </span>
+        <span id="gs-profile-signup-base-verify-wait-status-unverified"
+               class="status" i18n:name="verify-wait-status-unverified">
+          The email address is <strong>unverified.</strong>
+        </span>
+        <span id="gs-profile-signup-base-verify-wait-status-verified"
+               class="status" i18n:name="verify-wait-status-verified">
+          The email address is <strong>verified.</strong>
+          Click the
+          <samp class="button" i18n:name="button"
+                tal:define="action python:[a for a in view.actions][0].label"
+                tal:content="action">Big R</samp>
+          button, or wait
+          <span class="val seconds"
+                i18n:name="nSeconds">a few</span> seconds.
         </span>
         <tal:block define="action python:[a for a in view.actions][0]">
           <span class="formelementbutton">
@@ -53,7 +82,7 @@
           </span>
         </tal:block>
       </div><!--buttons-->
-      <div id="thingsToCheck">
+      <div id="gs-profile-signup-base-verify-wait-things-to-check">
         <h2 i18n:translate="verify-wait-issues-heading">
           Haven't got the email?
         </h2>
@@ -123,15 +152,17 @@
             </div>
           </tal:block>
         </div><!--buttons-->
-      </div><!--thingsToCheck-->
+      </div><!--gs-profile-signup-base-verify-wait-things-to-check-->
     </form><!--gs-profile-signup-verify-->
     <script id="gs-profile-signup-verify-js" metal:fill-slot="javascript"
             type="text/javascript" defer="defer"
             tal:attributes="data-email python:view.userEmail[0];"
             data-button="#form\.actions\.finish"
-            data-status="#checking"
-            data-toCheck="#thingsToCheck"
-            src="/++resource++gs-profile-signup-verify-check-20130515.js">
+            data-msg-checking="#gs-profile-signup-base-verify-wait-status-checking"
+            data-msg-unverified="#gs-profile-signup-base-verify-wait-status-unverified"
+            data-msg-verified="#gs-profile-signup-base-verify-wait-status-verified"
+            data-toCheck="#gs-profile-signup-base-verify-wait-things-to-check"
+            src="/++resource++gs-profile-signup-verify-check-20150305.js">
     </script>
   </body>
 </html>

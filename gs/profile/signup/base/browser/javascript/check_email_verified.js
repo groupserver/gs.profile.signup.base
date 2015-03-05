@@ -1,40 +1,38 @@
+"use strict";
 // GroupServer module for checking if email addresses are verified
 jQuery.noConflict();
-var GSCheckEmailVerified = function (email, buttonId, satusUpdateId, 
-                                     thingsToCheckId) {
+function GSCheckEmailVerified (email, buttonId, msgCheckingId, msgUnverifiedId,  
+                               msgVerifiedId,  thingsToCheckId) {
 
     // Private variables
-    var button = null,
-        satusUpdate = null,
-        thingsToCheck = null,
-        submitCount = null,
-        ADDRESS = 'checkemailverified.ajax', // In the profile context
-        TIMEOUT_DELTA = 8000,
-        AUTOSUBMIT_TIMEOUT = 5000,
-        CHECKING_MSG = '<strong>Checking</strong> verification ' +
-            'status&#160;<img src="/++resource++anim/wait.gif"/>',
-        UNVERIFIED_MSG = 'The email address is '+
-            '<strong>not verified.</strong>',
-        VERIFIED_MSG = 'The email address is <strong>verified.</strong> '+
-            'You may now click the <samp class="button">FINISH</samp> ' +
-            'button, or wait XSEC seconds.';
+    var button=null,
+        satusUpdate=null,
+        thingsToCheck=null,
+        submitCount=null,
+        msgChecking=null,
+        msgUnverified=null,  
+        msgVerified=null,
+        ADDRESS='checkemailverified.ajax', // In the profile context
+        TIMEOUT_DELTA=8000,
+        AUTOSUBMIT_TIMEOUT=5000;
 
     // Private methods
     function checkServer() {
-        var d = null;
+        var d=null;
+        jQuery('.status').removeClass('status-current');
         d = {
             type: "POST",
             url: ADDRESS, 
             cache: false,
-            data: 'email='+email,
+            data: {'email': email},
             success: checkReturn
         }
         jQuery.ajax(d);
-        statusUpdate.html(CHECKING_MSG);
-    };
+        msgChecking.addClass('status-current');
+    }// checkServer
 
     function checkReturn(data, textStatus) {
-        var verified = null, halfDelta = null;
+        var verified=null, halfDelta=null;
         verified = data == '1';
         if ( verified ) {
             button.removeAttr("disabled");
@@ -48,61 +46,65 @@ var GSCheckEmailVerified = function (email, buttonId, satusUpdateId,
             window.setTimeout(changeCheckingMessage, halfDelta)
             window.setTimeout(checkServer, TIMEOUT_DELTA);
         }
-    }
+    }// checkReturn
 
     function updateVerifiedMessage() {
-        var vm = null;
-        vm = VERIFIED_MSG.replace('XSEC', submitCount)
-        statusUpdate.html(vm);
+        jQuery('.status').removeClass('status-current');
+        msgVerified.addClass('status-current');
         submitCount -= 1;
         if ( submitCount >= 0 ) {
             window.setTimeout(updateVerifiedMessage, 1000);
         }
-    }
+    }// updateVerifiedMessage
 
     function autoSubmitForm() {
-        button.click();
-        //jQuery(button).submit();
-    }
+        console.info('Fixme');
+        // button.click();
+    }// autoSubmitForm
 
     function changeCheckingMessage() {
-        statusUpdate.html(UNVERIFIED_MSG);              
-    }
+        jQuery('.status').removeClass('status-current');
+        msgUnverified.addClass('status-current');
+    }// changeCheckingMessage
 
     function init() {
-        var buttonVal = null;
+        msgChecking = jQuery(msgCheckingId);
+        msgUnverified = jQuery(msgUnverifiedId);
+        msgVerified = jQuery(msgVerifiedId);
 
         button = jQuery(buttonId);
-        statusUpdate = jQuery(satusUpdateId);
         thingsToCheck = jQuery(thingsToCheckId);
-
-        buttonVal = button.attr('value');
-        VERIFIED_MSG = VERIFIED_MSG.replace('FINISH', buttonVal);
-
         submitCount = AUTOSUBMIT_TIMEOUT / 1000;
-    }
+        msgVerified.children('.seconds').html(submitCount);
+    }// init
     init(); // Note the automatic execution.
 
     return {
         start: function () { checkServer(); },
     };
-}; // GSCheckEmailVerified
+}// GSCheckEmailVerified
 
 jQuery(window).load(function () {
-    var script = null, 
-        email = null, 
-        button = null, 
-        statusUpdate = null, 
-        thingsToCheck = null,
-        checker = null;
+    var script=null, 
+        email=null, 
+        button=null, 
+        msgCheckingId=null,
+        msgUnverifiedId=null,
+        msgVerifiedId=null,
+        thingsToCheck=null,
+        autosubmit=null,
+        checker=null;
 
     script = jQuery('#gs-profile-signup-verify-js');
 
-    email = script.attr('data-email');
-    button = script.attr('data-button');
-    statusUpdate = script.attr('data-status');
-    toCheck = script.attr('data-toCheck');
+    email = script.data('email');
+    button = script.data('button');
+    msgCheckingId = script.data('msg-checking');
+    msgUnverifiedId = script.data('msg-unverified');
+    msgVerifiedId = script.data('msg-verified');
+    thingsToCheck = script.data('toCheck');
 
-    checker = GSCheckEmailVerified(email, button, statusUpdate, toCheck);
+    checker = GSCheckEmailVerified(email, button, msgCheckingId, 
+                                   msgUnverifiedId, msgVerifiedId, thingsToCheck);
     checker.start();
 });
