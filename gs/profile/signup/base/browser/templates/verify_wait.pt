@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:tal="http://xml.zope.org/namespaces/tal"
-  xmlns:metal="http://xml.zope.org/namespaces/metal"
-  metal:use-macro="context/@@groupserver_layout/page">
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="context/@@groupserver_layout/page">
   <head>
     <title metal:fill-slot="title">
       <span tal:replace="view/label"/>:
@@ -11,27 +11,28 @@
   </head>
   <body>
     <tal:block content="structure provider:groupserver.FormStatusMessage"
-      define="errors view/errors; status view/status; widgets view/widgets"
-      metal:fill-slot="messages">&#160;</tal:block>
+               define="errors view/errors; status view/status;
+                       widgets view/widgets"
+               metal:fill-slot="messages">&#160;</tal:block>
     <tal:block metal:fill-slot="utilitylinks">
       <div id="utilitylinks">&#160;</div>
     </tal:block>
-    <form id="gs-profile-signup-verify" class="gs-content-js-required" 
+    <form id="gs-profile-signup-verify" class="gs-content-js-required"
           data-required-buttons="#form\.actions\.send"
           enctype="multipart/form-data"  method="post" action="."
           metal:fill-slot="body" tal:attributes="action request/URL">
-      
-      <h1 tal:content="view/label">Awaiting Verification</h1>
+
+      <h1 tal:content="view/label">Awaiting verification</h1>
       <p>
         An email has been sent to
-        <code class="email" 
+        <code class="email"
               tal:content="python:view.userEmail[0]">your@email.address</code>
         to check that it works.
-        When you receive the email, follow the instructions in it, 
+        When you receive the email, follow the instructions in it,
         then click the
-        <samp class="button" 
+        <samp class="button"
               tal:define="action python:[a for a in view.actions][0].label"
-              tal:content="action">Big R</samp> 
+              tal:content="action">Big R</samp>
         button below to finish sign up.
       </p>
       <tal:block repeat="widget python:[[w for w in view.widgets][-1]]">
@@ -40,7 +41,8 @@
       <div class="buttons" tal:condition="view/availableActions">
         <span id="checking">
           Checking verification status
-          <img src="/++resource++anim/wait.gif"/>
+          <span data-icon="&#xe619;" aria-hidden="true"
+                class="loading"> </span>
         </span>
         <tal:block define="action python:[a for a in view.actions][0]">
           <span class="formelementbutton">
@@ -53,23 +55,23 @@
         <ul>
           <li>Check that <strong>your address is
           correct.</strong>
-          You can correct it in the entry below and click the 
-          <samp class="button" 
+          You can correct it in the entry below and click the
+          <samp class="button"
                 tal:define="action python:[a for a in view.actions][1].label"
-                tal:content="action">Big R</samp> 
+                tal:content="action">Big R</samp>
           button.</li>
-          <li>Add 
+          <li>Add
           <code tal:content="view/verificationEmailAddress"
                 class="email">foo@bar.wibble</code> to
           <strong>your address book.</strong>
-          Then click the 
-          <samp class="button" 
+          Then click the
+          <samp class="button"
                 tal:define="action python:[a for a in view.actions][1].label"
-                tal:content="action">Big R</samp> 
+                tal:content="action">Big R</samp>
           button to send another verification message.</li>
         </ul>
         <tal:block define="widget python:[w for w in view.widgets][0]">
-          <div class="form-widget" id="widget-abc123" 
+          <div class="form-widget" id="widget-abc123"
                tal:define="req widget/required;
                            style python:req and 'required' or 'not-required'"
                tal:attributes="id string:widget-${widget/name};
@@ -80,15 +82,15 @@
                    tal:content="widget/label">
               A label
             </label>
-            
+
             <p class="error" tal:condition="widget/error"
                tal:content="structure widget/error">
               Error message
             </p>
-            
-            <span id="abc123" 
+
+            <span id="abc123"
                   tal:replace="structure widget">Widget</span>
-            
+
             <label for="abc123" title="The hint for the widget"
                    class="checkboxLabel"
                    tal:condition="python:widget.type == 'checkbox'"
@@ -116,8 +118,8 @@
     <tal:block metal:fill-slot="javascript">
       <!--script type="text/javascript" defer="true"
         src="/++resource++check_email-20110222.js">&#160;</script-->
-      <script id="gs-profile-signup-verify-js" type="text/javascript" 
-              defer="true" 
+      <script id="gs-profile-signup-verify-js" type="text/javascript"
+              defer="true"
               tal:attributes="data-email python:view.userEmail[0];"
               data-button="#form\.actions\.finish"
               data-status="#checking"
