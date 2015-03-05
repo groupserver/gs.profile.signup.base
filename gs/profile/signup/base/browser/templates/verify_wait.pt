@@ -1,6 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:browser="http://namespaces.zope.org/browser"
+      xmlns:i18n="http://namespaces.zope.org/i18n"
       metal:use-macro="context/@@groupserver_layout/page">
   <head>
     <title metal:fill-slot="title">
@@ -23,14 +25,14 @@
           metal:fill-slot="body" tal:attributes="action request/URL">
 
       <h1 tal:content="view/label">Awaiting verification</h1>
-      <p>
+      <p i18n:translate="verify-wait-intro">
         An email has been sent to
-        <code class="email"
-              tal:content="python:view.userEmail[0]">your@email.address</code>
+        <code class="email" tal:content="python:view.userEmail[0]"
+              i18n:name="email">your@email.address</code>
         to check that it works.
         When you receive the email, follow the instructions in it,
         then click the
-        <samp class="button"
+        <samp class="button" i18n:name="button"
               tal:define="action python:[a for a in view.actions][0].label"
               tal:content="action">Big R</samp>
         button below to finish sign up.
@@ -39,10 +41,11 @@
         <span tal:replace="structure widget/hidden"/>
       </tal:block>
       <div class="buttons" tal:condition="view/availableActions">
-        <span id="checking">
+        <span id="checking"
+              i18n:translate="verify-wait-status-checking">
           Checking verification status
-          <span data-icon="&#xe619;" aria-hidden="true"
-                class="loading"> </span>
+          <span data-icon="&#xe619;" aria-hidden="true" class="loading"
+                i18n:name="loadingIcon"> </span>
         </span>
         <tal:block define="action python:[a for a in view.actions][0]">
           <span class="formelementbutton">
@@ -51,24 +54,30 @@
         </tal:block>
       </div><!--buttons-->
       <div id="thingsToCheck">
-        <h2>Haven't got the Email?</h2>
+        <h2 i18n:translate="verify-wait-issues-heading">
+          Haven't got the email?
+        </h2>
         <ul>
-          <li>Check that <strong>your address is
-          correct.</strong>
-          You can correct it in the entry below and click the
-          <samp class="button"
-                tal:define="action python:[a for a in view.actions][1].label"
-                tal:content="action">Big R</samp>
-          button.</li>
-          <li>Add
-          <code tal:content="view/verificationEmailAddress"
-                class="email">foo@bar.wibble</code> to
-          <strong>your address book.</strong>
-          Then click the
-          <samp class="button"
-                tal:define="action python:[a for a in view.actions][1].label"
-                tal:content="action">Big R</samp>
-          button to send another verification message.</li>
+          <li i18n:translate="verify-wait-issues-correct">
+            Check that <strong>your address is correct.</strong>
+            You can correct it in the entry below and click the
+            <samp class="button" i18n:name="button"
+                  tal:define="action python:[a for a in view.actions][1].label"
+                  tal:content="action">Big R</samp>
+            button.
+          </li>
+          <li i18n:translate="verify-wait-issues-whitelist">
+            Add
+            <code i18n:name="supportEmail"
+                  tal:content="view/verificationEmailAddress"
+                  class="email">foo@bar.wibble</code> to
+            <strong>your address book.</strong>
+            Then click the
+            <samp class="button" i18n:name="button"
+                  tal:define="action python:[a for a in view.actions][1].label"
+                  tal:content="action">Big R</samp>
+            button to send another verification message.
+          </li>
         </ul>
         <tal:block define="widget python:[w for w in view.widgets][0]">
           <div class="form-widget" id="widget-abc123"
@@ -101,11 +110,12 @@
           </div><!--form-widget-->
         </tal:block>
         <div id="emailHelp">
-          <p class="message-error" style="display: none;">
+          <p class="message-error" style="display: none;"
+             i18n:translate="verify-wait-issues-invalid">
             The email address is not valid.
             Please enter a valid email address.
           </p>
-        </div><!--Password Help-->
+        </div><!--emailHelp-->
         <div class="buttons" tal:condition="view/availableActions">
           <tal:block define="action python:[a for a in view.actions][1]">
             <div class="formelementbutton">
@@ -115,17 +125,13 @@
         </div><!--buttons-->
       </div><!--thingsToCheck-->
     </form><!--gs-profile-signup-verify-->
-    <tal:block metal:fill-slot="javascript">
-      <!--script type="text/javascript" defer="true"
-        src="/++resource++check_email-20110222.js">&#160;</script-->
-      <script id="gs-profile-signup-verify-js" type="text/javascript"
-              defer="true"
-              tal:attributes="data-email python:view.userEmail[0];"
-              data-button="#form\.actions\.finish"
-              data-status="#checking"
-              data-toCheck="#thingsToCheck"
-              src="/++resource++gs-profile-signup-verify-check-20130515.js">
-      </script>
-    </tal:block>
+    <script id="gs-profile-signup-verify-js" metal:fill-slot="javascript"
+            type="text/javascript" defer="defer"
+            tal:attributes="data-email python:view.userEmail[0];"
+            data-button="#form\.actions\.finish"
+            data-status="#checking"
+            data-toCheck="#thingsToCheck"
+            src="/++resource++gs-profile-signup-verify-check-20130515.js">
+    </script>
   </body>
 </html>
