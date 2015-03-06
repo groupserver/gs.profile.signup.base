@@ -36,6 +36,8 @@ function GSCheckEmailVerified (email, buttonId, msgCheckingId, msgUnverifiedId,
         verified = data == '1';
         if ( verified ) {
             button.removeAttr("disabled");
+            jQuery('.status').removeClass('status-current');
+            msgVerified.addClass('status-current');
             updateVerifiedMessage();
             thingsToCheck.find('input').attr("disabled","disabled");
             window.setTimeout(autoSubmitForm, AUTOSUBMIT_TIMEOUT);
@@ -49,17 +51,15 @@ function GSCheckEmailVerified (email, buttonId, msgCheckingId, msgUnverifiedId,
     }// checkReturn
 
     function updateVerifiedMessage() {
-        jQuery('.status').removeClass('status-current');
-        msgVerified.addClass('status-current');
         submitCount -= 1;
-        if ( submitCount >= 0 ) {
+        msgVerified.children('.seconds').html(submitCount);
+        if ( submitCount > 0 ) {
             window.setTimeout(updateVerifiedMessage, 1000);
         }
     }// updateVerifiedMessage
 
     function autoSubmitForm() {
-        console.info('Fixme');
-        // button.click();
+        button.click();
     }// autoSubmitForm
 
     function changeCheckingMessage() {
