@@ -1,12 +1,24 @@
 Changelog
 =========
 
+3.3.0 (2015-03-05)
+------------------
+
+* Dealing with email addresses with ``+`` characters in them,
+  closing `Bug 4036`_
+* Refactoring the ``verify_wait.html`` to make
+  internationalisation easier
+
+.. _Bug 4036: https://redmine.iopen.net/issues/4036
+
 3.2.0 (2014-10-10)
 ------------------
 
-* Pointing at GitHub as the canonical source repository, and
-  naming the reStructuredText files as such
+* Pointing at GitHub_ as the canonical source repository
+* Naming the reStructuredText files as such
 * Dropping the ``IGSEmailAddressEntry``
+
+.. _GitHub: https://github.com/groupserver/gs.profile.signup.base
 
 3.1.3 (2014-06-12)
 ------------------
@@ -156,3 +168,5 @@ Changelog
   4. Verify Email
 * The Set Password page now takes in the password *en clear*
 
+
+..  LocalWords:  Changelog GitHub reStructuredText
