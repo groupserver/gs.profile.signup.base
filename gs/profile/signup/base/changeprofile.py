@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
-# Copyright © 2013 OnlineGroups.net and Contributors.
+# Copyright © 2013, 2015 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -11,11 +11,12 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
-from __future__ import absolute_import
+############################################################################
+from __future__ import absolute_import, unicode_literals
 from urllib import urlencode
 from urlparse import urlparse
 from zope.app.apidoc.interface import getFieldsInOrder
+from zope.cachedescriptor.property import Lazy
 from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
@@ -25,11 +26,13 @@ from gs.group.member.invite.base.inviter import Inviter
 from gs.profile.email.base.emailuser import EmailUser
 from Products.CustomUserFolder.interfaces import IGSUserInfo
 from Products.GSProfile import interfaces
-from Products.GSProfile.profileaudit import *
-from Products.GSProfile.edit_profile import EditProfileForm, wym_editor_widget
+from Products.GSProfile.profileaudit import *  # lint:ok
+from Products.GSProfile.edit_profile import (EditProfileForm,
+                                             wym_editor_widget)
 from Products.GSProfile.utils import profile_interface_name
 from Products.XWFCore.XWFUtils import get_the_actual_instance_from_zope
 from .utils import join_group
+from . import GSMessageFactory as _
 
 
 class ChangeProfileForm(EditProfileForm):
@@ -37,7 +40,7 @@ class ChangeProfileForm(EditProfileForm):
     different from the standard Change Profile page, as the user is able
     to join groups.
     """
-    label = u'Change Profile'
+    label = _('change-profile-page-title', 'Change profile')
     pageTemplateFileName = 'browser/templates/changeprofile.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
 
@@ -48,26 +51,19 @@ class ChangeProfileForm(EditProfileForm):
 
         self.profileInterface = getattr(interfaces, profileInterfaceName)
         self.registerInterface = interface = getattr(interfaces,
-                                                        registerInterfaceName)
+                                                     registerInterfaceName)
         enforce_schema(profile, interface)
 
-        self.__userInfo = self.__emailUser = None
-        self.__formFields = self.__siteInfo = None
-        self.__profileFields = None
         self.__hiddenFieldNames = ['form.came_from']
 
-    @property
+    @Lazy
     def form_fields(self):
-        if self.__formFields is None:
-            self.__formFields = form.Fields(self.registerInterface,
-                                    render_context=True)
-            self.__formFields['tz'].custom_widget = select_widget
-            self.__formFields['biography'].custom_widget = \
-                wym_editor_widget
-            self.__formFields['joinable_groups'].custom_widget = \
-                multi_check_box_widget
-
-        return self.__formFields
+        retval = form.Fields(self.registerInterface,
+                             render_context=True)
+        retval['tz'].custom_widget = select_widget
+        retval['biography'].custom_widget = wym_editor_widget
+        retval['joinable_groups'].custom_widget = multi_check_box_widget
+        return retval
 
     def setUpWidgets(self, ignore_request=False):
         data = {'tz': self.get_timezone()}
@@ -81,7 +77,8 @@ class ChangeProfileForm(EditProfileForm):
             retval = self.request.form['form.tz']
         else:
             gTz = siteTz = self.siteInfo.get_property('tz', 'UTC')
-            joinableGroups = self.request.form.get('form.joinable_groups', [])
+            joinableGroups = self.request.form.get('form.joinable_groups',
+                                                   [])
             gIds = [i for i in joinableGroups
                     if i and i != 'None']
             # Zope Sux. For some reason, kept to itself, Zope gives me a
@@ -97,7 +94,8 @@ class ChangeProfileForm(EditProfileForm):
             gTzs = []
             for gId in gIds:
                 if hasattr(groups, gId):
-                    gTzs.append(getattr(groups, gId).getProperty('tz', siteTz))
+                    gTzs.append(getattr(groups, gId).getProperty('tz',
+                                                                 siteTz))
             if gTzs:
                 tzs = {}
                 for tz in gTzs:
@@ -111,37 +109,30 @@ class ChangeProfileForm(EditProfileForm):
         assert retval
         return retval
 
-    @property
+    @Lazy
     def siteInfo(self):
-        if self.__siteInfo is None:
-            self.__siteInfo = createObject('groupserver.SiteInfo',
-                                self.ctx)
-        assert self.__siteInfo
-        return self.__siteInfo
+        retval = createObject('groupserver.SiteInfo', self.ctx)
+        return retval
 
-    @property
+    @Lazy
     def ctx(self):
         return get_the_actual_instance_from_zope(self.context)
 
-    @property
+    @Lazy
     def groupsInfo(self):
-        if self.__groupsInfo is None:
-            self.__groupsInfo = createObject('groupserver.GroupsInfo',
-                self.ctx)
-        return self.__groupsInfo
+        retval = createObject('groupserver.GroupsInfo', self.ctx)
+        return retval
 
-    @property
+    @Lazy
     def userInfo(self):
-        if self.__userInfo is None:
-            self.__userInfo = IGSUserInfo(self.ctx)
-        assert self.__userInfo
-        return self.__userInfo
+        retval = IGSUserInfo(self.ctx)
+        assert retval
+        return retval
 
-    @property
+    @Lazy
     def emailUser(self):
-        if self.__emailUser is None:
-            self.__emailUser = EmailUser(self.ctx, self.userInfo)
-        return self.__emailUser
+        retval = EmailUser(self.ctx, self.userInfo)
+        return retval
 
     @property
     def userEmail(self):
@@ -149,7 +140,8 @@ class ChangeProfileForm(EditProfileForm):
         assert retval
         return retval
 
-    @form.action(label=u'Change', failure='handle_set_action_failure')
+    @form.action(label=_('change-profile-button', 'Change'),
+                 name='change', failure='handle_set_action_failure')
     def handle_set(self, action, data):
         self.auditer = ProfileAuditer(self.context)
         self.actual_handle_set(action, data)
@@ -164,7 +156,7 @@ class ChangeProfileForm(EditProfileForm):
             email = self.emailUser.get_addresses()[0]
             u = '{0}/verify_wait.html?{1}'
             d = {'form.email': email,
-                'form.came_from': cf}
+                 'form.came_from': cf}
             queryString = urlencode(d)
             uri = u.format(self.userInfo.url, queryString)
 
@@ -172,9 +164,10 @@ class ChangeProfileForm(EditProfileForm):
 
     def handle_set_action_failure(self, action, data, errors):
         if len(errors) == 1:
-            self.status = u'<p>There is an error:</p>'
+            s = _('single-error', 'There is an error:')
         else:
-            self.status = u'<p>There are errors:</p>'
+            s = _('multiple-errors', 'There are errors:')
+        self.status = '<p>{0}</p>'.format(s)
 
     def actual_handle_set(self, action, data):
         groupsToJoin = None
@@ -200,7 +193,7 @@ class ChangeProfileForm(EditProfileForm):
     def join_groups(self, groupsToJoin):
         for groupId in groupsToJoin:
             groupInfo = createObject('groupserver.GroupInfo',
-                                      self.ctx, groupId)
+                                     self.ctx, groupId)
             join_group(self.userInfo, groupInfo, self.request)
 
     def invite_groups(self, groupsToJoin):
@@ -209,52 +202,50 @@ class ChangeProfileForm(EditProfileForm):
         initial = True
         for groupId in groupsToJoin:
             groupInfo = createObject('groupserver.GroupInfo',
-                            self.ctx, groupId)
+                                     self.ctx, groupId)
             # TODO: Create an inviter that is not so clunky. See
             #   IGSJoiningUser for a better pattern.
             inviter = Inviter(self.ctx, self.request,
-                                self.userInfo, self.userInfo,
-                                self.siteInfo, groupInfo)
+                              self.userInfo, self.userInfo,
+                              self.siteInfo, groupInfo)
             inviter.create_invitation({}, initial)
             initial = False
 
-    @property
+    @Lazy
     def profileWidgetNames(self):
-        if self.__profileFields is None:
-            self.__profileFields = \
-                ['form.%s' % f[0] for f in
-                                    getFieldsInOrder(self.profileInterface)]
-            self.__profileFields = [f for f in self.__profileFields
-                                        if f not in self.__hiddenFieldNames]
-        assert type(self.__profileFields) == list
-        return self.__profileFields
+        retval = ['form.%s' % f[0] for f in
+                  getFieldsInOrder(self.profileInterface)]
+        retval = [f for f in retval if f not in self.__hiddenFieldNames]
+        assert type(retval) == list
+        retval
 
     @property
     def profileWidgets(self):
         widgets = [widget for widget in self.widgets
-                            if widget.name in self.profileWidgetNames]
+                   if widget.name in self.profileWidgetNames]
         return widgets
 
     @property
     def nonProfileWidgets(self):
         pw = self.profileWidgetNames + self.__hiddenFieldNames
-        widgets = [widget for widget in self.widgets if widget.name not in pw]
+        widgets = [widget for widget in self.widgets
+                   if widget.name not in pw]
         return widgets
 
     @property
     def hiddenWidgets(self):
         widgets = [widget for widget in self.widgets
-                            if widget.name in self.__hiddenFieldNames]
+                   if widget.name in self.__hiddenFieldNames]
         return widgets
 
     @property
     def requiredProfileWidgets(self):
         widgets = [widget for widget in self.profileWidgets
-                            if widget.required]
+                   if widget.required]
         return widgets
 
     @property
     def optionalProfileWidgets(self):
         widgets = [widget for widget in self.profileWidgets
-                            if not(widget.required)]
+                   if not(widget.required)]
         return widgets

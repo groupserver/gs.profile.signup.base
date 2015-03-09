@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
-# Copyright © 2013 OnlineGroups.net and Contributors.
+# Copyright © 2013, 2015 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -11,8 +11,8 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
-from __future__ import absolute_import
+############################################################################
+from __future__ import absolute_import, unicode_literals
 from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
@@ -21,11 +21,12 @@ from gs.content.form.base import SiteForm
 from gs.profile.email.base.emailuser import EmailUser
 from gs.profile.password.interfaces import IGSPasswordUser
 from .interfaces import IGSSetPasswordRegister
+from . import GSMessageFactory as _
 
 
 class SetPasswordForm(SiteForm):
     form_fields = form.Fields(IGSSetPasswordRegister)
-    label = u'Set Password'
+    label = _('set-password-label', 'Set password')
     pageTemplateFileName = 'browser/templates/setpassword.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
 
@@ -34,7 +35,8 @@ class SetPasswordForm(SiteForm):
         self.userInfo = GSUserInfo(context)
         self.emailUser = EmailUser(context, self.userInfo)
 
-    @form.action(label=u'Set', failure='handle_set_action_failure')
+    @form.action(label=_('set-password-button', 'Set'), name='set',
+                 failure='handle_set_action_failure')
     def handle_set(self, action, data):
         assert self.context
         assert self.form_fields
@@ -58,9 +60,10 @@ class SetPasswordForm(SiteForm):
 
     def handle_set_action_failure(self, action, data, errors):
         if len(errors) == 1:
-            self.status = u'<p>There is an error:</p>'
+            s = _('single-error', 'There is an error:')
         else:
-            self.status = u'<p>There are errors:</p>'
+            s = _('multiple-errors', 'There are errors:')
+        self.status = '<p>{0}</p>'.format(s)
 
     @property
     def userEmail(self):

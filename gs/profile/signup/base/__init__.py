@@ -1,2 +1,3 @@
 # -*- coding: utf-8 -*-
-# This space deliberately left blank.
+from zope.i18nmessageid import MessageFactory
+GSMessageFactory = MessageFactory('gs.profile.signup.base')

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
-# Copyright © 2014 OnlineGroups.net and Contributors.
+# Copyright © 2014, 2015 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -11,30 +11,31 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
+############################################################################
 from __future__ import absolute_import, unicode_literals
+import logging
+log = logging.getLogger('gs.profile.signup.base')
 from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.XWFCore.XWFUtils import get_support_email
 from Products.GSProfile.utils import login, create_user_from_email
 from gs.content.form.base import SiteForm
-from gs.profile.email.base import NewEmailAddress, EmailAddressExists, \
-    sanitise_address
-from gs.profile.email.verify.emailverificationuser import EmailVerificationUser
-from Products.GSProfile.profileaudit import *
+from gs.profile.email.base import (NewEmailAddress, EmailAddressExists,
+                                   sanitise_address)
+from gs.profile.email.verify.emailverificationuser import \
+    EmailVerificationUser
+from Products.GSProfile.profileaudit import *  # lint:ok
 from Products.GSAuditTrail.queries import AuditQuery
 from gs.profile.password.audit import SET, \
     SUBSYSTEM as GS_PROFILE_PASSWORD_SUBSYSTEM
 from .interfaces import IGSRequestRegistration
-
-import logging
-log = logging.getLogger('gs.profile.signup.base')
+from . import GSMessageFactory as _
 
 
 class RequestRegistrationForm(SiteForm):
     form_fields = form.Fields(IGSRequestRegistration)
-    label = 'Register'
+    label = _('register-page-label', 'Register')
     pageTemplateFileName = 'browser/templates/signup.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
 
@@ -70,7 +71,7 @@ class RequestRegistrationForm(SiteForm):
 
     def validate(self, action, data):
         return (form.getWidgetsData(self.widgets, self.prefix, data) +
-            form.checkInvariants(self.form_fields, data))
+                form.checkInvariants(self.form_fields, data))
 
     # --=mpj17=--
     # The "form.action" decorator creates an action instance, with
@@ -79,8 +80,9 @@ class RequestRegistrationForm(SiteForm):
     #   action to the "actions" instance variable (creating it if
     #   necessary). I did not need to explicitly state the label, but it
     #   helps with readability.
-    @form.action(label=u'Register', failure='handle_register_action_failure',
-      validator='validate')
+    @form.action(label=_('register-button', 'Register'), name='register',
+                 failure='handle_register_action_failure',
+                 validator='validate')
     def handle_register(self, action, data):
         assert self.form_fields
         assert action
@@ -92,8 +94,8 @@ class RequestRegistrationForm(SiteForm):
         try:
             emailChecker.validate(email)
         except EmailAddressExists, e:
-            logMsg = 'RequestRegistrationForm: Registration attempted with '\
-                        'existing address <{}>\n{}'.format(email, e)
+            logMsg = 'RequestRegistrationForm: Registration attempted '\
+                     'with existing address <{}>\n{}'.format(email, e)
             log.info(logMsg)
 
             nextPage = self.next_page_from_email(email)
@@ -119,9 +121,10 @@ class RequestRegistrationForm(SiteForm):
 
     def handle_register_action_failure(self, action, data, errors):
         if len(errors) == 1:
-            self.status = '<p>There is an error:</p>'
+            s = _('single-error', 'There is an error:')
         else:
-            self.status = '<p>There are errors:</p>'
+            s = _('multiple-errors', 'There are errors:')
+        self.status = '<p>{0}</p>'.format(s)
 
     def next_page_from_email(self, email):
         '''Figure out the next page for the existing user
@@ -304,11 +307,11 @@ Thanks to Alice for suggesting that I trawl the audit-logs for the
 set-password events.'''
     q = AuditQuery()
     items = q.get_instance_user_events(user.getId(), limit=128)
-    setPasswordItems = [i for i in items
-        if (((i['subsystem'] == SUBSYSTEM) and
-             (i['code'] == SET_PASSWORD)) or
-            ((i['subsystem'] == GS_PROFILE_PASSWORD_SUBSYSTEM) and
-             (i['code'] == SET)))]
+    setPasswordItems = [
+        i for i in items
+        if (((i['subsystem'] == SUBSYSTEM) and (i['code'] == SET_PASSWORD))
+            or ((i['subsystem'] == GS_PROFILE_PASSWORD_SUBSYSTEM)
+            and (i['code'] == SET)))]
 
     retval = bool(setPasswordItems)
     return retval

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
-# Copyright © 2013 OnlineGroups.net and Contributors.
+# Copyright © 2013, 2015 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -11,8 +11,10 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
-from __future__ import absolute_import
+############################################################################
+from __future__ import absolute_import, unicode_literals
+import logging
+log = logging.getLogger('gs.profile.signup.base')
 from urlparse import urlparse
 from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
@@ -28,19 +30,17 @@ from Products.XWFCore.XWFUtils import get_support_email,\
     get_the_actual_instance_from_zope
 from .interfaces import IGSVerifyWait
 from .utils import join_group
-
-import logging
-log = logging.getLogger('gs.profile.signup.base')
+from . import GSMessageFactory as _
 
 
 class VerifyWaitForm(SiteForm):
-    label = u'Awaiting Verification'
+    label = _('verify-wait-label', 'Awaiting Verification')
     pageTemplateFileName = 'browser/templates/verify_wait.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
     form_fields = form.Fields(IGSVerifyWait)
 
     def __init__(self, context, request):
-        SiteForm.__init__(self, context, request)
+        super(VerifyWaitForm, self).__init__(context, request)
 
     def setUpWidgets(self, ignore_request=False):
         data = {'email': self.userEmail[0], }
@@ -74,7 +74,8 @@ class VerifyWaitForm(SiteForm):
         assert '@' in retval
         return retval
 
-    @form.action(label=u'Finish', failure='handle_set_action_failure')
+    @form.action(label=_('verify-wait-button', 'Finish'), name='finish',
+                 failure='handle_set_action_failure')
     def handle_set(self, action, data):
 
         self.join_groups()
@@ -87,9 +88,10 @@ class VerifyWaitForm(SiteForm):
 
     def handle_set_action_failure(self, action, data, errors):
         if len(errors) == 1:
-            self.status = u'<p>There is an error:</p>'
+            s = _('single-error', 'There is an error:')
         else:
-            self.status = u'<p>There are errors:</p>'
+            s = _('multiple-errors', 'There are errors:')
+        self.status = '<p>{0}</p>'.format(s)
 
     @form.action(label=u'Send', failure='handle_set_action_failure')
     def handle_send(self, action, data):
@@ -101,34 +103,45 @@ class VerifyWaitForm(SiteForm):
 
     def actual_handle_send(self, data):
         newEmail = data['email']
+        xmlEmail = '<code class="email">%s</code>.' % newEmail
         if address_exists(self.context, newEmail):
             if newEmail in self.userEmail:
                 # TODO: Audit
                 m = 'GSVerifyWait: Resending verification message to ' \
-                  '<%s> for the user "%s"' % (newEmail, self.context.getId())
+                    '<%s> for the user "%s"' % (newEmail,
+                                                self.context.getId())
                 log.info(m)
 
-                eu = createObject('groupserver.EmailVerificationUserFromEmail',
-                                  self.context, newEmail)
+                eu = createObject(
+                    'groupserver.EmailVerificationUserFromEmail',
+                    self.context, newEmail)
                 eu.send_verification(self.request)
-                self.status = u'''Another email address verification
-                  message has been sent to
-                  <code class="email">%s</code>.''' % newEmail
+                self.status = _(
+                    'verify-wait-resend',
+                    'Another email address verification message has been '
+                    'sent to ${email}.',
+                    mapping={'email': xmlEmail})
             else:
                 # TODO: Audit
                 m = 'GSVerifyWait: Attempt to use another email address ' \
-                  '<%s> by the user "%s"' % (newEmail, self.context.getId())
+                    '<%s> by the user "%s"' % (newEmail,
+                                               self.context.getId())
                 log.info(m)
 
-                self.status = u'''The address
-                  <code class="email">%s</code> is already registered
-                  to another user.''' % newEmail
+                self.status = _(
+                    'verify-wait-existing-email',
+                    'The address ${email} is already registered to another '
+                    'user.',
+                    mapping={'email': xmlEmail})
         else:  # The address does not exist
             oldEmail = self.remove_old_email()
             self.add_new_email(newEmail)
-            self.status = u'''Changed your email address from
-              <code class="email">%s</code> to
-              <code class="email">%s</code>.''' % (oldEmail, newEmail)
+            oldXMLEmail = '<code class="email">%s</code>.' % (oldEmail)
+            self.status = _(
+                'verify-wait-address-change',
+                'Changed your email address to ${newEmail} from '
+                '${oldEmail}.',
+                mapping={'newEmail': xmlEmail, 'oldEmail': oldXMLEmail})
 
     def remove_old_email(self):
         oldEmail = self.userEmail[0]
@@ -169,10 +182,10 @@ class VerifyWaitForm(SiteForm):
         # One odd side-effect of hacking on top of Invites is that it
         #   deals with a corner case of a person being invited then
         #   requesting membership.
-        invs = query.get_current_invitiations_for_site(self.siteInfo.id,
-                self.userInfo.id)
+        invs = query.get_current_invitiations_for_site(
+            self.siteInfo.id, self.userInfo.id)
         invitations = [Invitation(self.ctx, i['invitation_id'])
-                        for i in invs]
+                       for i in invs]
         for invite in invitations:
             invite.accept()
             join_group(self.userInfo, invite.groupInfo, self.request)

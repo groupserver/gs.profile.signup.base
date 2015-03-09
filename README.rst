@@ -13,6 +13,9 @@ Sign up (register) a profile with GroupServer
   `Creative Commons Attribution-Share Alike 4.0 International License`_
   by `OnlineGroups.net`_.
 
+..  _Creative Commons Attribution-Share Alike 4.0 International License:
+    http://creativecommons.org/licenses/by-sa/4.0/
+
 Introduction
 ============
 
@@ -80,7 +83,5 @@ Resources
 .. _GroupServer.org: http://groupserver.org/
 .. _OnlineGroups.Net: https://onlinegroups.net
 .. _Michael JasonSmith: http://groupserver.org/p/mpj17
-..  _Creative Commons Attribution-Share Alike 4.0 International License:
-    http://creativecommons.org/licenses/by-sa/4.0/
 
 ..  LocalWords:  signup mpj groupserver

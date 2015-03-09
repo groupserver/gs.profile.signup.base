@@ -21,6 +21,7 @@ from zope.viewlet.interfaces import IViewletManager
 from gs.core import to_ascii
 from gs.profile.email.base.emailaddress import EmailAddress
 from gs.profile.password.interfaces import ISetPassword
+from . import GSMessageFactory as _
 
 
 class IGSRequestRegistrationMarker(Interface):
@@ -61,28 +62,28 @@ class IGSRequestRegistration(Interface):
     # Unfortunately the group identifier is not checked against the
     #   joinable groups, because there is no "user" to check with.
     email = EmailAddress(
-        title='Email address',
-        description='Your email address.',
+        title=('request-email-label', 'Email address'),
+        description=_('request-email-help', 'Your email address.'),
         required=True)
     groupId = GroupID(
-        title='Group Identifier',
+        title='Group identifier',
         description='The identifier for the group that you wish to join.',
         required=False)
 
     came_from = URI(
-        title='Came From',
+        title='Came from',
         description='The page to return to after registration has finished',
         required=False)
 
 
 class IGSSetPasswordRegister(ISetPassword):
     groupId = GroupID(
-        title='Group Identifier',
+        title='Group identifier',
         description='The identifier for the group that you wish to join.',
         required=False)
 
     came_from = URI(
-        title='Came From',
+        title='Came from',
         description='The page to return to after registration has finished',
         required=False)
 
@@ -95,8 +96,9 @@ class IGSResendVerification(Interface):
     resend his or her verification email, while in the middle of
     registration."""
     email = EmailAddress(
-        title='Email address',
-        description='Your email address that you want to verify.',
+        title=_('resend-verification-label', 'Email address'),
+        description=_('resend-verification-help',
+                      'Your email address that you want to verify.'),
         required=True)
 
 
@@ -104,11 +106,11 @@ class IGSVerifyWait(Interface):
     """Schema use to define the user-interface presented while the user
     waits for verification of his or her email address."""
     email = EmailAddress(
-        title='Email address',
-        description='Your email address.',
+        title=_('verify-wait-email-label', 'Email address'),
+        description=_('verify-wait-email-help', 'Your email address.'),
         required=True)
     came_from = URI(
-        title='Came From',
+        title='Came from',
         description='The page to return to after registration has finished',
         required=False)
 
@@ -122,7 +124,7 @@ class IGSAwaitingVerificationJavaScriptContentProvider(IContentProvider):
         default="browser/templates/verify_wait_javascript.pt")
 
     email = EmailAddress(
-        title='Email Address',
+        title='Email address',
         description='Your email address.',
         required=True)
 
