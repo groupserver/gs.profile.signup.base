@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2015-03-09 23:57+0000\n"
-"PO-Revision-Date: 2015-03-09 17:06-0700\n"
+"PO-Revision-Date: 2015-03-09 17:09-0700\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr "<strong>Thanks for that:</strong> your password has been set."
 #. Default: "Change profile: Sign up: ${siteName}"
 #: ./browser/templates/changeprofile.pt:11
 msgid "change-profile-title"
-msgstr "Change profile: Sign up: ${siteName}"
+msgstr "Change profile: Register: ${siteName}"
 
 #. Default: "The email address is not valid. Please enter a valid email address."
 #: ./browser/templates/signupmethod-email.pt:16
@@ -134,7 +134,7 @@ msgstr "Set password"
 #. Default: "Set password: Sign Up: ${siteName}"
 #: ./browser/templates/setpassword.pt:11
 msgid "set-password-title"
-msgstr "Set password: Sign up: ${siteName}"
+msgstr "Set password: Register: ${siteName}"
 
 #. Default: "Show password"
 #: ./browser/templates/setpassword.pt:79
@@ -149,7 +149,7 @@ msgstr "Deselect if you are in a public place, like a cafe or library."
 #. Default: "<strong>Register with ${siteName}</strong> so you can join groups, post messages, and receive email from your groups."
 #: ./browser/templates/signup.pt:22
 msgid "signup-intro"
-msgstr "<strong>Sign up with ${siteName}</strong> so you can join groups, post messages, and receive email from your groups."
+msgstr "<strong>Register with ${siteName}</strong> so you can join groups, post messages, and receive email from your groups."
 
 #. Default: "Your privacy is important, and will be maintained according to the privacy policy of ${thisSite}."
 #: ./browser/templates/changeprofile.pt:56
@@ -197,7 +197,7 @@ msgstr "The address ${email} is already being used by someone else."
 #. Default: "An email has been sent to ${email} to check that it works. When you receive the email, follow the instructions in it, then click the ${button} button below to finish sign up."
 #: ./browser/templates/verify_wait.pt:49
 msgid "verify-wait-intro"
-msgstr "An email has been sent to ${email} to check that it works. When you receive the email, follow the instructions in it, then click the ${button} button below to finish sign up."
+msgstr "An email has been sent to ${email} to check that it works. When you receive the email, follow the instructions in it, then click the ${button} button below to finish registration."
 
 #. Default: "Check that <strong>your address is correct.</strong> You can correct it in the entry below and click the ${button} button."
 #: ./browser/templates/verify_wait.pt:93
