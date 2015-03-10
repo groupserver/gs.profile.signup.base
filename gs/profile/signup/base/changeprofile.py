@@ -16,7 +16,7 @@ from __future__ import absolute_import, unicode_literals
 from urllib import urlencode
 from urlparse import urlparse
 from zope.app.apidoc.interface import getFieldsInOrder
-from zope.cachedescriptor.property import Lazy
+from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
