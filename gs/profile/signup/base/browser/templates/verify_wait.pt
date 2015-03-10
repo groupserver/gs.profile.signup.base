@@ -10,20 +10,6 @@
       <span tal:replace="view/userInfo/name"/>:
       <span tal:replace="view/siteInfo/name"/>
     </title>
-    <style type="text/css" metal:fill-slot="style">
-      .status {
-        max-width: 0;
-        max-height: 0;
-        overflow: hidden;
-        white-space: nowrap;
-      }
-      .status-current {
-        max-width: 43.75em;
-        max-height: 2.5em;
-        -webkit-transition: max-width 1s;
-        transition: max-width 1s;
-      }
-    </style>
   </head>
   <body>
     <tal:block content="structure provider:groupserver.FormStatusMessage"
