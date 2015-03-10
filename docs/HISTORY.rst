@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.3.0 (2015-03-05)
+3.3.0 (2015-03-10)
 ------------------
 
 * Dealing with email addresses with ``+`` characters in them,
