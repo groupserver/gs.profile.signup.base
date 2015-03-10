@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2015-03-09 23:57+0000\n"
-"PO-Revision-Date: 2015-03-09 17:09-0700\n"
+"PO-Revision-Date: 2015-03-09 17:22-0700\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -160,7 +160,7 @@ msgstr "Your privacy is important, and will be maintained according to the priva
 #. Default: "By signing up with ${siteName}, you agree to the acceptable use policy."
 #: ./browser/templates/signup.pt:33
 msgid "signup-tnc-button"
-msgstr "By signing up with ${siteName}, you agree to the acceptable use policy."
+msgstr "By registering with ${siteName}, you agree to the acceptable use policy."
 
 #. Default: "There is an error:"
 #: ./changeprofile.py:167
