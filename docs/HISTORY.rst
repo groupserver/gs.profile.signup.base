@@ -6,10 +6,11 @@ Changelog
 
 * Dealing with email addresses with ``+`` characters in them,
   closing `Bug 4036`_
-* Refactoring the ``verify_wait.html`` to make
-  internationalisation easier
+* Adding internationalisation_
 
 .. _Bug 4036: https://redmine.iopen.net/issues/4036
+.. _internationalisation:
+   https://www.transifex.com/projects/p/gs-profile-signup-base/
 
 3.2.0 (2014-10-10)
 ------------------
