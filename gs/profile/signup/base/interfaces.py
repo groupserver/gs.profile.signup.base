@@ -62,7 +62,7 @@ class IGSRequestRegistration(Interface):
     # Unfortunately the group identifier is not checked against the
     #   joinable groups, because there is no "user" to check with.
     email = EmailAddress(
-        title=('request-email-label', 'Email address'),
+        title=_('request-email-label', 'Email address'),
         description=_('request-email-help', 'Your email address.'),
         required=True)
     groupId = GroupID(
