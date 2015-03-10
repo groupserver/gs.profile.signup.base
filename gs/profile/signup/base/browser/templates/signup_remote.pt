@@ -1,45 +1,48 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:tal="http://xml.zope.org/namespaces/tal"
-  xmlns:metal="http://xml.zope.org/namespaces/metal"
-  metal:use-macro="context/@@groupserver_layout/page">
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="gs.profile.signup.base"
+      metal:use-macro="context/@@groupserver_layout/page">
   <head>
-    <title metal:fill-slot="title">
-      Remote Registration Form:
-      <span tal:replace="view/groupInfo/get_name">this group</span>:
-      <span tal:replace="view/siteInfo/get_name">this site</span>
+    <title metal:fill-slot="title" i18n:translate="remote-register-title">
+      Remote registration form:
+      <tal:block i18n:name="groupName"
+                 replace="view/groupInfo/get_name">this group</tal:block>:
+      <tal:block i18n:name="siteName"
+                 replace="view/siteInfo/get_name">this site</tal:block>
     </title>
   </head>
   <body>
     <tal:block metal:fill-slot="body">
-      <h1>Remote Registration Form</h1>
-      <p>
+      <h1 i18n:translate="remote-register-heading">Remote registration form</h1>
+      <p i18n:translate="remote-register-intro">
         To create a remote sign-up box for
-        <span class="group" 
+        <span class="group" i18n:name="groupName"
           tal:content="view/groupInfo/get_name">this group</span>,
         copy the
-        <acronym title="Hypertext Markup Languae">HTML</acronym>
+        <acronym title="Hypertext Markup Language">HTML</acronym>
         below and paste it into your own page.
         After filling out the form, the new group member will be taken
-        through the standard registration process for 
-        <span class="group" 
+        through the standard registration process for
+        <span class="group" i18n:name="groupName"
           tal:content="view/groupInfo/get_name">this group</span>.
       </p>
       <pre class="code">
 &lt;form enctype="multipart/form-data"  method="post" id="register.form"
   action="<span tal:replace="python:'%s/request_registration.html' % view.siteInfo.url"/>"&gt;
-  &lt;label for="form.email" 
+  &lt;label for="form.email"
     title="Your email address."&gt;Email Address&lt;/label&gt;
-  &lt;input id="form.email" name="form.email" 
+  &lt;input id="form.email" name="form.email"
     size="20" type="text" value="" /&gt;
-  &lt;input id="form.groupId" name="form.groupId" 
+  &lt;input id="form.groupId" name="form.groupId"
     type="hidden" value="<span tal:replace="view/groupInfo/get_id"/>" /&gt;
-  &lt;input id="form.came_from" name="form.came_from" 
+  &lt;input id="form.came_from" name="form.came_from"
     type="hidden" value="<span tal:replace="view/groupInfo/get_url"/>" /&gt;
-  &lt;input type="submit" id="form.actions.register" 
+  &lt;input type="submit" id="form.actions.register"
     name="form.actions.register" value="Register" /&gt;
 &lt;/form&gt;&lt;!--GroupSever Signup Form--&gt;
       </pre>
     </tal:block>
   </body>
 </html>
-

@@ -1,7 +1,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:tal="http://xml.zope.org/namespaces/tal"
-  xmlns:metal="http://xml.zope.org/namespaces/metal"
-  metal:use-macro="context/@@groupserver_layout/page">
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="gs.profile.signup.base"
+      metal:use-macro="context/@@groupserver_layout/page">
   <head>
     <title metal:fill-slot="title">
       <span tal:replace="view/label">Register</span>:
@@ -10,23 +12,27 @@
   </head>
   <body>
     <tal:block content="structure provider:groupserver.FormStatusMessage"
-      define="errors view/errors; status view/status; widgets view/widgets"
-      metal:fill-slot="messages">&#160;</tal:block>
+               define="errors view/errors; status view/status;
+                       widgets view/widgets"
+               metal:fill-slot="messages">&#160;</tal:block>
     <tal:block metal:fill-slot="body">
       <h1 tal:content="view/label">Sign up</h1>
-      <p id="intro">
+      <p id="intro" i18n:translate="signup-intro">
         <strong>Register with
-          <span class="site" tal:content="siteName">this site</span></strong>
+          <span i18n:name="siteName" class="site"
+                tal:content="siteName">this site</span></strong>
           so you can join groups, post messages, and receive email from
           your groups.
       </p>
       <div id="tc" class="disclosureWidget">
         <p>
           <a class="disclosureButton" id="tc-button"
-            href="javascript:showHideDisclosure('tc')">By signing up
-            with
-            <span class="site" tal:content="siteName">this site</span>,
-            you agree to the acceptable use policy.</a>
+             href="javascript:showHideDisclosure('tc')"
+             i18n:translate="signup-tnc-button">By signing up
+          with
+          <span i18n:name="siteName" class="site"
+                tal:content="siteName">this site</span>,
+          you agree to the acceptable use policy.</a>
         </p>
         <div class="disclosureShowHide" style="display: none;">
           <div id="tc-content">Loading&#8230;</div>
@@ -35,10 +41,12 @@
       <div id="privacy" class="disclosureWidget">
         <p>
           <a class="disclosureButton" id="privacy-button"
-            href="javascript:showHideDisclosure('privacy')">Your privacy is
-            important, and will be maintained  according to the privacy
-            policy of 
-            <span class="site" tal:content="siteName">this site</span>.</a>
+            href="javascript:showHideDisclosure('privacy')"
+            i18n:translate="signup-privacy-button">Your privacy
+          is important, and will be maintained  according to the
+          privacy policy of
+          <span i18n:name="thisSite"
+                class="site" tal:content="siteName">this site</span>.</a>
         </p>
         <div class="disclosureShowHide" style="display: none;">
           <div id="privacy-content">Loading&#8230;</div>
@@ -46,7 +54,9 @@
       </div>
       <span tal:replace="structure provider:groupserver.SignupMethods" />
     </tal:block>
-    <script metal:fill-slot="javascript" type="text/javascript" defer="true"
+    <script metal:fill-slot="javascript"
+            type="text/javascript"
+            defer="defer"
             src="/++resource++gs-profile-signup-20130510.js">&#160;</script>
   </body>
 </html>

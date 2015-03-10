@@ -12,8 +12,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE. -->
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:browser="http://namespaces.zope.org/browser"
-           i18n_domain="groupserver">
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           i18n_domain="gs.profile.signup.base">
 
+  <i18n:registerTranslations directory="locales" />
   <include package="zope.viewlet" file="meta.zcml" />
 
   <interface
@@ -22,8 +24,8 @@
     interface=".interfaces.IGSRequestRegistrationMarker"
     type="zope.app.content.interfaces.IContentType" />
   <browser:page
-    for="*"
     name="request_registration.html"
+    for="Products.GSContent.interfaces.IGSSiteFolder"
     class=".request_registration.RequestRegistrationForm"
     permission="zope2.View"/>
   <browser:resource
@@ -32,15 +34,15 @@
     permission="zope2.Public" />
 
   <browser:page
-    for="Products.XWFChat.interfaces.IGSGroupFolder"
     name="admin_remote_request_register.html"
+    for="gs.group.base.interfaces.IGSGroupMarker"
     class=".request_registration_remote.GSRemoteRequestRegistration"
     template="browser/templates/signup_remote.pt"
     permission="zope2.View" />
 
   <browser:page
-    for="Products.CustomUserFolder.interfaces.ICustomUser"
     name="register_password.html"
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
     class=".setpassword.SetPasswordForm"
     permission="zope2.ManageProperties" />
   <browser:resource
@@ -49,8 +51,8 @@
     permission="zope2.Public" />
 
   <browser:page
-    for="Products.CustomUserFolder.interfaces.ICustomUser"
     name="registration_profile.html"
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
     class=".changeprofile.ChangeProfileForm"
     permission="zope2.ManageProperties" />
 
@@ -72,11 +74,12 @@
     class="gs.viewlet.WeightOrderedViewletManager"
     template="browser/templates/alternativesignupmethods.pt"/>
 
-  <browser:viewlet name="gs-email-register-method"
-                   manager="gs.profile.signup.base.interfaces.ISignupMethods"
-                   template="browser/templates/signupmethod-email.pt"
-                   permission="zope.Public"
-                   weight="1000" />
+  <browser:viewlet
+    name="gs-email-register-method"
+    manager="gs.profile.signup.base.interfaces.ISignupMethods"
+    template="browser/templates/signupmethod-email.pt"
+    permission="zope.Public"
+    weight="1000" />
 
   <!--Help-->
   <browser:viewlet

@@ -27,7 +27,7 @@
       </li>
       <li>
         Click <samp class="link">Sign up and join.</samp>
-        You will be taken to 
+        You will be taken to
         <a href="#gs-profile-signup-email">the
           <cite class="page">Enter Email</cite> page.</a>
       </li>
@@ -43,14 +43,14 @@
     <h3>Enter Email</h3>
     <ol>
       <li>
-        Enter your email address into the 
+        Enter your email address into the
         <samp class="entry">Email Address</samp> entry.
       </li>
       <li>
         Click the <samp class="button">Sign up</samp> button.
         You will be taken to
         <a href="#gs-profile-signup-password">the <cite class="page">Set
-          Password</cite> page.</a> 
+          Password</cite> page.</a>
         In addition, an email message will be sent to you, verifying that
         you control the address you entered.
       </li>
@@ -58,7 +58,7 @@
     <p class="note">
       <strong class="label">Note:</strong> It is important that the email
       address for the support group &#8213;
-      <code class="email" 
+      <code class="email"
             tal:content="view/siteInfo/get_support_email">foo@example.com</code>
       &#8213; is added to your address book.
     </p>
@@ -70,32 +70,32 @@
     </p>
     <ol>
       <li>
-        Enter a password in the 
+        Enter a password in the
         <cite class="entry">Password</cite> entry.
       </li>
       <li>
         Click the <cite class="button">Set</cite> button.
         Your password will be sent, and you will be taken to
         <a href="#gs-profile-signup-profile">the <cite class="page">Change
-            Profile</cite> page</a> 
+            Profile</cite> page</a>
         page.
       </li>
     </ol>
   </div><!--gs-profile-signup-password-->
   <div id="gs-profile-signup-profile" class="section">
-    <h3>Change Profile</h3>    
+    <h3>Change Profile</h3>
     <p>
       Your profile says a little about you, so others can find out the
       names of the group members.
     </p>
     <ol>
       <li>
-        Enter your name in the 
+        Enter your name in the
         <samp class="entry">Name</samp> entry.
       </li>
       <li>
         <strong class="label">(Optional)</strong>
-        Select your <cite class="wordasword">timezone</cite> 
+        Select your <cite class="wordasword">timezone</cite>
         from the <samp class="list">Timezone</samp> list.
       </li>
       <li>
@@ -105,13 +105,13 @@
       </li>
       <li>
         Click the <samp class="button">Change</samp> button.
-        Your profile will be change, and you will be taken to 
-        <a href="#gs-profile-signup-verify">the 
+        Your profile will be change, and you will be taken to
+        <a href="#gs-profile-signup-verify">the
           <cite class="page">Verify Email</cite> page.</a>
       </li>
     </ol>
     <p class="note">
-      <strong class="label">Note:</strong> 
+      <strong class="label">Note:</strong>
       Some sites may provide extra fields on the
       <cite class="page">Change Profile</cite> page.
     </p>
@@ -126,16 +126,16 @@
       <li>Check your email <cite class="wordasword">inbox.</cite>
         It should contain a message asking you to verify the
         address.
-        If it does not, go through the procedures in 
+        If it does not, go through the procedures in
         <a href="#gs-profile-signup-verify-trouble">Trouble Shooting</a>
         below.</li>
-      <li>Click the link in the email. 
-        You will be taken to the <cite class="page">Verify Email 
+      <li>Click the link in the email.
+        You will be taken to the <cite class="page">Verify Email
           Address</cite> page.</li>
       <li>Wait while your address is verified. You will
         be shown a confirmation message once this is done.</li>
       <li>Close the <cite class="page">Verify Email Address</cite> page.</li>
-      <li>Find the window showing the 
+      <li>Find the window showing the
         <cite class="page">Awaiting Verification</cite> page.
         The <samp class="button">Finish</samp> button on the page will
         be available.</li>
@@ -149,15 +149,15 @@
       <h4>Trouble Shooting</h4>
       <p>
         If your email does not contain a message asking you to verify
-        your address, carry out the following tasks. 
+        your address, carry out the following tasks.
       </p>
       <ol>
         <li id="gs-profile-signup-verify-trouble-junk">
-          Check your email <samp class="folder">Junk</samp> (or 
+          Check your email <samp class="folder">Junk</samp> (or
           <samp class="folder">Spam</samp>) folder to see if the message
           is there.
-          If it is then you should go carry out steps 2&#8213;5 in the 
-          <a href="#gs-profile-signup-verify">Verify Email</a> section 
+          If it is then you should go carry out steps 2&#8213;5 in the
+          <a href="#gs-profile-signup-verify">Verify Email</a> section
           above.</li><!--gs-profile-signup-verify-trouble-junk-->
         <li id="gs-profile-signup-verify-trouble-correct">
           Check that your email address is correct.
@@ -169,7 +169,7 @@
               <samp class="entry">Send</samp> button.
               A new verification email will be sent to you.</li>
             <li>Carry out the steps in the
-              <a href="#gs-profile-signup-verify">Verify Email</a> section 
+              <a href="#gs-profile-signup-verify">Verify Email</a> section
               above.</li>
           </ol>
         </li><!--gs-profile-signup-verify-trouble-correct-->
@@ -177,4 +177,3 @@
     </div><!--gs-profile-signup-verify-trouble-->
   </div><!--gs-profile-signup-verify-->
 </div><!--gs-profile-signup-->
-

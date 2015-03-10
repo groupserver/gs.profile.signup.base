@@ -1,12 +1,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="gs.profile.signup.base"
       metal:use-macro="context/@@groupserver_layout/page">
   <head>
-    <title metal:fill-slot="title">
-      <span tal:replace="view/label"/>:
-      Sign Up:
-      <span tal:replace="view/siteInfo/get_name"/>
+    <title metal:fill-slot="title"
+           i18n:translate="change-profile-title">
+      Change profile: Sign up:
+      <tal:block i18n:name="siteName" replace="view/siteInfo/get_name"/>
     </title>
   </head>
   <body>
@@ -14,28 +16,29 @@
       <div id="utilitylinks">&#160;</div>
     </tal:block>
     <tal:block content="structure provider:groupserver.FormStatusMessage"
-               define="errors view/errors; status view/status; widgets view/widgets"
+               define="errors view/errors; status view/status;
+                       widgets view/widgets"
                metal:fill-slot="messages">&#160;</tal:block>
     <tal:block metal:fill-slot="body">
       <h1 tal:content="view/label">Edit Profile</h1>
-      <p>
+      <p i18n:translate="change-profile-password-set">
         <strong>Thanks for that:</strong>
         your password has been set.
       </p>
-      <p>
+      <p i18n:translate="change-profile-intro-next">
         You can now <strong>change your profile.</strong>
         When you have finished, click the
-        <samp class="button"
+        <samp class="button" i18n:name="changeButton"
               tal:define="action python:[a for a in view.actions][0].label"
               tal:content="action">Big R</samp>
         button.
         Some profile fields are required, and are marked
         <span class="required"><label style="display:inline;margin:0px;">like this</label></span>.
       </p>
-      <p>
+      <p i18n:translate="change-profile-intro-privacy">
         Most of your profile properties are only visible to other
         logged in users of
-        <span class="site"
+        <span class="site" i18n:name="siteName"
               tal:content="view/siteInfo/get_name">this site</span>,
         when they visit your profile page.
         However, if you post to a public group, then your name will be
@@ -46,10 +49,12 @@
       <div id="privacy" class="disclosureWidget">
         <p>
           <a class="disclosureButton" id="privacy-button"
-             href="javascript:showHideDisclosure('privacy')">Your privacy
+             href="javascript:showHideDisclosure('privacy')"
+             i18n:translate="signup-privacy-button">Your privacy
           is important, and will be maintained  according to the
           privacy policy of
-          <span class="site" tal:content="siteName">this site</span>.</a>
+          <span i18n:name="thisSite"
+                class="site" tal:content="siteName">this site</span>.</a>
         </p>
         <div class="disclosureShowHide" style="display: none;">
           <div id="privacy-content">Loading&#8230;</div>
@@ -66,7 +71,10 @@
         </div><!--standardProfileFields-->
         <div id="advancedProfileFields" class="disclosureWidget">
           <p>
-            <a class="disclosureButton" href="javascript:showHideDisclosure('advancedProfileFields')">You may optionally change other parts of your profile.</a>
+            <a class="disclosureButton"
+               href="javascript:showHideDisclosure('advancedProfileFields')"
+               i18n:translate="change-profile-optional-fields">You may optionally 
+            change other parts of your profile.</a>
           </p>
           <div class="disclosureShowHide" style="display: none;">
 

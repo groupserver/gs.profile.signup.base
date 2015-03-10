@@ -1,5 +1,8 @@
-<form id="gs-profile-signup-base-method-email" class="gs-content-js-required" 
-      enctype="multipart/form-data" method="post" 
+<form id="gs-profile-signup-base-method-email" class="gs-content-js-required"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="gs.profile.signup.base"
+      enctype="multipart/form-data" method="post"
       action="/request_registration.html">
   <div class="form-widget required" id="widget-form.email">
     <tal:block define="widgets python:[view.__parent__.widgets['email']]">
@@ -10,14 +13,15 @@
     <span tal:replace="structure widget/hidden"/>
   </tal:block>
   <div id="emailHelp">
-    <p class="message-error" style="display: none;">
+    <p class="message-error" style="display: none;"
+       i18n:translate="email-invalid-feedback">
       The email address is not valid.
       Please enter a valid email address.
     </p>
   </div><!--Password Help-->
   <div class="buttons">
     <div class="formelementbutton">
-      <input type="submit" id="form.actions.register" 
+      <input type="submit" id="form.actions.register"
              name="form.actions.register" value="Register" class="button" />
     </div>
   </div><!--buttons-->
