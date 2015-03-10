@@ -1,20 +1,24 @@
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: gs.profile.signup.base\n"
 "POT-Creation-Date: 2015-03-09 23:57+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"PO-Revision-Date: 2015-03-10 00:14+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: German (http://www.transifex.com/projects/p/gs-profile-signup-base/language/de/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Domain: DOMAIN\n"
+"Language: de\n"
 "Language-Code: en\n"
 "Language-Name: English\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: DOMAIN\n"
 
-#. Default: "Start your signup by choosing <strong>one</strong> of the following:"
+#. Default: "Start your signup by choosing <strong>one</strong> of the
+#. following:"
 #: ./browser/templates/alternativesignupmethods.pt:6
 msgid "alternate-start"
 msgstr ""
@@ -24,12 +28,19 @@ msgstr ""
 msgid "change-profile-button"
 msgstr ""
 
-#. Default: "You can now <strong>change your profile.</strong> When you have finished, click the ${changeButton} button. Some profile fields are required, and are marked <span class=\"required\"><label style=\"display:inline;margin:0px;\">like this</label></span>."
+#. Default: "You can now <strong>change your profile.</strong> When you have
+#. finished, click the ${changeButton} button. Some profile fields are
+#. required, and are marked <span class=\"required\"><label
+#. style=\"display:inline;margin:0px;\">like this</label></span>."
 #: ./browser/templates/changeprofile.pt:31
 msgid "change-profile-intro-next"
 msgstr ""
 
-#. Default: "Most of your profile properties are only visible to other logged in users of ${siteName}, when they visit your profile page. However, if you post to a public group, then your name will be visible to all visitors to that group, even if they are not logged in. You will be able to change all your profile properties later."
+#. Default: "Most of your profile properties are only visible to other logged
+#. in users of ${siteName}, when they visit your profile page. However, if you
+#. post to a public group, then your name will be visible to all visitors to
+#. that group, even if they are not logged in. You will be able to change all
+#. your profile properties later."
 #: ./browser/templates/changeprofile.pt:41
 msgid "change-profile-intro-privacy"
 msgstr ""
@@ -54,15 +65,14 @@ msgstr ""
 msgid "change-profile-title"
 msgstr ""
 
-#. Default: "The email address is not valid. Please enter a valid email address."
+#. Default: "The email address is not valid. Please enter a valid email
+#. address."
 #: ./browser/templates/signupmethod-email.pt:16
 msgid "email-invalid-feedback"
 msgstr ""
 
 #. Default: "There are errors:"
-#: ./changeprofile.py:169
-#: ./request_registration.py:126
-#: ./setpassword.py:65
+#: ./changeprofile.py:169 ./request_registration.py:126 ./setpassword.py:65
 msgid "multiple-errors"
 msgstr ""
 
@@ -81,7 +91,10 @@ msgstr ""
 msgid "remote-register-heading"
 msgstr ""
 
-#. Default: "To create a remote sign-up box for ${groupName}, copy the <acronym title=\"Hypertext Markup Language\">HTML</acronym> below and paste it into your own page. After filling out the form, the new group member will be taken through the standard registration process for ${groupName}."
+#. Default: "To create a remote sign-up box for ${groupName}, copy the
+#. <acronym title=\"Hypertext Markup Language\">HTML</acronym> below and paste
+#. it into your own page. After filling out the form, the new group member
+#. will be taken through the standard registration process for ${groupName}."
 #: ./browser/templates/signup_remote.pt:28
 msgid "remote-register-intro"
 msgstr ""
@@ -111,17 +124,24 @@ msgstr ""
 msgid "set-password-button"
 msgstr ""
 
-#. Default: "To set your password, enter it in the ${passwordEntry} entry below and click the ${setButton} button. After that you will be taken to a page where you will be able to <strong>change your profile.</strong>"
+#. Default: "To set your password, enter it in the ${passwordEntry} entry
+#. below and click the ${setButton} button. After that you will be taken to a
+#. page where you will be able to <strong>change your profile.</strong>"
 #: ./browser/templates/setpassword.pt:61
 msgid "set-password-intro-howto"
 msgstr ""
 
-#. Default: "The next step in becoming a fully active member of ${siteName} is to <strong>set your password.</strong> Your password will protect you and your private information: you will use your password to log into this site and change your profile, change your delivery settings, and post messages using the web."
+#. Default: "The next step in becoming a fully active member of ${siteName} is
+#. to <strong>set your password.</strong> Your password will protect you and
+#. your private information: you will use your password to log into this site
+#. and change your profile, change your delivery settings, and post messages
+#. using the web."
 #: ./browser/templates/setpassword.pt:48
 msgid "set-password-intro-step"
 msgstr ""
 
-#. Default: "<strong>Welcome!</strong> An email message has been sent to your email account, asking you to verify that you control the address ${email}."
+#. Default: "<strong>Welcome!</strong> An email message has been sent to your
+#. email account, asking you to verify that you control the address ${email}."
 #: ./browser/templates/setpassword.pt:43
 msgid "set-password-intro-welcome"
 msgstr ""
@@ -146,26 +166,26 @@ msgstr ""
 msgid "set-password-visibility-toggle-help"
 msgstr ""
 
-#. Default: "<strong>Register with ${siteName}</strong> so you can join groups, post messages, and receive email from your groups."
+#. Default: "<strong>Register with ${siteName}</strong> so you can join
+#. groups, post messages, and receive email from your groups."
 #: ./browser/templates/signup.pt:22
 msgid "signup-intro"
 msgstr ""
 
-#. Default: "Your privacy is important, and will be maintained according to the privacy policy of ${thisSite}."
-#: ./browser/templates/changeprofile.pt:56
-#: ./browser/templates/signup.pt:48
+#. Default: "Your privacy is important, and will be maintained according to
+#. the privacy policy of ${thisSite}."
+#: ./browser/templates/changeprofile.pt:56 ./browser/templates/signup.pt:48
 msgid "signup-privacy-button"
 msgstr ""
 
-#. Default: "By signing up with ${siteName}, you agree to the acceptable use policy."
+#. Default: "By signing up with ${siteName}, you agree to the acceptable use
+#. policy."
 #: ./browser/templates/signup.pt:33
 msgid "signup-tnc-button"
 msgstr ""
 
 #. Default: "There is an error:"
-#: ./changeprofile.py:167
-#: ./request_registration.py:124
-#: ./setpassword.py:63
+#: ./changeprofile.py:167 ./request_registration.py:124 ./setpassword.py:63
 msgid "single-error"
 msgstr ""
 
@@ -194,12 +214,15 @@ msgstr ""
 msgid "verify-wait-existing-email"
 msgstr ""
 
-#. Default: "An email has been sent to ${email} to check that it works. When you receive the email, follow the instructions in it, then click the ${button} button below to finish sign up."
+#. Default: "An email has been sent to ${email} to check that it works. When
+#. you receive the email, follow the instructions in it, then click the
+#. ${button} button below to finish sign up."
 #: ./browser/templates/verify_wait.pt:49
 msgid "verify-wait-intro"
 msgstr ""
 
-#. Default: "Check that <strong>your address is correct.</strong> You can correct it in the entry below and click the ${button} button."
+#. Default: "Check that <strong>your address is correct.</strong> You can
+#. correct it in the entry below and click the ${button} button."
 #: ./browser/templates/verify_wait.pt:93
 msgid "verify-wait-issues-correct"
 msgstr ""
@@ -209,12 +232,14 @@ msgstr ""
 msgid "verify-wait-issues-heading"
 msgstr ""
 
-#. Default: "The email address is not valid. Please enter a valid email address."
+#. Default: "The email address is not valid. Please enter a valid email
+#. address."
 #: ./browser/templates/verify_wait.pt:142
 msgid "verify-wait-issues-invalid"
 msgstr ""
 
-#. Default: "Add ${supportEmail} to <strong>your address book.</strong> Then click the ${button} button to send another verification message."
+#. Default: "Add ${supportEmail} to <strong>your address book.</strong> Then
+#. click the ${button} button to send another verification message."
 #: ./browser/templates/verify_wait.pt:105
 msgid "verify-wait-issues-whitelist"
 msgstr ""
@@ -224,7 +249,8 @@ msgstr ""
 msgid "verify-wait-label"
 msgstr ""
 
-#. Default: "Another email address verification message has been sent to ${email}."
+#. Default: "Another email address verification message has been sent to
+#. ${email}."
 #: ./verifywait.py:119
 msgid "verify-wait-resend"
 msgstr ""
@@ -239,8 +265,8 @@ msgstr ""
 msgid "verify-wait-status-unverified"
 msgstr ""
 
-#. Default: "The email address is <strong>verified.</strong> Click the ${button} button, or wait ${nSeconds} seconds."
+#. Default: "The email address is <strong>verified.</strong> Click the
+#. ${button} button, or wait ${nSeconds} seconds."
 #: ./browser/templates/verify_wait.pt:76
 msgid "verify-wait-status-verified"
 msgstr ""
-

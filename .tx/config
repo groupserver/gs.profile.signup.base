@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[gs-profile-signup-base.gs-profile-signup-base-pot]
+file_filter = gs/profile/signup/base/locales/<lang>/LC_MESSAGES/gs.profile.signup.base.po
+source_file = gs/profile/signup/base/locales/en/LC_MESSAGES/gs.profile.signup.base.po
+source_lang = en
+type = PO
+

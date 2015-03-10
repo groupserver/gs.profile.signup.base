@@ -74,7 +74,9 @@ Resources
 =========
 
 - Code repository:
-  https://github.com/groupserver/gs.profile.signup.base
+  https://github.com/groupserver/gs.profile.signup.base/
+- Translations:
+  https://www.transifex.com/projects/p/gs-profile-signup-base/
 - Questions and comments to
   http://groupserver.org/groups/development
 - Report bugs at https://redmine.iopen.net/projects/groupserver
