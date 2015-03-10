@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2015-03-09 23:57+0000\n"
-"PO-Revision-Date: 2015-03-09 17:22-0700\n"
+"PO-Revision-Date: 2015-03-09 17:30-0700\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "Change"
 #. Default: "You can now <strong>change your profile.</strong> When you have finished, click the ${changeButton} button. Some profile fields are required, and are marked <span class=\"required\"><label style=\"display:inline;margin:0px;\">like this</label></span>."
 #: ./browser/templates/changeprofile.pt:31
 msgid "change-profile-intro-next"
-msgstr "You can now <strong>change your profile.</strong> When you have finished, click the ${changeButton} button. Some profile fields are required, and are marked <span class=\\\"required\\\"><label style=\\\"display:inline;margin:0px;\\\">like this</label></span>."
+msgstr "You can now <strong>change your profile.</strong> When you have finished, click the ${changeButton} button. Some profile fields are required, and are marked <span class=\"required\"><label style=\"display:inline;margin:0px;\">like this</label></span>."
 
 #. Default: "Most of your profile properties are only visible to other logged in users of ${siteName}, when they visit your profile page. However, if you post to a public group, then your name will be visible to all visitors to that group, even if they are not logged in. You will be able to change all your profile properties later."
 #: ./browser/templates/changeprofile.pt:41

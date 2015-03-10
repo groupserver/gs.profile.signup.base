@@ -217,7 +217,7 @@ class ChangeProfileForm(EditProfileForm):
                   getFieldsInOrder(self.profileInterface)]
         retval = [f for f in retval if f not in self.__hiddenFieldNames]
         assert type(retval) == list
-        retval
+        return retval
 
     @property
     def profileWidgets(self):
