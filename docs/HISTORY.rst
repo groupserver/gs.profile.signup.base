@@ -1,16 +1,19 @@
 Changelog
 =========
 
-3.3.0 (2015-03-10)
+3.3.0 (2015-03-12)
 ------------------
 
 * Dealing with email addresses with ``+`` characters in them,
   closing `Bug 4036`_
 * Adding internationalisation_
+* [FR] Adding a French translation, thanks to `Razique Mahroua`_
 
 .. _Bug 4036: https://redmine.iopen.net/issues/4036
 .. _internationalisation:
    https://www.transifex.com/projects/p/gs-profile-signup-base/
+.. _Razique Mahroua:
+   https://www.transifex.com/accounts/profile/Razique/
 
 3.2.0 (2014-10-10)
 ------------------
