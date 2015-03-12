@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2015-03-09 23:57+0000\n"
-"PO-Revision-Date: 2015-03-09 17:30-0700\n"
+"PO-Revision-Date: 2015-03-12 13:22-0700\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,7 @@ msgstr "You may optionally change other parts of your profile."
 #. Default: "Change profile"
 #: ./changeprofile.py:43
 msgid "change-profile-page-title"
-msgstr ""
+msgstr "Change profile"
 
 #. Default: "<strong>Thanks for that:</strong> your password has been set."
 #: ./browser/templates/changeprofile.pt:24
@@ -187,7 +187,7 @@ msgstr "Your email address."
 #. Default: "Email address"
 #: ./interfaces.py:109
 msgid "verify-wait-email-label"
-msgstr ""
+msgstr "Email address"
 
 #. Default: "The address ${email} is already registered to another user."
 #: ./verifywait.py:131
