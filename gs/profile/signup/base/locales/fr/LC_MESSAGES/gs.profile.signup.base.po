@@ -1,10 +1,11 @@
 # 
 # Translators:
+# Razique Mahroua <razique.mahroua@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: gs.profile.signup.base\n"
 "POT-Creation-Date: 2015-03-09 23:57+0000\n"
-"PO-Revision-Date: 2015-03-10 00:33+0000\n"
+"PO-Revision-Date: 2015-03-11 15:00+0000\n"
 "Last-Translator: Michael JasonSmith <mpj17@onlinegroups.net>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/gs-profile-signup-base/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -21,12 +22,12 @@ msgstr ""
 #. following:"
 #: ./browser/templates/alternativesignupmethods.pt:6
 msgid "alternate-start"
-msgstr ""
+msgstr "Commencez par vous enregistrer, en choisissant l'<strong>un</strong> des éléments suivants :"
 
 #. Default: "Change"
 #: ./changeprofile.py:143
 msgid "change-profile-button"
-msgstr ""
+msgstr "Changer"
 
 #. Default: "You can now <strong>change your profile.</strong> When you have
 #. finished, click the ${changeButton} button. Some profile fields are
@@ -34,7 +35,7 @@ msgstr ""
 #. style=\"display:inline;margin:0px;\">like this</label></span>."
 #: ./browser/templates/changeprofile.pt:31
 msgid "change-profile-intro-next"
-msgstr ""
+msgstr "Il vous est maintenant possible de <strong>mettre à jour votre profil</strong>. Une fois ceci terminé, cliquez sur le bouton ${changeButton}. Certains champs sont obligatoires, lorsqu'ils sont indiqués <span class=\"required\"><label style=\"display:inline;margin:0px;\">de la manière suivante</label></span>."
 
 #. Default: "Most of your profile properties are only visible to other logged
 #. in users of ${siteName}, when they visit your profile page. However, if you
@@ -43,53 +44,53 @@ msgstr ""
 #. your profile properties later."
 #: ./browser/templates/changeprofile.pt:41
 msgid "change-profile-intro-privacy"
-msgstr ""
+msgstr "La plupart des informations de votre profil ne sont consultables qu'uniquement par les utilisateurs connectés, du groupe ${groupName}, et ce lorsqu'ils visitent votre profil. Cependant, si vous postez une message dans un groupe public, votre nom sera visible à tous les membres du groupe, et ce même si ils ne sont pas connectés. Il vous sera possible de mettre à jour les paramètres de votre profil plus tard."
 
 #. Default: "You may optionally change other parts of your profile."
 #: ./browser/templates/changeprofile.pt:74
 msgid "change-profile-optional-fields"
-msgstr ""
+msgstr "Vous pouvez optionnellement renseigner d'autres informations pour votre profil. "
 
 #. Default: "Change profile"
 #: ./changeprofile.py:43
 msgid "change-profile-page-title"
-msgstr ""
+msgstr "change-profile-page-title"
 
 #. Default: "<strong>Thanks for that:</strong> your password has been set."
 #: ./browser/templates/changeprofile.pt:24
 msgid "change-profile-password-set"
-msgstr ""
+msgstr "<strong>Merci ! </strong> : votre mot de passe a été créé."
 
 #. Default: "Change profile: Sign up: ${siteName}"
 #: ./browser/templates/changeprofile.pt:11
 msgid "change-profile-title"
-msgstr ""
+msgstr "Mise à jour du profil : Enregistrement : ${siteName}"
 
 #. Default: "The email address is not valid. Please enter a valid email
 #. address."
 #: ./browser/templates/signupmethod-email.pt:16
 msgid "email-invalid-feedback"
-msgstr ""
+msgstr "L'adresse e-mail fournie n'est pas valide. Veuillez saisir une adresse e-mail valide."
 
 #. Default: "There are errors:"
 #: ./changeprofile.py:169 ./request_registration.py:126 ./setpassword.py:65
 msgid "multiple-errors"
-msgstr ""
+msgstr "Des erreurs sont survenues :"
 
 #. Default: "Register"
 #: ./request_registration.py:83
 msgid "register-button"
-msgstr ""
+msgstr "Enregister"
 
 #. Default: "Register"
 #: ./request_registration.py:38
 msgid "register-page-label"
-msgstr ""
+msgstr "Enregister"
 
 #. Default: "Remote registration form"
 #: ./browser/templates/signup_remote.pt:18
 msgid "remote-register-heading"
-msgstr ""
+msgstr "Formulaire d'enregistrement distant"
 
 #. Default: "To create a remote sign-up box for ${groupName}, copy the
 #. <acronym title=\"Hypertext Markup Language\">HTML</acronym> below and paste
@@ -97,39 +98,39 @@ msgstr ""
 #. will be taken through the standard registration process for ${groupName}."
 #: ./browser/templates/signup_remote.pt:28
 msgid "remote-register-intro"
-msgstr ""
+msgstr "Pour créer un formulaire d'enregistrement à distance pour le groupe ${groupName}, veuillez copier le code <acronym title=\\\"Hypertext Markup Language\\\">HTML</acronym> ci-dessous, et collez-le sur votre propre page internet. Une fois que les utilisateurs auront rempli le formulaire, ils seront redirigés vers la page d'enregistrement standard du groupe ${groupName}."
 
 #. Default: "Remote registration form: ${groupName}: ${siteName}"
 #: ./browser/templates/signup_remote.pt:12
 msgid "remote-register-title"
-msgstr ""
+msgstr "Enregistrement à distance : ${groupName} : ${siteName}"
 
 #. Default: "Your email address."
 #: ./interfaces.py:66
 msgid "request-email-help"
-msgstr ""
+msgstr "Votre adresse e-mail."
 
 #. Default: "Your email address that you want to verify."
 #: ./interfaces.py:100
 msgid "resend-verification-help"
-msgstr ""
+msgstr "L'adresse e-mail que vous souhaitez vérifier"
 
 #. Default: "Email address"
 #: ./interfaces.py:99
 msgid "resend-verification-label"
-msgstr ""
+msgstr "Adresse e-mail"
 
 #. Default: "Set"
 #: ./setpassword.py:38
 msgid "set-password-button"
-msgstr ""
+msgstr "Choisir"
 
 #. Default: "To set your password, enter it in the ${passwordEntry} entry
 #. below and click the ${setButton} button. After that you will be taken to a
 #. page where you will be able to <strong>change your profile.</strong>"
 #: ./browser/templates/setpassword.pt:61
 msgid "set-password-intro-howto"
-msgstr ""
+msgstr "Afin de créer votre mot de passe, veuillez le saisir dans le formulaire ${passwordEntry} ci-dessous, et cliquer sur le bouton ${setButton}. Une fois le mot de passe choisi, vous serez redirigé vers une page vous donnant la possibilité de <strong>mettre à jour votre profil</strong>."
 
 #. Default: "The next step in becoming a fully active member of ${siteName} is
 #. to <strong>set your password.</strong> Your password will protect you and
@@ -138,135 +139,135 @@ msgstr ""
 #. using the web."
 #: ./browser/templates/setpassword.pt:48
 msgid "set-password-intro-step"
-msgstr ""
+msgstr "La prochaine étape afin de devenir un membre actif de ${siteName} consiste à <strong>choisir votre mot de passe</strong>. Votre mot de passe vous protègera, et protègera vos informations privées. Vous utiliserez votre mot de passe pour vous connecter à ce site, mettre à jour votre profile, mettre à jour vos préférences d'envoi, et poster de nouveaux messages depuis le site."
 
 #. Default: "<strong>Welcome!</strong> An email message has been sent to your
 #. email account, asking you to verify that you control the address ${email}."
 #: ./browser/templates/setpassword.pt:43
 msgid "set-password-intro-welcome"
-msgstr ""
+msgstr "<strong>Bienvenue !</strong> Un e-mail de bienvenue vous a été envoyé, afin de nous assurer que vous êtes bien le propriétaire de l'adresse ${email}."
 
 #. Default: "Set password"
 #: ./setpassword.py:29
 msgid "set-password-label"
-msgstr ""
+msgstr "Choisir un mot de passe"
 
 #. Default: "Set password: Sign Up: ${siteName}"
 #: ./browser/templates/setpassword.pt:11
 msgid "set-password-title"
-msgstr ""
+msgstr "Choisir un mot de passe : Enregistrement ${siteName}"
 
 #. Default: "Show password"
 #: ./browser/templates/setpassword.pt:79
 msgid "set-password-visibility-toggle"
-msgstr ""
+msgstr "Afficher le mot de passe"
 
 #. Default: "Select if you are in a public place, like a cafe or library."
 #: ./browser/templates/setpassword.pt:79
 msgid "set-password-visibility-toggle-help"
-msgstr ""
+msgstr "Décocher si vous vous trouvez dans un lieu public, comme un café, ou une bibliothèque."
 
 #. Default: "<strong>Register with ${siteName}</strong> so you can join
 #. groups, post messages, and receive email from your groups."
 #: ./browser/templates/signup.pt:22
 msgid "signup-intro"
-msgstr ""
+msgstr "<strong>Rejoignez ${siteName}</strong>, afin de pouvoir joindre des groupe, poster des messages, et recevoir des e-mails de la part des membres de vos groupes."
 
 #. Default: "Your privacy is important, and will be maintained according to
 #. the privacy policy of ${thisSite}."
 #: ./browser/templates/changeprofile.pt:56 ./browser/templates/signup.pt:48
 msgid "signup-privacy-button"
-msgstr ""
+msgstr "Votre vie privée est importante, et sera préservée, en accord avec la politique de confidentialité de ${thisSite}"
 
 #. Default: "By signing up with ${siteName}, you agree to the acceptable use
 #. policy."
 #: ./browser/templates/signup.pt:33
 msgid "signup-tnc-button"
-msgstr ""
+msgstr "En créant un compte sur ${siteName}, vous acceptez les conditions d'utilisation."
 
 #. Default: "There is an error:"
 #: ./changeprofile.py:167 ./request_registration.py:124 ./setpassword.py:63
 msgid "single-error"
-msgstr ""
+msgstr "Une erreur est survenue :"
 
 #. Default: "Changed your email address to ${newEmail} from ${oldEmail}."
 #: ./verifywait.py:140
 msgid "verify-wait-address-change"
-msgstr ""
+msgstr "L'adresse e-mail ${oldEmail} a été remplacée par l'adresse ${newEmail}."
 
 #. Default: "Finish"
 #: ./verifywait.py:77
 msgid "verify-wait-button"
-msgstr ""
+msgstr "Terminer"
 
 #. Default: "Your email address."
 #: ./interfaces.py:110
 msgid "verify-wait-email-help"
-msgstr ""
+msgstr "Votre adresse e-mail."
 
 #. Default: "Email address"
 #: ./interfaces.py:109
 msgid "verify-wait-email-label"
-msgstr ""
+msgstr "verify-wait-email-label"
 
 #. Default: "The address ${email} is already registered to another user."
 #: ./verifywait.py:131
 msgid "verify-wait-existing-email"
-msgstr ""
+msgstr "L'adresse e-mail ${email} est déjà utilisée par quelqu'un d'autre."
 
 #. Default: "An email has been sent to ${email} to check that it works. When
 #. you receive the email, follow the instructions in it, then click the
 #. ${button} button below to finish sign up."
 #: ./browser/templates/verify_wait.pt:49
 msgid "verify-wait-intro"
-msgstr ""
+msgstr "Un e-mail a été envoyé à l'adresse ${email}, afin de s'assurer qu'elle existe, et que le compte fonctionne. Lorsque vous aurez recu l'e-mail, veuillez suivre les instructions qui s'y trouvent, puis cliquez sur le bouton ${button} ci-dessous, afin de compléter votre enregistrement."
 
 #. Default: "Check that <strong>your address is correct.</strong> You can
 #. correct it in the entry below and click the ${button} button."
 #: ./browser/templates/verify_wait.pt:93
 msgid "verify-wait-issues-correct"
-msgstr ""
+msgstr "Veuillez vous assurer que votre <strong>adresse est correcte</strong>. Il vous est possible de la corriger ci-dessous, puis de cliquer sur le bouton ${button}"
 
 #. Default: "Haven't got the email?"
 #: ./browser/templates/verify_wait.pt:86
 msgid "verify-wait-issues-heading"
-msgstr ""
+msgstr "Message manquant ?"
 
 #. Default: "The email address is not valid. Please enter a valid email
 #. address."
 #: ./browser/templates/verify_wait.pt:142
 msgid "verify-wait-issues-invalid"
-msgstr ""
+msgstr "L'adresse fournie n'est pas valide. Veuillez saisir une adresse valide."
 
 #. Default: "Add ${supportEmail} to <strong>your address book.</strong> Then
 #. click the ${button} button to send another verification message."
 #: ./browser/templates/verify_wait.pt:105
 msgid "verify-wait-issues-whitelist"
-msgstr ""
+msgstr "Veuillez ajouter ${supportEmail} à votre <strong>carnet d'adresse</strong>, puis cliquez sur le bouton ${button} afin d'envoyer un autre message de vérification."
 
 #. Default: "Awaiting Verification"
 #: ./verifywait.py:37
 msgid "verify-wait-label"
-msgstr ""
+msgstr "En cours de vérification"
 
 #. Default: "Another email address verification message has been sent to
 #. ${email}."
 #: ./verifywait.py:119
 msgid "verify-wait-resend"
-msgstr ""
+msgstr "Un autre e-mail de vérification a été envoyé à l'adresse ${email}."
 
 #. Default: "Checking verification status ${loadingIcon}"
 #: ./browser/templates/verify_wait.pt:61
 msgid "verify-wait-status-checking"
-msgstr ""
+msgstr "Vérification de la validation ${loadingIcon}"
 
 #. Default: "The email address is <strong>unverified.</strong>"
 #: ./browser/templates/verify_wait.pt:64
 msgid "verify-wait-status-unverified"
-msgstr ""
+msgstr "L'adresse e-mail n'a pas encore été <strong>vérifiée</strong>. L'adresse e-mail est <strong>non-vérifiée</strong>"
 
 #. Default: "The email address is <strong>verified.</strong> Click the
 #. ${button} button, or wait ${nSeconds} seconds."
 #: ./browser/templates/verify_wait.pt:76
 msgid "verify-wait-status-verified"
-msgstr ""
+msgstr "L'adresse e-mail est <strong>vérifiée</strong>. Cliquez sur le bouton ${button}, ou bien patientez ${nSeconds} secondes."
