@@ -99,7 +99,6 @@ class VerifyWaitForm(SiteForm):
         assert 'email' in data.keys()
         self.actual_handle_send(data)
         assert self.status
-        assert type(self.status) == unicode
 
     def actual_handle_send(self, data):
         newEmail = data['email']

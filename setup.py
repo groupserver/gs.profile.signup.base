@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ############################################################################
 #
-# Copyright © 2010, 2011, 2012, 2013, 2014 OnlineGroups.net and
+# Copyright © 2010, 2011, 2012, 2013, 2014, 2015 OnlineGroups.net and
 # Contributors.
 #
 # All Rights Reserved.
