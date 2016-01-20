@@ -1,6 +1,11 @@
 Changelog
 =========
 
+3.3.2 (2016-01-19)
+------------------
+
+* Following the updated GS WYMeditor code
+
 3.3.1 (2015-03-24)
 ------------------
 
@@ -178,4 +183,4 @@ Changelog
 * The Set Password page now takes in the password *en clear*
 
 
-..  LocalWords:  Changelog GitHub reStructuredText
+..  LocalWords:  Changelog GitHub reStructuredText WYMeditor
