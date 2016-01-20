@@ -117,7 +117,7 @@
         type="text/javascript"
         data-text-element="#form\.biography"
         data-submit="#form\.actions\.change"
-        src="/++resource++wymeditor-1.0.0b5/gswymeditor-min.js"
+        src="/++resource++wymeditor-1.1.1/gswymeditor-min.js"
         defer="true"> </script>
     </tal:block>
   </body>
