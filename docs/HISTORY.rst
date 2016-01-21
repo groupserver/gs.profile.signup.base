@@ -1,10 +1,12 @@
 Changelog
 =========
 
-3.3.2 (2016-01-19)
+3.3.2 (2016-01-21)
 ------------------
 
 * Following the updated GS WYMeditor code
+* Switching the JavaScript to *strict* mode on the *Register*
+  page, *Set password* page and *Awaiting verification* page
 
 3.3.1 (2015-03-24)
 ------------------
