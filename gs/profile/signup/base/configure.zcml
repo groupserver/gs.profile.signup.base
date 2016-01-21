@@ -29,7 +29,7 @@
     class=".request_registration.RequestRegistrationForm"
     permission="zope2.View"/>
   <browser:resource
-    name="gs-profile-signup-20130510.js"
+    name="gs-profile-signup-20160121.js"
     file="browser/javascript/signup.js"
     permission="zope2.Public" />
 
@@ -46,7 +46,7 @@
     class=".setpassword.SetPasswordForm"
     permission="zope2.ManageProperties" />
   <browser:resource
-    name="gs-profile-signup-password-20130517.js"
+    name="gs-profile-signup-password-20160121.js"
     file="browser/javascript/set_password.js"
     permission="zope2.Public" />
 
@@ -63,7 +63,7 @@
     permission="zope2.ManageProperties" />
 
   <browser:resource
-    name="gs-profile-signup-verify-check-20150305.js"
+    name="gs-profile-signup-verify-check-20160121.js"
     file="browser/javascript/check_email_verified.js"
     permission="zope2.Public" />
 

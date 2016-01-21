@@ -57,6 +57,6 @@
     <script metal:fill-slot="javascript"
             type="text/javascript"
             defer="defer"
-            src="/++resource++gs-profile-signup-20130510.js">&#160;</script>
+            src="/++resource++gs-profile-signup-20160121.js"> </script>
   </body>
 </html>

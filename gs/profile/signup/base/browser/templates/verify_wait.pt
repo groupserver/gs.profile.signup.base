@@ -148,7 +148,7 @@
             data-msg-unverified="#gs-profile-signup-base-verify-wait-status-unverified"
             data-msg-verified="#gs-profile-signup-base-verify-wait-status-verified"
             data-toCheck="#gs-profile-signup-base-verify-wait-things-to-check"
-            src="/++resource++gs-profile-signup-verify-check-20150305.js">
+            src="/++resource++gs-profile-signup-verify-check-20160121.js">
     </script>
   </body>
 </html>
